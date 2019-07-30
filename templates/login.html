@@ -1,0 +1,26 @@
+{% block body %}
+
+<form action="/login" method="POST">
+<div >
+<div >
+<div >
+<h1>Login</h1>
+</div>
+<div >
+<div >
+				<input type="text"  value="" placeholder="username" name="username">
+<label  for="login-name"></label></div>
+<div >
+				<input type="password"  value=""  placeholder="password" name="password">
+<label  for="login-pass"></label></div>
+<input type="submit" value="Log in" >
+
+</div>
+</div>
+</div>
+</form>
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+{% endblock %}

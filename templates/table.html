@@ -1,0 +1,182 @@
+
+{% block body %}
+
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript">
+function buildTable(data){
+var table = document.createElement('table');
+   var tableBody = document.createElement('tbody');
+        var row = document.createElement('tr');
+        var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("EntityID "));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("Ename "));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("NoStateAidDistrict"));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("TotalLocalLevy"));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("UncapturedQTR"));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("TotalStateAid"));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode("TotalStateFundingEqualised"));
+       row.appendChild(cell);
+
+       tableBody.appendChild(row);
+       for(i=0;i<data.length;i++)
+       {
+        var row = document.createElement('tr');
+        var cell = document.createElement('td');
+       cell.appendChild(document.createTextNode(data[i]['a']));
+       row.appendChild(cell);
+       var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['c']));
+      row.appendChild(cell);
+
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['b']));
+      row.appendChild(cell);
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['d']));
+      row.appendChild(cell);
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['e']));
+      row.appendChild(cell);
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['f']));
+      row.appendChild(cell);
+      var cell = document.createElement('td');
+      cell.appendChild(document.createTextNode(data[i]['g']));
+      row.appendChild(cell);
+
+
+       tableBody.appendChild(row);
+       }
+
+       table.appendChild(tableBody);
+  //document.body.appendChild(table);
+  var element = document.getElementById('table-div');
+  element.appendChild(tableBody);
+
+}
+  var data="";
+var ele=null;
+function callEndpoint() {
+    $.getJSON('/wftf', function(data) {
+       console.log("done");
+       console.log(data);
+       console.log(data instanceof Map);
+       console.log(data instanceof Array);
+       console.log(data.length);
+      buildTable(data);
+
+    });
+
+}
+
+
+callEndpoint();
+document.write(ele);
+
+</script>
+
+    <title>LEA Summary</title>
+
+  </head>
+<style>
+html, body
+{
+    height: 100%;
+    width: 100%;
+}
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 80px;
+  margin-bottom: 30px;
+}
+#text-div,#bar {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("static/download.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+#aa {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("static/aa.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+ td,  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+     font-family: sans-serif;
+}
+ tr:nth-child(even){background-color: #f2f2f2;}
+ tr:hover {background-color: #ddd;}
+ th {
+  font-size: 13px;
+      font-weight: bolder;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: green;
+    color: white;
+}
+  .slice text {
+            font-size: 16pt;
+            font-family:Arial;
+path {
+        stroke: steelblue;
+        stroke-width: 1;
+        fill: none;
+      }
+      .axis {
+        shape-rendering: crispEdges;
+      }
+      .x.axis line {
+        stroke: lightgrey;
+      }
+      .x.axis .minor {
+        stroke-opacity: .5;
+      }
+      .x.axis path {
+        display: none;
+      }
+      .y.axis line, .y.axis path {
+        fill: none;
+        stroke: #000;
+      }
+</style>
+
+<body  >
+<div id="aa">
+<center><h1>THE LYLE TOOL</H1></center>
+
+
+
+
+  </div>
+<div id="bar"><br>
+   <center><b><p id="demo"></p></b></center>  <br></div><br><br>
+<center><div id ="table-div" style="background-color:green ; display:table; width:80%; float: center;  margin: auto;  padding: 10px  ">
+</div></center>
+
+
+<div id=second-cont>
+<div id="container1" style="height: 400px"></div>
+
+<div id="container" style="width:100%; height:400px;"></div>
+ </div>
+{% endblock %}

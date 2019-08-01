@@ -102,7 +102,7 @@ DistHSTxtBk600AndOver9_12 = 69.68
 CharHSTxtBkAllK_8 = 0
 CharHSTxtBkAll9_12 = 0
 Reduction10 = 1
-AdditionalAssistant_eqformula = 1
+AdditionalAssistant_eqformula = 2
 DistrictReduction = 352442700
 ActualDistrictReduction = -381355874.7
 CharterReduction = 18656000
@@ -424,23 +424,23 @@ def wftf():
         else:
             NetworkElemADM.append(0)
             NetworkHSADM.append(0)
-            if HSADM[ddd] >= float(1) and sumhsadm[d['EntityID']] < float(100):
+            if sumhsadm[d['EntityID']] >= float(1) and sumhsadm[d['EntityID']] < float(100):
                 HSRange.append("1to99")
-            elif HSADM[ddd] >= float(100) and sumhsadm[d['EntityID']] < float(500):
+            elif sumhsadm[d['EntityID']] >= float(100) and sumhsadm[d['EntityID']] < float(500):
                 HSRange.append("100to499")
-            elif HSADM[ddd] >= (float(500)) and sumhsadm[d['EntityID']] < (float(600)):
+            elif sumhsadm[d['EntityID']] >= (float(500)) and sumhsadm[d['EntityID']] < (float(600)):
                 HSRange.append("500to599")
-            elif (HSADM[ddd] >= float(600)):
+            elif (sumhsadm[d['EntityID']] >= float(600)):
                 HSRange.append(">600")
             else:
                 HSRange.append(None)
-            if ELEMADM[ddd] >= float(1) and sumelemadm[d['EntityID']] < float(100):
+            if sumelemadm[d['EntityID']] >= float(1) and sumelemadm[d['EntityID']] < float(100):
                 ELEMRange.append("1to99")
-            elif ELEMADM[ddd] >= float(100) and sumelemadm[d['EntityID']] < float(500):
+            elif sumelemadm[d['EntityID']] >= float(100) and sumelemadm[d['EntityID']] < float(500):
                 ELEMRange.append("100to499")
-            elif ELEMADM[ddd] >= (float(500)) and sumelemadm[d['EntityID']] < (float(600)):
+            elif sumelemadm[d['EntityID']] >= (float(500)) and sumelemadm[d['EntityID']] < (float(600)):
                 ELEMRange.append("500to599")
-            elif (ELEMADM[ddd] >= float(600)):
+            elif (sumelemadm[d['EntityID']] >= float(600)):
                 ELEMRange.append(">600")
             else:
                 ELEMRange.append(None)
@@ -763,10 +763,27 @@ def wftf():
             FinalFormulaAdditionalAssistance.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
         else:
             if AdditionalAssistant_eqformula == 2:
+
                 DistrictHSTextbooksAA.append(0)
-                DistrictHSAA.append(float(CharSuppLvlAll9_12 * HSADM[ddd]))
-                DistrictElemAA.append(float(CharSuppLvlAllK_8 * ELEMADM[ddd]))
-                DistrictPreKAA.append(float(CharSuppLvlAllK_8 * PREKADM[ddd]))
+                DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
+                if HSRange[ddd] == "1to99":
+                    DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
+                elif HSRange[ddd] == "100to499" or HSRange[ddd] == "100to499":
+                    DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
+                elif HSRange[ddd] == ">600":
+                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                else:
+                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                if ELEMRange[ddd] == "1to99":
+                    DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
+                elif ELEMRange[ddd] == "100to499" or ELEMRange[ddd] == "500to599":
+                    DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
+                elif ELEMRange[ddd] == ">600":
+                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                else:
+                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+
+
             else:
                 if d['HsBooksCapOutlayRevLimitAmt'] == None:
                     d['HsBooksCapOutlayRevLimitAmt'] = 0
@@ -776,6 +793,7 @@ def wftf():
                     d['ElemCapOutlayRevLimitAmt'] = 0
                 if d['PsdCapOutlayRevLimitAmt'] == None:
                     d['PsdCapOutlayRevLimitAmt'] = 0
+
                 DistrictHSTextbooksAA.append(float(d['HsBooksCapOutlayRevLimitAmt']))
                 DistrictHSAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
                 DistrictElemAA.append(float(d['ElemCapOutlayRevLimitAmt']))
@@ -787,8 +805,9 @@ def wftf():
             DistrictPreKElemReduction.append(float(d['PSElTransAdj']))
             DistrictHSReduction.append(float(d['HSTransAdj']))
             TotalDistrictAAReduction.append(float(DistrictPreKElemReduction[ddd] + DistrictHSReduction[ddd]))
-            TotalFormulaDistrictAA.append(float(DistrictHSTextbooksAA[ddd] + DistrictHSAA[ddd] + DistrictElemAA[ddd] + DistrictElemAA[ddd] + DistrictPreKAA[ddd]))
+            TotalFormulaDistrictAA.append(float(DistrictHSTextbooksAA[ddd] + DistrictHSAA[ddd] + DistrictElemAA[ddd] + DistrictPreKAA[ddd]))
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[ddd] + TotalDistrictAAReduction[ddd]))
+
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[ddd])
             FinalFormulaAdditionalAssistance.append(TotalFormulaDistrictAA[ddd])
         # CALCULATION OF FINALAAALLOCATION
@@ -796,6 +815,7 @@ def wftf():
             FinalAAAllocation.append(FinalFormulaAAwithReduction[ddd])
         else:
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[ddd])
+
         AdditionalAssistance.append(FinalAAAllocation[ddd])
 
 
@@ -916,6 +936,9 @@ def wftf():
         d11['County'] = d4['County']
         d11['AOI'] = str(d4['FTFStatus'])
         d11['TEI'] = str(round(TEI[dd4], 5))
+        d11['DistrictHSAA'] = str(round(DistrictHSAA[dd4], 5))
+        d11['DistrictElemAA'] = str(round(DistrictElemAA[dd4], 5))
+        d11['DistrictPreKAA'] = str(round(DistrictPreKAA[dd4], 5))
         d11['hsadm'] = str(round(HSADM[dd4], 4))
         d11['elemadm'] = str(round(ELEMADM[dd4], 4))
         d11['prekbsl'] = str(round(PrekBSL[dd4], 4))

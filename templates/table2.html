@@ -60,7 +60,28 @@ body { padding-top:50px; }
             <span ng-show="sortType == 'TEI' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
-
+​
+          <td>
+          <a href="#" ng-click="sortType = 'prekadm'; sortReverse = !sortReverse">
+            prekadm
+            <span ng-show="sortType == 'prekadm' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'prekadm' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'elemadm'; sortReverse = !sortReverse">
+            elemadm
+            <span ng-show="sortType == 'elemadm' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'elemadm' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'hsadm'; sortReverse = !sortReverse">
+            hsadm
+            <span ng-show="sortType == 'hsadm' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'hsadm' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
 
           <td>
           <a href="#" ng-click="sortType = 'EntityName'; sortReverse = !sortReverse">
@@ -273,13 +294,37 @@ body { padding-top:50px; }
             <span ng-show="sortType == 'ElemAssessedValuation' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictHSAA'; sortReverse = !sortReverse">
+          DistrictHSAA
+            <span ng-show="sortType == 'DistrictHSAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictHSAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictElemAA'; sortReverse = !sortReverse">
+          DistrictElemAA
+            <span ng-show="sortType == 'DistrictElemAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictElemAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictPreKAA'; sortReverse = !sortReverse">
+          DistrictPreKAA
+            <span ng-show="sortType == 'DistrictPreKAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictPreKAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
         <td>{{ roll.EntityID }}</td>
           <td>{{ roll.TEI }}</td>
-        <td>{{ roll.EntityName }}</td>
+          <td>{{ roll.prekadm }}</td>
+          <td>{{ roll.elemadm }}</td>
+          <td>{{ roll.hsadm }}</td>
+          <td>{{ roll.EntityName }}</td>
           <td>{{ roll.County }}</td>
            <td>{{ roll.AOI }}</td>
            <td>{{ roll.BSL }}</td>
@@ -309,6 +354,11 @@ body { padding-top:50px; }
           <td>{{ roll.ElemQTRYield }}</td>
           <td>{{ roll.ElemTotalStateFormula }}</td>
           <td>{{ roll.ElemAssessedValuation }}</td>
+          <td>{{ roll.DistrictHSAA }}</td>
+          <td>{{ roll.DistrictElemAA }}</td>
+          <td>{{ roll.DistrictPreKAA }}</td>
+
+
 
       </tr>
     </tbody>

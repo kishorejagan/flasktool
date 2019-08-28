@@ -19,7 +19,7 @@ body { padding-top:50px; }
 </head>
 <body>
 <h1> <center>The LYLE TOOL</center></h1>
-<h3><center> Hi  {{session['username']}} </center></h3>
+<h3><center> Hi  {{session['username']  }} Here is the Data for 2017 and the student count is based on {{ session['Yeardef'] }} </center></h3>
 
 <p><right>
         <a href="/logout" class="btn btn-info btn-lg">
@@ -197,6 +197,13 @@ body { padding-top:50px; }
           </a>
         </td>
           <td>
+          <a href="#" ng-click="sortType = 'GroupBWeightedAddonCounts'; sortReverse = !sortReverse">
+          GroupBWeightedAddonCounts
+            <span ng-show="sortType == 'GroupBWeightedAddonCounts' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'GroupBWeightedAddonCounts' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
           <a href="#" ng-click="sortType = 'AdditionalAssistance'; sortReverse = !sortReverse">
           AdditionalAssistance
             <span ng-show="sortType == 'AdditionalAssistance' && !sortReverse" class="fa fa-caret-down"></span>
@@ -315,6 +322,41 @@ body { padding-top:50px; }
             <span ng-show="sortType == 'DistrictPreKAA' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'Final_K_8SmWgt'; sortReverse = !sortReverse">
+          Final_K_8SmWgt
+            <span ng-show="sortType == 'Final_K_8SmWgt' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'Final_K_8SmWgt' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'Final_9_12SmWgt'; sortReverse = !sortReverse">
+          Final_9_12SmWgt
+            <span ng-show="sortType == 'Final_9_12SmWgt' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'Final_9_12SmWgt' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+           <td>
+          <a href="#" ng-click="sortType = 'WeightedPreKCounts'; sortReverse = !sortReverse">
+          WeightedPreKCounts
+            <span ng-show="sortType == 'WeightedPreKCounts' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'WeightedPreKCounts' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'WeightedElemCounts'; sortReverse = !sortReverse">
+          WeightedElemCounts
+            <span ng-show="sortType == 'WeightedElemCounts' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'WeightedElemCounts' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'WeightedHSCounts'; sortReverse = !sortReverse">
+          WeightedHSCounts
+            <span ng-show="sortType == 'WeightedHSCounts' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'WeightedHSCounts' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
       </tr>
     </thead>
     <tbody>
@@ -340,6 +382,7 @@ body { padding-top:50px; }
           <td>{{ roll.DSL }}</td>
           <td>{{ roll.TSL }}</td>
           <td>{{ roll.AuditBaseLevelAdjustment }}</td>
+          <td>{{ roll.GroupBWeightedAddonCounts}}</td>
           <td>{{ roll.AdditionalAssistance }}</td>
           <td>{{ roll.NetworkForFundingPurposes }}</td>
           <td>{{ roll.DistrictPreKElemReduction }}</td>
@@ -357,6 +400,12 @@ body { padding-top:50px; }
           <td>{{ roll.DistrictHSAA }}</td>
           <td>{{ roll.DistrictElemAA }}</td>
           <td>{{ roll.DistrictPreKAA }}</td>
+          <td>{{ roll.Final_K_8SmWgt }}</td>
+          <td>{{ roll.Final_9_12SmWgt }}</td>
+
+          <td>{{ roll.WeightedPreKCounts }}</td>
+          <td>{{ roll.WeightedElemCounts }}</td>
+          <td>{{ roll.WeightedHSCounts }}</td>
 
 
 

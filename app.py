@@ -115,6 +115,7 @@ QTR9_12 = 2.0793
 QTRUnified = 4.1586
 QTRJTED = 0.05
 
+Yeardef="PY"
 
 class CustomJsonEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -164,6 +165,7 @@ def logout():
 def wftf():
     # ASSIGNING VARIABLES FOR CALCULATION
     # DEFINING VARIABLES FOR FURTHER CALCULATION
+    flask.session['Yeardef']=Yeardef
     sumprekadm={}
     sumelemadm={}
     sumhsadm={}
@@ -306,7 +308,7 @@ def wftf():
             sumofnetworkhsadm[d2]=0
     count = 0
     # CALCULATION OF ADM VALUES
-    preresult = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID,sum(PsdCount) as sumOfPsdCount,sum(ElemCount) as sumOfElemCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt, sum(PSDCnt)as sumOfPSDCnt, sum(VICnt)as sumOfVICnt, sum(OISCCnt)as sumOfOISCCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(HICnt)as sumOfHICnt, sum(MOMRCnt)as sumOfMOMRCnt, sum(EDPPrivateCnt)as sumOfEDPPrivateCnt, sum(MDResCnt)as sumOfMDResCnt, sum(OIResCnt)as sumOfOIResCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt, sum(LEPCnt)as sumOfLEPCnt, sum(K3Cnt)as sumOfK3Cnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCount,t.ElemCount,t.DSCSElemCnt,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCnt,t.VICnt,t.OISCCnt, t.MDSCCnt,t.HICnt,t.MOMRCnt,t.EDPPrivateCnt,t.MDResCnt,t.OIResCnt,t.EDMIMRCnt,t.LEPCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs1 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs1 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount,ElemCount,DSCSElemCnt,HsCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,VICnt,OISCCnt, MDSCCnt,HICnt,MOMRCnt,EDPPrivateCnt,MDResCnt,OIResCnt,EDMIMRCnt,LEPCnt,K3Cnt from SaCharBaseSupportLevelCalcs1 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
+    preresult = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt, t.MDSCCnt,t.MDSCCYCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount, PsdCYCount,ElemCount, ElemCYCount,DSCSElemCnt,HsCount,HsCYCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt, MDSSICYCnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,PSDCYCnt,VICnt, VICYCnt,OISCCnt,OISCCYCnt, MDSCCnt,MDSCCYCnt,HICnt,HICYCnt,MOMRCnt, MOMRCYCnt,EDPPrivateCnt,EDPPrivateCYCnt,MDResCnt,MDResCYCnt,OIResCnt, OIResCYCnt,EDMIMRCnt,EDMIMRCYCnt,LEPCnt,LEPCYCnt,K3Cnt,K3CYCnt from SaCharBaseSupportLevelCalcs2 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
     for prerow in preresult:
         pred = dict(prerow.items())
         d3 = pred['EntityID']
@@ -323,25 +325,42 @@ def wftf():
         else:
             pred['Type'] = "District"
         # calculation of PREKADM
+        if Yeardef=="PY":
 
-        if pred['sumOfPsdCount'] == None:
-            pred['sumOfPsdCount'] = 0
+            if pred['sumOfPsdCount'] == None:
+                pred['sumOfPsdCount'] = 0
+            PREKADM.append(float(pred['sumOfPsdCount']))
+            if pred['sumOfElemCount'] == None:
+                pred['sumOfElemCount'] = 0
+            if pred['sumOfDSCSElemCount'] == None:
+                pred['sumOfDSCSElemCount'] = 0
+            ELEMADM.append(float(pred['sumOfElemCount']) + float(pred['sumOfDSCSElemCount']))
+            # CALCULATION OF HSADM VALUE
+            if pred['sumOfHsCount'] == None:
+                pred['sumOfHsCount'] = 0
+            if pred['sumOfDSCSHsCount'] == None:
+                pred['sumOfDSCSHsCount'] = 0
+            HSADM.append(float(pred['sumOfHsCount']) + float(pred['sumOfDSCSHsCount']))
+        elif Yeardef=="CY":
+            if pred['sumOfPsdCYCount'] == None:
+                pred['sumOfPsdCYCount'] = 0
+            PREKADM.append(float(pred['sumOfPsdCYCount']))
+            if pred['sumOfElemCYCount'] == None:
+                pred['sumOfElemCYCount'] = 0
+            if pred['sumOfDSCSElemCount'] == None:
+                pred['sumOfDSCSElemCount'] = 0
+            ELEMADM.append(float(pred['sumOfElemCYCount']) + float(pred['sumOfDSCSElemCount']))
+            # CALCULATION OF HSADM VALUE
+            if pred['sumOfHsCYCount'] == None:
+                pred['sumOfHsCYCount'] = 0
+            if pred['sumOfDSCSHsCount'] == None:
+                pred['sumOfDSCSHsCount'] = 0
+            HSADM.append(float(pred['sumOfHsCYCount']) + float(pred['sumOfDSCSHsCount']))
 
-        PREKADM.append(float(pred['sumOfPsdCount']))
 
         # CALCULATION OF ELEM ADM
 
-        if pred['sumOfElemCount'] == None:
-            pred['sumOfElemCount'] = 0
-        if pred['sumOfDSCSElemCount'] == None:
-            pred['sumOfDSCSElemCount'] = 0
-        ELEMADM.append(float(pred['sumOfElemCount']) + float(pred['sumOfDSCSElemCount']))
-        # CALCULATION OF HSADM VALUE
-        if pred['sumOfHsCount'] == None:
-            pred['sumOfHsCount'] = 0
-        if pred['sumOfDSCSHsCount'] == None:
-            pred['sumOfDSCSHsCount'] = 0
-        HSADM.append(float(pred['sumOfHsCount']) + float(pred['sumOfDSCSHsCount']))
+
         if pred['NetworkForFundingPurposes'] == 1:
 
             sumofnetworkelemadm[pred['ParentOrganization']] += ELEMADM[count]
@@ -376,7 +395,7 @@ def wftf():
         SumofBSL[pred['EntityID']]=0
         count += 1
     #CARRYING ON NEXT STEPS OF CALCULATION
-    result = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID,sum(PsdCount) as sumOfPsdCount,sum(ElemCount) as sumOfElemCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt, sum(PSDCnt)as sumOfPSDCnt, sum(VICnt)as sumOfVICnt, sum(OISCCnt)as sumOfOISCCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(HICnt)as sumOfHICnt, sum(MOMRCnt)as sumOfMOMRCnt, sum(EDPPrivateCnt)as sumOfEDPPrivateCnt, sum(MDResCnt)as sumOfMDResCnt, sum(OIResCnt)as sumOfOIResCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt, sum(LEPCnt)as sumOfLEPCnt, sum(K3Cnt)as sumOfK3Cnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCount,t.ElemCount,t.DSCSElemCnt,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCnt,t.VICnt,t.OISCCnt, t.MDSCCnt,t.HICnt,t.MOMRCnt,t.EDPPrivateCnt,t.MDResCnt,t.OIResCnt,t.EDMIMRCnt,t.LEPCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs1 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs1 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount,ElemCount,DSCSElemCnt,HsCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,VICnt,OISCCnt, MDSCCnt,HICnt,MOMRCnt,EDPPrivateCnt,MDResCnt,OIResCnt,EDMIMRCnt,LEPCnt,K3Cnt from SaCharBaseSupportLevelCalcs1 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
+    result = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt, t.MDSCCnt,t.MDSCCYCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount, PsdCYCount,ElemCount, ElemCYCount,DSCSElemCnt,HsCount,HsCYCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt, MDSSICYCnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,PSDCYCnt,VICnt, VICYCnt,OISCCnt,OISCCYCnt, MDSCCnt,MDSCCYCnt,HICnt,HICYCnt,MOMRCnt, MOMRCYCnt,EDPPrivateCnt,EDPPrivateCYCnt,MDResCnt,MDResCYCnt,OIResCnt, OIResCYCnt,EDMIMRCnt,EDMIMRCYCnt,LEPCnt,LEPCYCnt,K3Cnt,K3CYCnt from SaCharBaseSupportLevelCalcs2 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
     #PERFORMING BSL CALCULATION
     for row in result:
         # Creating a dictionary of the values retrieved from the query
@@ -564,72 +583,141 @@ def wftf():
         else:
             Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
         # CALCULATION OF VARIABLES FOR GROUP B WEIGHTS
-        if d['sumOfDSCSEDMIMRCnt'] == None:
-            d['sumOfDSCSEDMIMRCnt'] = 0
-        if d['sumOfEDMIMRCnt'] == None:
-            d['sumOfEDMIMRCnt'] = 0
-        GB1_EDMIDSLD.append(float(d['sumOfEDMIMRCnt']) + float(d['sumOfDSCSEDMIMRCnt']))
-        if d['sumOfK3Cnt'] == None:
-            d['sumOfK3Cnt'] = 0
-        if d['SumOfDSCSK3Cnt'] == None:
-            d['SumOfDSCSK3Cnt'] = 0
-        GB2_K3Reading.append(float(d['sumOfK3Cnt']) + float(d['SumOfDSCSK3Cnt']))
-        GB3_K3.append(float(d['sumOfK3Cnt']) + float(d['SumOfDSCSK3Cnt']))
-        if d['sumOfLEPCnt'] == None:
-            d['sumOfLEPCnt'] = 0
-        if d['sumOfDSCSLEPCnt'] == None:
-            d['sumOfDSCSLEPCnt'] = 0
-        GB4_ELL.append(float(d['sumOfLEPCnt']) + float(d['sumOfDSCSLEPCnt']))
-        if d['sumOfOIResCnt'] == None:
-            d['sumOfOIResCnt'] = 0
-        if d['sumOfDSCSOIResCnt'] == None:
-            d['sumOfDSCSOIResCnt'] = 0
-        GB5_OI_R.append(float(d['sumOfOIResCnt']) + float(d['sumOfDSCSOIResCnt']))
-        if d['sumOfPSDCnt'] == None:
-            d['sumOfPSDCnt'] = 0
-        if d['sumOfDSCSPSDCnt'] == None:
-            d['sumOfDSCSPSDCnt'] = 0
-        GB6_PS_D.append(float(d['sumOfPSDCnt']) + float(d['sumOfDSCSPSDCnt']))
-        if d['sumOfMOMRCnt'] == None:
-            d['sumOfMOMRCnt'] = 0
-        if d['sumOfDSCSMOMRCnt'] == None:
-            d['sumOfDSCSMOMRCnt'] = 0
-        GB7_MOID.append(float(d['sumOfMOMRCnt']) + float(d['sumOfDSCSMOMRCnt']))
-        if d['sumOfHICnt'] == None:
-            d['sumOfHICnt'] = 0
-        if d['sumOfDSCSHICnt'] == None:
-            d['sumOfDSCSHICnt'] = 0
-        GB8_HI.append(float(d['sumOfHICnt']) + float(d['sumOfDSCSHICnt']))
-        if d['sumOfVICnt'] == None:
-            d['sumOfVICnt'] = 0
-        if d['sumOfDSCSVICnt'] == None:
-            d['sumOfDSCSVICnt'] = 0
-        GB9_VI.append(float(d['sumOfVICnt']) + float(d['sumOfDSCSVICnt']))
-        if d['sumOfEDPPrivateCnt'] == None:
-            d['sumOfEDPPrivateCnt'] = 0
-        if d['sumOfDSCSEDPPrivateCnt'] == None:
-            d['sumOfDSCSEDPPrivateCnt'] = 0
-        GB10_ED_P.append(float(d['sumOfEDPPrivateCnt']) + float(d['sumOfDSCSEDPPrivateCnt']))
-        if d['sumOfMDSCCnt'] == None:
-            d['sumOfMDSCCnt'] = 0
-        if d['sumOfDSCSMDSCCnt'] == None:
-            d['sumOfDSCSMDSCCnt'] = 0
-        GB11_MDSC.append(float(d['sumOfMDSCCnt']) + float(d['sumOfDSCSMDSCCnt']))
-        if d['sumOfMDResCnt'] == None:
-            d['sumOfMDResCnt'] = 0
-        if d['sumOfDSCSMDResCnt'] == None:
-            d['sumOfDSCSMDResCnt'] = 0
-        GB12_MD_R.append(float(d['sumOfMDResCnt']) + float(d['sumOfDSCSMDResCnt']))
-        if d['sumOfOISCCnt'] == None:
-            d['sumOfOISCCnt'] = 0
-        if d['sumOfDSCSOISCCnt'] == None:
-            d['sumOfDSCSOISCCnt'] = 0
-        GB13_OI_SC.append(float(d['sumOfOISCCnt']) + float(d['sumOfDSCSOISCCnt']))
-        if d['sumOfMDSSICnt'] == None:
-            d['sumOfMDSSICnt'] = 0
-        if d['sumOfDSCSMDSSICnt'] == None:
-            d['sumOfDSCSMDSSICnt'] = 0
-        GB14_MD_SSI.append(float(d['sumOfMDSSICnt']) + float(d['sumOfDSCSMDSSICnt']))
+        if Yeardef=="PY":
+            if d['sumOfDSCSEDMIMRCnt'] == None:
+                d['sumOfDSCSEDMIMRCnt'] = 0
+            if d['sumOfEDMIMRCnt'] == None:
+                d['sumOfEDMIMRCnt'] = 0
+            GB1_EDMIDSLD.append(float(d['sumOfEDMIMRCnt']) + float(d['sumOfDSCSEDMIMRCnt']))
+            if d['sumOfK3Cnt'] == None:
+                d['sumOfK3Cnt'] = 0
+            if d['SumOfDSCSK3Cnt'] == None:
+                d['SumOfDSCSK3Cnt'] = 0
+            GB2_K3Reading.append(float(d['sumOfK3Cnt']) + float(d['SumOfDSCSK3Cnt']))
+            GB3_K3.append(float(d['sumOfK3Cnt']) + float(d['SumOfDSCSK3Cnt']))
+            if d['sumOfLEPCnt'] == None:
+                d['sumOfLEPCnt'] = 0
+            if d['sumOfDSCSLEPCnt'] == None:
+                d['sumOfDSCSLEPCnt'] = 0
+            GB4_ELL.append(float(d['sumOfLEPCnt']) + float(d['sumOfDSCSLEPCnt']))
+            if d['sumOfOIResCnt'] == None:
+                d['sumOfOIResCnt'] = 0
+            if d['sumOfDSCSOIResCnt'] == None:
+                d['sumOfDSCSOIResCnt'] = 0
+            GB5_OI_R.append(float(d['sumOfOIResCnt']) + float(d['sumOfDSCSOIResCnt']))
+            if d['sumOfPSDCnt'] == None:
+                d['sumOfPSDCnt'] = 0
+            if d['sumOfDSCSPSDCnt'] == None:
+                d['sumOfDSCSPSDCnt'] = 0
+            GB6_PS_D.append(float(d['sumOfPSDCnt']) + float(d['sumOfDSCSPSDCnt']))
+            if d['sumOfMOMRCnt'] == None:
+                d['sumOfMOMRCnt'] = 0
+            if d['sumOfDSCSMOMRCnt'] == None:
+                d['sumOfDSCSMOMRCnt'] = 0
+            GB7_MOID.append(float(d['sumOfMOMRCnt']) + float(d['sumOfDSCSMOMRCnt']))
+            if d['sumOfHICnt'] == None:
+                d['sumOfHICnt'] = 0
+            if d['sumOfDSCSHICnt'] == None:
+                d['sumOfDSCSHICnt'] = 0
+            GB8_HI.append(float(d['sumOfHICnt']) + float(d['sumOfDSCSHICnt']))
+            if d['sumOfVICnt'] == None:
+                d['sumOfVICnt'] = 0
+            if d['sumOfDSCSVICnt'] == None:
+                d['sumOfDSCSVICnt'] = 0
+            GB9_VI.append(float(d['sumOfVICnt']) + float(d['sumOfDSCSVICnt']))
+            if d['sumOfEDPPrivateCnt'] == None:
+                d['sumOfEDPPrivateCnt'] = 0
+            if d['sumOfDSCSEDPPrivateCnt'] == None:
+                d['sumOfDSCSEDPPrivateCnt'] = 0
+            GB10_ED_P.append(float(d['sumOfEDPPrivateCnt']) + float(d['sumOfDSCSEDPPrivateCnt']))
+            if d['sumOfMDSCCnt'] == None:
+                d['sumOfMDSCCnt'] = 0
+            if d['sumOfDSCSMDSCCnt'] == None:
+                d['sumOfDSCSMDSCCnt'] = 0
+            GB11_MDSC.append(float(d['sumOfMDSCCnt']) + float(d['sumOfDSCSMDSCCnt']))
+            if d['sumOfMDResCnt'] == None:
+                d['sumOfMDResCnt'] = 0
+            if d['sumOfDSCSMDResCnt'] == None:
+                d['sumOfDSCSMDResCnt'] = 0
+            GB12_MD_R.append(float(d['sumOfMDResCnt']) + float(d['sumOfDSCSMDResCnt']))
+            if d['sumOfOISCCnt'] == None:
+                d['sumOfOISCCnt'] = 0
+            if d['sumOfDSCSOISCCnt'] == None:
+                d['sumOfDSCSOISCCnt'] = 0
+            GB13_OI_SC.append(float(d['sumOfOISCCnt']) + float(d['sumOfDSCSOISCCnt']))
+            if d['sumOfMDSSICnt'] == None:
+                d['sumOfMDSSICnt'] = 0
+            if d['sumOfDSCSMDSSICnt'] == None:
+                d['sumOfDSCSMDSSICnt'] = 0
+            GB14_MD_SSI.append(float(d['sumOfMDSSICnt']) + float(d['sumOfDSCSMDSSICnt']))
+        elif Yeardef=="CY":
+            if d['sumOfDSCSEDMIMRCnt'] == None:
+                d['sumOfDSCSEDMIMRCnt'] = 0
+            if d['sumOfEDMIMRCYCnt'] == None:
+                d['sumOfEDMIMRCYCnt'] = 0
+            GB1_EDMIDSLD.append(float(d['sumOfEDMIMRCYCnt']) + float(d['sumOfDSCSEDMIMRCnt']))
+            if d['sumOfK3CYCnt'] == None:
+                d['sumOfK3CYCnt'] = 0
+            if d['SumOfDSCSK3Cnt'] == None:
+                d['SumOfDSCSK3Cnt'] = 0
+            GB2_K3Reading.append(float(d['sumOfK3CYCnt']) + float(d['SumOfDSCSK3Cnt']))
+            GB3_K3.append(float(d['sumOfK3CYCnt']) + float(d['SumOfDSCSK3Cnt']))
+            if d['sumOfLEPCYCnt'] == None:
+                d['sumOfLEPCYCnt'] = 0
+            if d['sumOfDSCSLEPCnt'] == None:
+                d['sumOfDSCSLEPCnt'] = 0
+            GB4_ELL.append(float(d['sumOfLEPCYCnt']) + float(d['sumOfDSCSLEPCnt']))
+            if d['sumOfOIResCYCnt'] == None:
+                d['sumOfOIResCYCnt'] = 0
+            if d['sumOfDSCSOIResCnt'] == None:
+                d['sumOfDSCSOIResCnt'] = 0
+            GB5_OI_R.append(float(d['sumOfOIResCYCnt']) + float(d['sumOfDSCSOIResCnt']))
+            if d['sumOfPSDCYCnt'] == None:
+                d['sumOfPSDCYCnt'] = 0
+            if d['sumOfDSCSPSDCnt'] == None:
+                d['sumOfDSCSPSDCnt'] = 0
+            GB6_PS_D.append(float(d['sumOfPSDCYCnt']) + float(d['sumOfDSCSPSDCnt']))
+            if d['sumOfMOMRCYCnt'] == None:
+                d['sumOfMOMRCYCnt'] = 0
+            if d['sumOfDSCSMOMRCnt'] == None:
+                d['sumOfDSCSMOMRCnt'] = 0
+            GB7_MOID.append(float(d['sumOfMOMRCYCnt']) + float(d['sumOfDSCSMOMRCnt']))
+            if d['sumOfHICYCnt'] == None:
+                d['sumOfHICYCnt'] = 0
+            if d['sumOfDSCSHICnt'] == None:
+                d['sumOfDSCSHICnt'] = 0
+            GB8_HI.append(float(d['sumOfHICYCnt']) + float(d['sumOfDSCSHICnt']))
+            if d['sumOfVICYCnt'] == None:
+                d['sumOfVICYCnt'] = 0
+            if d['sumOfDSCSVICnt'] == None:
+                d['sumOfDSCSVICnt'] = 0
+            GB9_VI.append(float(d['sumOfVICYCnt']) + float(d['sumOfDSCSVICnt']))
+            if d['sumOfEDPPrivateCYCnt'] == None:
+                d['sumOfEDPPrivateCYCnt'] = 0
+            if d['sumOfDSCSEDPPrivateCnt'] == None:
+                d['sumOfDSCSEDPPrivateCnt'] = 0
+            GB10_ED_P.append(float(d['sumOfEDPPrivateCYCnt']) + float(d['sumOfDSCSEDPPrivateCnt']))
+            if d['sumOfMDSCCYCnt'] == None:
+                d['sumOfMDSCCYCnt'] = 0
+            if d['sumOfDSCSMDSCCnt'] == None:
+                d['sumOfDSCSMDSCCnt'] = 0
+            GB11_MDSC.append(float(d['sumOfMDSCCYCnt']) + float(d['sumOfDSCSMDSCCnt']))
+            if d['sumOfMDResCYCnt'] == None:
+                d['sumOfMDResCYCnt'] = 0
+            if d['sumOfDSCSMDResCnt'] == None:
+                d['sumOfDSCSMDResCnt'] = 0
+            GB12_MD_R.append(float(d['sumOfMDResCYCnt']) + float(d['sumOfDSCSMDResCnt']))
+            if d['sumOfOISCCYCnt'] == None:
+                d['sumOfOISCCYCnt'] = 0
+            if d['sumOfDSCSOISCCnt'] == None:
+                d['sumOfDSCSOISCCnt'] = 0
+            GB13_OI_SC.append(float(d['sumOfOISCCYCnt']) + float(d['sumOfDSCSOISCCnt']))
+            if d['sumOfMDSSICYCnt'] == None:
+                d['sumOfMDSSICYCnt'] = 0
+            if d['sumOfDSCSMDSSICnt'] == None:
+                d['sumOfDSCSMDSSICnt'] = 0
+            GB14_MD_SSI.append(float(d['sumOfMDSSICYCnt']) + float(d['sumOfDSCSMDSSICnt']))
+
         if d["TEI"] == None:
             d["TEI"] = 0
         # CALCULATION OF TEI
@@ -827,6 +915,8 @@ def wftf():
         TRCL.append(float(d['TRCL']))
         TSL.append(float(d['TSL']))
 
+
+
         # CALCULATION OF  WEIGHTED PUPILS USER SPECIFIED SSW REDUCTION
         PreKWeightedPupilsuser_specifiedSWWreduction.append(
             float(float(PREKADM[ddd] * float(GroupAFinalGroupAWeightsPSD)) - 0))
@@ -837,7 +927,7 @@ def wftf():
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += nine_12WeightedPupilsuser_specifiedSWWreduction[ddd]
         ddd += 1
     dd4 = 0
-    result3 = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID,sum(PsdCount) as sumOfPsdCount,sum(ElemCount) as sumOfElemCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt, sum(PSDCnt)as sumOfPSDCnt, sum(VICnt)as sumOfVICnt, sum(OISCCnt)as sumOfOISCCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(HICnt)as sumOfHICnt, sum(MOMRCnt)as sumOfMOMRCnt, sum(EDPPrivateCnt)as sumOfEDPPrivateCnt, sum(MDResCnt)as sumOfMDResCnt, sum(OIResCnt)as sumOfOIResCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt, sum(LEPCnt)as sumOfLEPCnt, sum(K3Cnt)as sumOfK3Cnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCount,t.ElemCount,t.DSCSElemCnt,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCnt,t.VICnt,t.OISCCnt, t.MDSCCnt,t.HICnt,t.MOMRCnt,t.EDPPrivateCnt,t.MDResCnt,t.OIResCnt,t.EDMIMRCnt,t.LEPCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs1 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs1 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount,ElemCount,DSCSElemCnt,HsCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,VICnt,OISCCnt, MDSCCnt,HICnt,MOMRCnt,EDPPrivateCnt,MDResCnt,OIResCnt,EDMIMRCnt,LEPCnt,K3Cnt from SaCharBaseSupportLevelCalcs1 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
+    result3 = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt, t.MDSCCnt,t.MDSCCYCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount, PsdCYCount,ElemCount, ElemCYCount,DSCSElemCnt,HsCount,HsCYCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt, MDSSICYCnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,PSDCYCnt,VICnt, VICYCnt,OISCCnt,OISCCYCnt, MDSCCnt,MDSCCYCnt,HICnt,HICYCnt,MOMRCnt, MOMRCYCnt,EDPPrivateCnt,EDPPrivateCYCnt,MDResCnt,MDResCYCnt,OIResCnt, OIResCYCnt,EDMIMRCnt,EDMIMRCYCnt,LEPCnt,LEPCYCnt,K3Cnt,K3CYCnt from SaCharBaseSupportLevelCalcs2 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select CWN.EntityID, CWN.EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, ESSmallIsolated, HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN left join SmallIsolatedList on CWN.EntityID = SmallIsolatedList.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
     for row in result3:
         d11 = {}
         # Creating a dictionary of the values retrieved from the query

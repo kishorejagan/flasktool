@@ -115,7 +115,7 @@ QTR9_12 = 2.0793
 QTRUnified = 4.1586
 QTRJTED = 0.05
 
-Yeardef="PY"
+Yeardef="CY"
 
 class CustomJsonEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -794,7 +794,7 @@ def wftf():
         else:
             GroupBBSL.append((float(LEABaseLevel[ddd])) * (float(TEI[ddd])) *round(float(GroupBWeightedAddonCounts[ddd]),3))
         # CALCULATION OF AuditBaseLevelAdjustment
-        if (d["FTFStatus"] != "NULL"):
+        if (d["FTFStatus"] == "NULL"):
             AuditBaseLevelAdjustment.append(float(0))
         else:
             AuditBaseLevelAdjustment.append(float(d["MaxofBaseAdjsAmount"]))
@@ -1066,6 +1066,8 @@ def wftf():
         d11['HSBSL'] = str(round(HSBSL[dd4], 2))
         d11['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[dd4], 3))
         d11['ELEMRange'] = (ELEMRange[dd4])
+        d11['HSRange'] = (HSRange[dd4])
+
         d11['AdditionalAssistance']=AdditionalAssistance[dd4]
         d11['ElemBSL'] = str(round(ELEMBSL[dd4], 3))
         # print(type(d4['ESSmallIsolated']))
@@ -1089,7 +1091,10 @@ def wftf():
         d11['FinalFormulaAAwithReduction'] = str(round(FinalFormulaAAwithReduction[dd4], 4))
         d11['FinalFormulaAdditionalAssistance'] = str(round(FinalFormulaAdditionalAssistance[dd4], 4))
         d11['ElemLL'] = str(round(ElemLL[dd4], 4))
+        d11['HSBaseWeight'] = str(round(HSBaseWeight[dd4], 4))
         d11['HSLL'] = str(round(HSLL[dd4], 4))
+        d11['SSWHSINCREMENTALWEIGHTPP'] = str(round(SSWHSINCREMENTALWEIGHTPP[dd4], 4))
+
         D.append(d11)
         dd4 += 1
 

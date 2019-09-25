@@ -357,6 +357,48 @@ body { padding-top:50px; }
             <span ng-show="sortType == 'WeightedHSCounts' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'ELEMRange'; sortReverse = !sortReverse">
+          ELEMRange
+            <span ng-show="sortType == 'ELEMRange' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'ELEMRange' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'HSRange'; sortReverse = !sortReverse">
+          HSRange
+            <span ng-show="sortType == 'HSRange' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'HSRange' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'HSBaseWeight'; sortReverse = !sortReverse">
+          HSBaseWeight
+            <span ng-show="sortType == 'HSBaseWeight' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'HSBaseWeight' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'SSWHSINCREMENTALWEIGHTPP'; sortReverse = !sortReverse">
+          SSWHSINCREMENTALWEIGHTPP
+            <span ng-show="sortType == 'SSWHSINCREMENTALWEIGHTPP' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'SSWHSINCREMENTALWEIGHTPP' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'HSSmallIsolated'; sortReverse = !sortReverse">
+          HSSmallIsolated
+            <span ng-show="sortType == 'HSSmallIsolated' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'HSSmallIsolated' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'ESSmallIsolated'; sortReverse = !sortReverse">
+          ESSmallIsolated
+            <span ng-show="sortType == 'ESSmallIsolated' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'ESSmallIsolated' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
       </tr>
     </thead>
     <tbody>
@@ -406,6 +448,12 @@ body { padding-top:50px; }
           <td>{{ roll.WeightedPreKCounts }}</td>
           <td>{{ roll.WeightedElemCounts }}</td>
           <td>{{ roll.WeightedHSCounts }}</td>
+          <td>{{ roll.ELEMRange }}</td>
+          <td>{{ roll.HSRange }}</td>
+          <td>{{ roll.HSBaseWeight }}</td>
+          <td>{{ roll.SSWHSINCREMENTALWEIGHTPP }}</td>
+          <td>{{ roll.HSSmallIsolated }}</td>
+          <td>{{ roll.ESSmallIsolated }}</td>
 
 
 

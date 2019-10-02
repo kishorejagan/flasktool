@@ -523,41 +523,41 @@ def wftf():
                     HSBaseWeight.append(WtSmall500to5999_12)
                 else:
                     HSBaseWeight.append(0)
-        if HSRange[counter1]!=None and ELEMRange[counter1]!=None:
-            countunified+=1
-            if HSRange[counter1]=="1to99" and ELEMRange[counter1]=="1to99":
-                countboth1to99unified+=1
-            #if HSRange[counter1]=="1to99" or ELEMRange[counter1]=="1to99":
-             #   counteither1to99unified+=1
-            #if HSRange[counter1]==">600" or ELEMRange[counter1]==">600":
-             #   countmore600unified+=1
-            elif HSRange[counter1]==">600" and ELEMRange[counter1]==">600":
-                countbothmore600unified += 1
-            elif (HSRange[counter1]=="100to499" or HSRange[counter1]=="500to599") and (ELEMRange[counter1]=="100to499" or ELEMRange[counter1]=="500to599"):
-                countboth100to599unified+=1
-            else:
-                countunifiedsplit+=1
-        elif HSRange[counter1]!=None and ELEMRange[counter1]==None:
-            counths+=1
-            if HSRange[counter1]=="1to99":
-                count1to99hs+=1
-            elif HSRange[counter1] == ">600":
-                countmore600hs+=1
-            elif (HSRange[counter1]=="100to499" or HSRange[counter1]=="500to599"):
-                count100to599hs+=1
-
-        elif ELEMRange[counter1]!=None and HSRange[counter1]==None:
-            countelem+=1
-            if ELEMRange[counter1]=="1to99":
-                count1to99elem+=1
-            elif ELEMRange[counter1] == ">600":
-                countmore600elem+=1
-            elif (ELEMRange[counter1]=="100to499" or ELEMRange[counter1]=="500to599"):
-                count100to599elem+=1
-        elif HSRange[counter1]==None and ELEMRange[counter1]==None:
-            entitynull.append(d['EntityID'])
-            bothnull+=1
-        totalcount+=1
+        # if HSRange[counter1]!=None and ELEMRange[counter1]!=None:
+        #     countunified+=1
+        #     if HSRange[counter1]=="1to99" and ELEMRange[counter1]=="1to99":
+        #         countboth1to99unified+=1
+        #     #if HSRange[counter1]=="1to99" or ELEMRange[counter1]=="1to99":
+        #      #   counteither1to99unified+=1
+        #     #if HSRange[counter1]==">600" or ELEMRange[counter1]==">600":
+        #      #   countmore600unified+=1
+        #     elif HSRange[counter1]==">600" and ELEMRange[counter1]==">600":
+        #         countbothmore600unified += 1
+        #     elif (HSRange[counter1]=="100to499" or HSRange[counter1]=="500to599") and (ELEMRange[counter1]=="100to499" or ELEMRange[counter1]=="500to599"):
+        #         countboth100to599unified+=1
+        #     else:
+        #         countunifiedsplit+=1
+        # elif HSRange[counter1]!=None and ELEMRange[counter1]==None:
+        #     counths+=1
+        #     if HSRange[counter1]=="1to99":
+        #         count1to99hs+=1
+        #     elif HSRange[counter1] == ">600":
+        #         countmore600hs+=1
+        #     elif (HSRange[counter1]=="100to499" or HSRange[counter1]=="500to599"):
+        #         count100to599hs+=1
+        #
+        # elif ELEMRange[counter1]!=None and HSRange[counter1]==None:
+        #     countelem+=1
+        #     if ELEMRange[counter1]=="1to99":
+        #         count1to99elem+=1
+        #     elif ELEMRange[counter1] == ">600":
+        #         countmore600elem+=1
+        #     elif (ELEMRange[counter1]=="100to499" or ELEMRange[counter1]=="500to599"):
+        #         count100to599elem+=1
+        # elif HSRange[counter1]==None and ELEMRange[counter1]==None:
+        #     entitynull.append(d['EntityID'])
+        #     bothnull+=1
+        # totalcount+=1
         #CALCUATION OF Final9-12WEIGHT
         if d['Type'] == "JTED":
             Final_9_12SmWgt.append(GroupAFinalGroupAWeightsJTED)
@@ -969,23 +969,23 @@ def wftf():
     counter2 = 0
 
     #result3 = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt, t.MDSCCnt,t.MDSCCYCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth) union all select EntityID,FiscalYear,PsdCount, PsdCYCount,ElemCount, ElemCYCount,DSCSElemCnt,HsCount,HsCYCount,DSCSHsCnt,DSCSK3Cnt,TEI,PaymentMonth,FTFStatus,BaseAmount,BaseAdjsAmount, MDSSICnt, MDSSICYCnt,DSCSMDSSICnt, DSCSVICnt,DSCSOISCCnt,DSCSPSDCnt,DSCSMDSCCnt,DSCSHICnt,DSCSMOMRCnt,DSCSEDPPrivateCnt,DSCSMDResCnt,DSCSOIResCnt,DSCSEDMIMRCnt,DSCSLEPCnt,PSDCnt,PSDCYCnt,VICnt, VICYCnt,OISCCnt,OISCCYCnt, MDSCCnt,MDSCCYCnt,HICnt,HICYCnt,MOMRCnt, MOMRCYCnt,EDPPrivateCnt,EDPPrivateCYCnt,MDResCnt,MDResCYCnt,OIResCnt, OIResCYCnt,EDMIMRCnt,EDMIMRCYCnt,LEPCnt,LEPCYCnt,K3Cnt,K3CYCnt from SaCharBaseSupportLevelCalcs2 where PaymentMonth=13)uni where FiscalYear=2017 group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and FiscalYear=2017))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=2017))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=2017))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, s1.Name as EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork left join Charters4Funding on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join SmallIsolatedList s1 on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=2017) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=2017) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID')
-    #print('countunified : {}'.format(countunified/3))
-    #print('countelem: {}'.format(countelem/3))
-    #print('counths: {}'.format(counths/3))
-    #print('countmore600unified: {}'.format(countmore600unified/3))
-    #print('bothnull: {}'.format(bothnull/3))
-    #print('countboth100to599unified: {}'.format(countboth100to599unified/3))
-    #print('countbothmore600unified: {}'.format(countbothmore600unified/3))
-    #print('countboth1to99unified: {}'.format((countboth1to99unified/3)))
-    #print('countunifiedsplit : {}'.format((countunifiedsplit/3)))
-    #print('count1to99elem: {}'.format(count1to99elem/3))
-    #print('countmore600elem: {}'.format(countmore600elem/3))
-    #print('count1to99hs: {}'.format(count1to99hs/3))
-    #print('countmore600hs: {}'.format(countmore600hs/3))
-    #print('count100to599hs: {}'.format(count100to599hs/3))
-    #print('count1to99elem: {}'.format(count1to99elem/3))
-    #print('count100to599elem: {}'.format(count100to599elem/3))
-    #print('total: {}'.format(totalcount/3))
+    # print('countunified : {}'.format(countunified/3))
+    # print('countelem: {}'.format(countelem/3))
+    # print('counths: {}'.format(counths/3))
+    # print('countmore600unified: {}'.format(countmore600unified/3))
+    # print('bothnull: {}'.format(bothnull/3))
+    # print('countboth100to599unified: {}'.format(countboth100to599unified/3))
+    # print('countbothmore600unified: {}'.format(countbothmore600unified/3))
+    # print('countboth1to99unified: {}'.format((countboth1to99unified/3)))
+    # print('countunifiedsplit : {}'.format((countunifiedsplit/3)))
+    # print('count1to99elem: {}'.format(count1to99elem/3))
+    # print('countmore600elem: {}'.format(countmore600elem/3))
+    # print('count1to99hs: {}'.format(count1to99hs/3))
+    # print('countmore600hs: {}'.format(countmore600hs/3))
+    # print('count100to599hs: {}'.format(count100to599hs/3))
+    # print('count1to99elem: {}'.format(count1to99elem/3))
+    # print('count100to599elem: {}'.format(count100to599elem/3))
+    # print('total: {}'.format(totalcount/3))
 
     for d4 in decoded:
         dictionary = {}
@@ -1069,8 +1069,8 @@ def wftf():
             d4['ESSmallIsolated'] = 0
         if d4['HSSmallIsolated']==None:
             d4['HSSmallIsolated']=0
-        df=pandas.DataFrame(entitynull)
-        df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
+        #df=pandas.DataFrame(entitynull)
+        #df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
         dictionary['ElemAssessedValuation']=str(round(ElemAssessedValuation[counter2],4))
         dictionary['ElemQTRYield'] =str(round(ElemQTRYield[counter2], 4))
         dictionary['ElemTotalStateFormula']=str(round(ElemTotalStateFormula[counter2], 4))

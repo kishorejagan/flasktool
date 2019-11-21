@@ -1,0 +1,28 @@
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>select the year</h2>
+
+
+<form action="/year" method="POST">
+  <select name="yearnum">
+
+    <option value="2017">2017</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+      <option value="2020">2020</option>
+  </select>
+  <br><br>
+  <input type="submit">
+</form>
+
+
+</body>
+</html>
+{% endblock %}

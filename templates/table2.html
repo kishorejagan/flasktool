@@ -19,13 +19,18 @@ body { padding-top:50px; }
 </head>
 <body>
 <h1> <center>The LYLE TOOL</center></h1>
-<h3><center> Hi  {{session['username']  }} Here is the Data for 2017 and the student count is based on {{ session['Yeardef'] }} </center></h3>
+<h3><center> Hi  {{session['username']  }} Here is the Data for {{ session['yearnum'] }} and the student count is based on {{ session['Yeardef'] }} </center></h3>
 
 <p><right>
         <a href="/logout" class="btn btn-info btn-lg">
           <span class="glyphicon glyphicon-log-out"></span> Log out
         </a>
       </right></p>
+<p><left>
+        <a href="/input" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-log-out"></span> change input variables
+        </a>
+      </left></p>
 {% raw %}
   <div class="container" ng-app="sortApp" ng-controller="mainController">
   <div class="alert alert-info">
@@ -105,12 +110,62 @@ body { padding-top:50px; }
           </a>
         </td>
           <td>
-          <a href="#" ng-click="sortType = 'BSL'; sortReverse = !sortReverse">
-          BSL
-            <span ng-show="sortType == 'BSL' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'BSL' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="#" ng-click="sortType = 'schooltype'; sortReverse = !sortReverse">
+          schooltype
+            <span ng-show="sortType == 'schooltype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'schooltype' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'admbyschooltype'; sortReverse = !sortReverse">
+          admbyschooltype
+            <span ng-show="sortType == 'admbyschooltype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'admbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+        <td>
+          <a href="#" ng-click="sortType = 'bslbyschooltype'; sortReverse = !sortReverse">
+          bslbyschooltype
+            <span ng-show="sortType == 'bslbyschooltype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'bslbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'perpupilbyschooltype'; sortReverse = !sortReverse">
+          perpupilbyschooltype
+            <span ng-show="sortType == 'perpupilbyschooltype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'perpupilbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'LEABaseLevel'; sortReverse = !sortReverse">
+          LEABaseLevel
+            <span ng-show="sortType == 'LEABaseLevel' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'LEABaseLevel' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'BSLcalc'; sortReverse = !sortReverse">
+          BSLcalc
+            <span ng-show="sortType == 'BSLcalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'BSLcalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'BSLoriginal'; sortReverse = !sortReverse">
+          BSLoriginal
+            <span ng-show="sortType == 'BSLoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'BSLoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+         <td>
+          <a href="#" ng-click="sortType = 'BSLdiffernce'; sortReverse = !sortReverse">
+          BSLdiffernce
+            <span ng-show="sortType == 'BSLdiffernce' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'BSLdiffernce' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
           <td>
           <a href="#" ng-click="sortType = 'BSLWithoutAdjustment'; sortReverse = !sortReverse">
           BSLWithoutAdjustment
@@ -119,24 +174,88 @@ body { padding-top:50px; }
           </a>
         </td>
           <td>
-          <a href="#" ng-click="sortType = 'SumofBSL'; sortReverse = !sortReverse">
-          SumofBSL
-            <span ng-show="sortType == 'SumofBSL' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'SumofBSL' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="#" ng-click="sortType = 'SumofBSLcalc'; sortReverse = !sortReverse">
+          SumofBSLcalc
+            <span ng-show="sortType == 'SumofBSLcalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'SumofBSLcalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'SumofBSLoriginal'; sortReverse = !sortReverse">
+          SumofBSLoriginal
+            <span ng-show="sortType == 'SumofBSLoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'SumofBSLoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'SumofBSLdifference'; sortReverse = !sortReverse">
+          SumofBSLdifference
+            <span ng-show="sortType == 'SumofBSLdifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'SumofBSLdifference' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+           <td>
+          <a href="#" ng-click="sortType = 'sumofBSLcalcperpupil'; sortReverse = !sortReverse">
+          sumofBSLcalcperpupil
+            <span ng-show="sortType == 'sumofBSLcalcperpupil' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'sumofBSLcalcperpupil' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'Type'; sortReverse = !sortReverse">
+          Type
+            <span ng-show="sortType == 'Type' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'Type' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'bslbytype'; sortReverse = !sortReverse">
+          bslbytype
+            <span ng-show="sortType == 'bslbytype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'bslbytype' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'admbytype'; sortReverse = !sortReverse">
+          admbytype
+            <span ng-show="sortType == 'admbytype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'admbytype' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'perpupilpertype'; sortReverse = !sortReverse">
+          perpupilpertype
+            <span ng-show="sortType == 'perpupilpertype' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'perpupilpertype' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
         <td>
           <a href="#" ng-click="sortType = 'NoStateAidDistrict'; sortReverse = !sortReverse">
-          NoStateAidFunction
+          NoStateAidDistrict
             <span ng-show="sortType == 'NoStateAidDistrict' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'NoStateAidDistrict' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+
           <td>
-          <a href="#" ng-click="sortType = 'TotalLocalLevy'; sortReverse = !sortReverse">
-          TotalLocalLevy
-            <span ng-show="sortType == 'TotalLocalLevy' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'TotalLocalLevy' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="#" ng-click="sortType = 'TotalLocalLevycalc'; sortReverse = !sortReverse">
+          TotalLocalLevycalc
+            <span ng-show="sortType == 'TotalLocalLevycalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalLocalLevycalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalLocalLevyoriginal'; sortReverse = !sortReverse">
+          TotalLocalLevyoriginal
+            <span ng-show="sortType == 'TotalLocalLevyoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalLocalLevyoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalLocalLevydifference'; sortReverse = !sortReverse">
+          TotalLocalLevydifference
+            <span ng-show="sortType == 'TotalLocalLevydifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalLocalLevydifference' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
           <td>
@@ -148,7 +267,21 @@ body { padding-top:50px; }
         </td>
           <td>
           <a href="#" ng-click="sortType = 'TotalStateAid'; sortReverse = !sortReverse">
-          TotalStateAid
+          TotalStateAidcalc
+            <span ng-show="sortType == 'TotalStateAid' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalStateAid' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalStateAid'; sortReverse = !sortReverse">
+          TotalStateAidoriginal
+            <span ng-show="sortType == 'TotalStateAid' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalStateAid' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalStateAid'; sortReverse = !sortReverse">
+          TotalStateAiddifference
             <span ng-show="sortType == 'TotalStateAid' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'TotalStateAid' && sortReverse" class="fa fa-caret-up"></span>
           </a>
@@ -162,10 +295,24 @@ body { padding-top:50px; }
         </td>
 
           <td>
-          <a href="#" ng-click="sortType = 'RCL'; sortReverse = !sortReverse">
-          RCL
-            <span ng-show="sortType == 'RCL' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'RCL' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="#" ng-click="sortType = 'RCLcalc'; sortReverse = !sortReverse">
+          RCLcalc
+            <span ng-show="sortType == 'RCLcalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'RCLcalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'RCLoriginal'; sortReverse = !sortReverse">
+          RCLoriginal
+            <span ng-show="sortType == 'RCLoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'RCLoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'RCLdifference'; sortReverse = !sortReverse">
+          RCLdifference
+            <span ng-show="sortType == 'RCLdifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'RCLdifference' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
           <td>
@@ -176,10 +323,24 @@ body { padding-top:50px; }
           </a>
         </td>
           <td>
-          <a href="#" ng-click="sortType = 'DSL'; sortReverse = !sortReverse">
-          DSL
-            <span ng-show="sortType == 'DSL' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'DSL' && sortReverse" class="fa fa-caret-up"></span>
+          <a href="#" ng-click="sortType = 'DSLcalc'; sortReverse = !sortReverse">
+          DSLcalc
+            <span ng-show="sortType == 'DSLcalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DSLcalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DSLoriginal'; sortReverse = !sortReverse">
+          DSLoriginal
+            <span ng-show="sortType == 'DSLoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DSLoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DSLdifference'; sortReverse = !sortReverse">
+          DSLdifference
+            <span ng-show="sortType == 'DSLdifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DSLdifference' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
           <td>
@@ -411,17 +572,42 @@ body { padding-top:50px; }
           <td>{{ roll.EntityName }}</td>
           <td>{{ roll.County }}</td>
            <td>{{ roll.AOI }}</td>
-           <td>{{ roll.BSL }}</td>
+          <td>{{ roll.schooltype }}</td>
+          <td>{{ roll.admbyschooltype }}</td>
+          <td>{{ roll.bslbyschooltype }}</td>
+          <td>{{ roll.perpupilbyschooltype }}</td>
+          <td>{{ roll.LEABaseLevel }}</td>
+          <td>{{ roll.BSLcalc }}</td>
+           <td>{{ roll.BSLoriginal }}</td>
+          <td>{{ roll.BSLdiffernce }}</td>
+
           <td>{{ roll.BSLWithoutAdjustment }}</td>
-          <td>{{ roll.SumofBSL }}</td>
-        <td>{{ roll.NoStateAidDistrict }}</td>
-        <td>{{ roll.TotalLocalLevy }}</td>
+          <td>{{ roll.SumofBSLcalc }}</td>
+          <td>{{ roll.SumofBSLoriginal }}</td>
+          <td>{{ roll.SumofBSLdifference }}</td>
+          <td>{{ roll.sumofBSLcalcperpupil }}</td>
+        <td>{{ roll.Type}}</td>
+          <td>{{ roll.bslbytype}}</td>
+          <td>{{ roll.admbytype}}</td>
+          <td>{{ roll.perpupilpertype}}</td>
+          <td>{{ roll.NoStateAidDistrict}}</td>
+
+
+          <td>{{ roll.TotalLocalLevycalc }}</td>
+          <td>{{ roll.TotalLocalLevyoriginal }}</td>
+          <td>{{ roll.TotalLocalLevydifference }}</td>
           <td>{{ roll.UncapturedQTR }}</td>
-          <td>{{ roll.TotalStateAid }}</td>
+          <td>{{ roll.TotalStateAidcalc }}</td>
+          <td>{{ roll.TotalStateAidoriginal }}</td>
+          <td>{{ roll.TotalStateAiddifference }}</td>
           <td>{{ roll.TotalStateFundingEqualised}}</td>
-          <td>{{ roll.RCL }}</td>
+          <td>{{ roll.RCLcalc }}</td>
+          <td>{{ roll.RCLoriginal }}</td>
+          <td>{{ roll.RCLdifference }}</td>
           <td>{{ roll.TRCL }}</td>
-          <td>{{ roll.DSL }}</td>
+          <td>{{ roll.DSLcalc }}</td>
+          <td>{{ roll.DSLoriginal }}</td>
+          <td>{{ roll.DSLdifference }}</td>
           <td>{{ roll.TSL }}</td>
           <td>{{ roll.AuditBaseLevelAdjustment }}</td>
           <td>{{ roll.GroupBWeightedAddonCounts}}</td>

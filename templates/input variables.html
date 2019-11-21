@@ -1,0 +1,196 @@
+{% block body %}
+
+<form action="/wftf2" method="POST">
+<div >
+<div >
+<div >
+<h1>Modify Input values</h1>
+</div>
+<div >
+    <div >
+      			yearnum &nbsp; <input type="text"  value="{{session['yearnum']  }}" placeholder="{{session['yearnum']  }}" name="yearnum">
+</div>
+<div >
+      			BaseSupport &nbsp; <input type="text"  value="{{session['basesupport']  }}" placeholder="{{session['basesupport']}}" name="BaseSupport">
+</div>
+<div >
+				TeacherCompPercent  &nbsp; <input type="text"  value="1.25" placeholder="1.25" name="TeacherCompPercent">
+</div>
+<div >
+				Percent200DayCalender &nbsp; <input type="text"  value="5" placeholder="5" name="Percent200DayCalender">
+</div>
+    <div >
+				WtSmallIso1to99K_8 &nbsp; <input type="text"  value="1.559" placeholder="1.559" name="WtSmallIso1to99K_8">
+</div><div >
+				WtSmallIso100to499K_8 &nbsp; <input type="text"  value="1.358" placeholder="1.358" name="WtSmallIso100to499K_8">
+</div><div >
+				WtSmallIso500to599K_8 &nbsp; <input type="text"  value="1.158" placeholder="1.158" name="WtSmallIso500to599K_8">
+</div><div >
+				WtSmallIso600AndOverK_8 &nbsp; <input type="text"  value="0" placeholder="0" name="WtSmallIso600AndOverK_8">
+</div><div >
+				WtSmall1to99K_8 &nbsp; <input type="text"  value="1.399" placeholder="1.399" name="WtSmall1to99K_8">
+</div><div >
+				WtSmall100to499K_8 &nbsp; <input type="text"  value="1.278" placeholder="1.278" name="WtSmall100to499K_8">
+</div><div >
+				WtSmall500to599K_8 &nbsp; <input type="text"  value="1.158" placeholder="1.158" name="WtSmall500to599K_8">
+</div><div >
+				WtSmall600AndOverK_8 &nbsp; <input type="text"  value="0" placeholder="0" name="WtSmall600AndOverK_8">
+</div><div >
+				WtSmallIso1to999_12 &nbsp; <input type="text"  value="1.669" placeholder="1.669" name="WtSmallIso1to999_12">
+</div>
+    <div >
+				WtSmallIso100to4999_12 &nbsp; <input type="text"  value="1.468" placeholder="1.468" name="WtSmallIso100to4999_12">
+</div>
+    <div >
+				WtSmallIso500to5999_12 &nbsp; <input type="text"  value="1.268" placeholder="1.268" name="WtSmallIso500to5999_12">
+</div>
+    <div >
+				WtSmallIso600AndOver9_12 &nbsp;<input type="text"  value="0" placeholder="0" name="WtSmallIso600AndOver9_12">
+</div>
+    <div >
+				WtSmall1to999_12 &nbsp;<input type="text"  value="1.559" placeholder="1.559" name="WtSmall1to999_12">
+</div>
+
+    <div >
+				WtSmall100to4999_12 &nbsp;<input type="text"  value="1.398" placeholder="1.398" name="WtSmall100to4999_12">
+</div>
+    <div >
+				WtSmall500to5999_12 &nbsp;<input type="text"  value="1.268" placeholder="1.268" name="WtSmall500to5999_12">
+</div>
+    <div >
+				WtSmall600AndOver9_12 &nbsp;<input type="text"  value="0" placeholder="0" name="WtSmall600AndOver9_12">
+</div>
+    <div >
+				IncWtSmallIso1to99K_8 &nbsp;<input type="text"  value="0" placeholder="0" name="IncWtSmallIso1to99K_8">
+</div>
+    <div >
+				IncWtSmallIso100to499K_8  &nbsp;<input type="text"  value="0.0005" placeholder="0.0005" name="IncWtSmallIso100to499K_8">
+</div>
+    <div >
+				IncWtSmallIso500to599K_8 &nbsp;<input type="text"  value="0.002" placeholder="0.002" name="IncWtSmallIso500to599K_8">
+</div>
+    <div >
+				IncWtSmallIso600AndOverK_8 &nbsp;<input type="text"  value="0" placeholder="0" name="IncWtSmallIso600AndOverK_8">
+</div>
+    <div >
+				IncWtSmall1to99K_8  &nbsp;<input type="text"  value="0" placeholder="0" name="IncWtSmall1to99K_8">
+</div>
+    <div >
+				IncWtSmall100to499K_8 &nbsp;<input type="text"  value="0.0003" placeholder="0.0003" name="IncWtSmall100to499K_8">
+</div>
+    <div >
+				IncWtSmall500to599K_8 &nbsp;<input type="text"  value="0.0012" placeholder="0.0012" name="IncWtSmall500to599K_8">
+</div>
+    <div >
+				IncWtSmall600AndOverK_8 &nbsp;<input type="text"  value="0" placeholder="0" name="IncWtSmall600AndOverK_8">
+</div>
+    <div >
+				IncWtSmallIso1to999_12 &nbsp;<input type="text"  value="0" placeholder="0" name="IncWtSmallIso1to999_12">
+</div>
+    <div >
+				IncWtSmallIso100to4999_12 &nbsp; <input type="text"  value="0.0005" placeholder="0.0005" name="IncWtSmallIso100to4999_12">
+</div>
+    <div >
+				IncWtSmallIso500to5999_12  &nbsp; <input type="text"  value="0.002" placeholder="0.002" name="IncWtSmallIso500to5999_12">
+</div>
+    <div >
+				IncWtSmallIso600AndOver9_12 &nbsp; <input type="text"  value="0" placeholder="0" name="IncWtSmallIso600AndOver9_12">
+</div>
+    <div >
+				IncWtSmall1to999_12  &nbsp; <input type="text"  value="0" placeholder="0" name="IncWtSmall1to999_12">
+</div>
+    <div >
+				IncWtSmall100to4999_12 &nbsp; <input type="text"  value="0.0004" placeholder="0.0004" name="IncWtSmall100to4999_12">
+</div>
+    <div >
+				IncWtSmall500to5999_12 &nbsp; <input type="text"  value="0.0013" placeholder="0.0013" name="IncWtSmall500to5999_12">
+</div>
+    <div >
+				IncWtSmall600AndOver9_12 &nbsp; <input type="text"  value="0" placeholder="0" name="IncWtSmall600AndOver9_12">
+</div>
+    <div >
+				FullTimeAOI &nbsp; <input type="text"  value="0.95" placeholder="0.95" name="FullTimeAOI">
+</div>
+    <div >
+				HalfTimeAOI &nbsp;<input type="text"  value="0.85" placeholder="0.85" name="HalfTimeAOI">
+</div>
+    <div >
+				Yeardef &nbsp;<input type="text"  value="CY" placeholder="CY" name="Yeardef">
+</div>
+    <div >
+				QTRK_8 &nbsp;<input type="text"  value="2.0793" placeholder="2.0793" name="QTRK_8">
+</div>
+    <div >
+				QTR9_12 &nbsp;<input type="text"  value="2.0793" placeholder="2.0793" name="QTR9_12">
+</div>
+    <div >
+				QTRJTED&nbsp;<input type="text"  value="0.05" placeholder="0.05" name="QTRJTED">
+</div>
+    <div >
+				CharterReduction &nbsp;<input type="text"  value="18656000" placeholder="18656000" name="CharterReduction">
+</div>
+    <div >
+				CharSuppLvlAllK_8 &nbsp;<input type="text"  value="1752.1" placeholder="1752.1" name="CharSuppLvlAllK_8">
+</div>
+    <div >
+				CharSuppLvlAll9_12 &nbsp;<input type="text"  value="2042.04" placeholder="2042.04" name="CharSuppLvlAll9_12">
+</div>
+    <div >
+				GroupAFinalGroupAWeightsPSD &nbsp; <input type="text"  value="1.45" placeholder="1.45" name="GroupAFinalGroupAWeightsPSD">
+</div>
+    <div >
+				GroupAFinalGroupAWeightsK_8 &nbsp;<input type="text"  value="1.158" placeholder="1.158" name="GroupAFinalGroupAWeightsK_8">
+</div>
+    <div >
+				GroupAFinalGroupAWeights9_12 &nbsp;<input type="text"  value="1.268" placeholder="1.268" name="GroupAFinalGroupAWeights9_12">
+</div>
+    <div >
+				GroupAFinalGroupAWeightsJTED &nbsp;<input type="text"  value="1.339" placeholder="1.339" name="GroupAFinalGroupAWeightsJTED">
+</div>
+    <div >
+				DistSuppLvlAllPSD &nbsp; <input type="text"  value="450.76" placeholder="450.76" name="DistSuppLvlAllPSD">
+</div>
+    <div >
+				DistSuppLvl1to99K_8 &nbsp; <input type="text"  value="544.58" placeholder="544.58" name="DistSuppLvl1to99K_8">
+</div>
+    <div >
+				DistSuppLvl100to599K_8 &nbsp; <input type="text"  value="389.25" placeholder="389.25" name="DistSuppLvl100to599K_8">
+</div>
+    <div >
+				DistSuppLvl600AndOverK_8 &nbsp; <input type="text"  value="450.76" placeholder="450.76" name="DistSuppLvl600AndOverK_8">
+</div>
+    <div >
+				DistSuppLvl1to999_12 &nbsp;<input type="text"  value="601.24" placeholder="601.24" name="DistSuppLvl1to999_12">
+</div>
+    <div >
+				DistSuppLvl100to5999_12 &nbsp; <input type="text"  value="405.59" placeholder="405.59" name="DistSuppLvl100to5999_12">
+</div>
+    <div >
+				DistSuppLvl600AndOver9_12 &nbsp; <input type="text"  value="492.94" placeholder="492.94" name="DistSuppLvl600AndOver9_12">
+</div>
+    <div >
+				TEI10   &nbsp;<input type="text"  value="1" placeholder="1" name="TEI10">
+</div>
+    <div >
+				AdditionalAssistant_eqformula &nbsp;<input type="text"  value="2" placeholder="2" name="AdditionalAssistant_eqformula">
+</div>
+    <div >
+				AdditonalAssistantReduction &nbsp;<input type="text"  value="1" placeholder="1" name="AdditonalAssistantReduction">
+</div>
+<input type="submit" value="submit" >
+
+</div>
+</div>
+</div>
+</form>
+
+<p><right>
+        <a href="/yearselect" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-log-out"></span> select different year
+        </a>
+      </right></p>
+{% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+{% endblock %}

@@ -175,9 +175,9 @@ def wftf(yearnum,Yeardef):
     AdditonalAssistantReduction = 1
     # End of input variables to be posted  in front end
     QTRUnified = QTRK_8 + QTR9_12
-    TeacherCompAmount = round(BaseSupport * (1 + (TeacherCompPercent/100)),2)
-    Amount200DayCalender = round(BaseSupport + (BaseSupport * (Percent200DayCalender)/100),2)
-    TeacherCompAnd200DayCalender = round((BaseSupport * (1 + (TeacherCompPercent/100)))+(BaseSupport * (1 + (TeacherCompPercent/100)))*(Percent200DayCalender/100),2)
+    TeacherCompAmount = BaseSupport + (BaseSupport * TeacherCompPercent)
+    Amount200DayCalender = BaseSupport + (BaseSupport * Percent200DayCalender)
+    TeacherCompAnd200DayCalender = (BaseSupport + (BaseSupport * TeacherCompPercent)) * (1 + Percent200DayCalender)
     gi=time.time()
     def example():
         preresult = engine.execute('select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt,t.MDSCCYCnt, t.MDSCCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) group by EntityID) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth and t.FiscalYear=(%s)) union all select yy.EntityID,yy.FiscalYear,yy.PsdCYCount,yy.PsdCount,yy.ElemCYCount, yy.ElemCount, yy.DSCSElemCnt,yy.HsCYCount,yy.HsCount,yy.DSCSHsCnt,yy.DSCSK3Cnt,yy.TEI,yy.PaymentMonth,yy.FTFStatus,yy.BaseAmount,yy.BaseAdjsAmount, yy.MDSSICnt, yy.MDSSICYCnt,yy.DSCSMDSSICnt, yy.DSCSVICnt,yy.DSCSOISCCnt,yy.DSCSPSDCnt,yy.DSCSMDSCCnt,yy.DSCSHICnt,yy.DSCSMOMRCnt,yy.DSCSEDPPrivateCnt,yy.DSCSMDResCnt,yy.DSCSOIResCnt,yy.DSCSEDMIMRCnt,yy.DSCSLEPCnt,yy.PSDCYCnt,yy.PSDCnt, yy.VICYCnt,yy.VICnt,yy.OISCCYCnt,yy.OISCCnt,yy.MDSCCYCnt, yy.MDSCCnt,yy.HICYCnt,yy.HICnt,yy.MOMRCYCnt,yy.MOMRCnt,yy.EDPPrivateCYCnt, yy.EDPPrivateCnt,yy.MDResCYCnt,yy.MDResCnt,yy.OIResCYCnt,yy.OIResCnt, yy.EDMIMRCYCnt,yy.EDMIMRCnt,yy.LEPCYCnt,yy.LEPCnt,yy.K3CYCnt,yy.K3Cnt from SaCharBaseSupportLevelCalcs2 yy use index(cbasei,cbasei2,cbasei3,cbasei4) inner join (select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaCharBaseSupportLevelCalcs2 use index(cbasei,cbasei2,cbasei3,cbasei4) group by EntityID)ym on yy.EntityId=ym.EntityID and yy.PaymentMonth=ym.MaxPaymentMonth and yy.FiscalYear=(%s))uni where FiscalYear=(%s) group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Entity.Type from Entity)Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j  Use index(TRCLi) inner join ( select EntityID,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 Use index(TRCLi) group by EntityID) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and j.FiscalYear=(%s)))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k use index(TSLi)  inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 use index(TSLi) group by EntityID)km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and k.FiscalYear=(%s)))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l use index(quallevyi) inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi) group by EntityID)lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and l.FiscalYear=(%s)))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, s1.Name as EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork use index(chneti) left join Charters4Funding use index(charfundi) on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join SmallIsolatedList s1 use index(smallisoi) on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g use index(acapoutlaycalci) inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 use index(acapoutlaycalci) group by EntityID ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and g.FiscalYear=(%s)) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d use index(aporsoftcapi) inner join (Select EntityID,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 use index(aporsoftcapi)group by EntityID)dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and d.FiscalYear=(%s)) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID',(yearnum,yearnum,yearnum,yearnum,yearnum,yearnum,yearnum,yearnum))
@@ -358,7 +358,7 @@ def wftf(yearnum,Yeardef):
         else:
             pred['Type'] = "District"
         # calculation of PREKADM
-        if Yeardef=="CY" and pred['Type']!="Charter":
+        if Yeardef=="CY" and (pred['Type']!="Charter" and pred['Type']!="JTED"):
             if pred['sumOfPsdCYCount'] == None:
                 pred['sumOfPsdCYCount'] = 0
             PREKADM.append(float(pred['sumOfPsdCYCount']))
@@ -491,20 +491,12 @@ def wftf(yearnum,Yeardef):
 
 
         count += 1
-
     entitynull=[]
     for d in decoded:
         # Creating a dictionary of the values retrieved from the query
         #d = dict(row.items())
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
-        if (d['Type'] == 'Charter Holder-Charter Board'):
-            d['Type'] = "Charter"
-        elif (d['Type'] == 'Charter Holder - University'):
-            d['Type'] = "Charter"
-        elif (d['Type'] == 'School District - Vocational/Technical'):
-            d['Type'] = "JTED"
-        else:
-            d['Type'] = "District"
+
         if d['Type'] == "Charter":
             CharterElemAA[d['EntityID']] = (float(CharSuppLvlAllK_8) * float(sumCharterElemADM[d['EntityID']]))
             CharterHSAA[d['EntityID']] = (float(CharSuppLvlAll9_12) * float(sumCharterHSADM[d['EntityID']]))
@@ -616,14 +608,22 @@ def wftf(yearnum,Yeardef):
                 Final_9_12SmWgt.append(HSBaseWeight[counter1])
             elif HSRange[counter1] == "100to499":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                                float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
+                            float(float(500) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(HSADM[counter1])))))
+                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                                float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
+                            float(float(500) - float(HSADM[counter1])))))
             elif HSRange[counter1] == "500to599":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                                float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
+                            float(float(600) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(HSADM[counter1])))))
+                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                                float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
+                            float(float(600) - float(HSADM[counter1])))))
             else:
                 Final_9_12SmWgt.append(GroupAFinalGroupAWeights9_12)
         # CALCULATION OF SSWELEMINCREMENTALWEIGHTPP
@@ -671,14 +671,18 @@ def wftf(yearnum,Yeardef):
             Final_K_8SmWgt.append(ElemBaseWeight[counter1])
         elif ELEMRange[counter1] == "100to499":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - ELEMADM[counter1]))))
+                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - ELEMADM[counter1]))))
         elif ELEMRange[counter1] == "500to599":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - ELEMADM[counter1]))))
+                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - ELEMADM[counter1]))))
         else:
             Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
         # CALCULATION OF VARIABLES FOR GROUP B WEIGHTS
@@ -841,31 +845,44 @@ def wftf(yearnum,Yeardef):
         # else:
         LEABaseLevel.append(float(d["MaxOfBaseAmount"]))
         # calculation of O
-        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[counter1]),3))
+        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[counter1]), 3))
         # calculation of P
-        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[counter1]),3))
+        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[counter1]), 3))
         # CALCULATION of WEIGHTED PREKCOUNT
         WeightedPreKCounts.append(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)))
         # CALCULATION OF PREKBSL
         if d['FTFStatus'] == '1':
-            PrekBSL.append((float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),3) * float(FullTimeAOI))
+            PrekBSL.append(
+                (float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),
+                                                                                  3) * float(FullTimeAOI))
         elif d['FTFStatus'] == '0':
-            PrekBSL.append((float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),3) * float(HalfTimeAOI))
+            PrekBSL.append(
+                (float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),
+                                                                                  3) * float(HalfTimeAOI))
         else:
-            PrekBSL.append((float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),3))
+            PrekBSL.append(
+                (float(TEI[counter1])) * (float(LEABaseLevel[counter1])) * round(float(WeightedPreKCounts[counter1]),
+                                                                                  3))
         # CALCULATION OF ELEMBSL AND HSBSL
         if (d["FTFStatus"] == '0'):
-            ELEMBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),3) * float(HalfTimeAOI))
-            HSBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),3) * float(HalfTimeAOI))
-        elif (d["FTFStatus"] == '1'):
-            ELEMBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),3) * float(FullTimeAOI))
+            ELEMBSL.append(
+                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),
+                                                                                  3) * float(HalfTimeAOI))
             HSBSL.append(
-                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),3) * float(FullTimeAOI))
+                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),
+                                                                                  3) * float(HalfTimeAOI))
+        elif (d["FTFStatus"] == '1'):
+            ELEMBSL.append(
+                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),
+                                                                                  3) * float(FullTimeAOI))
+            HSBSL.append(
+                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),
+                                                                                  3) * float(FullTimeAOI))
         else:
             ELEMBSL.append(
-                ((LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),3))
+                ((LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]), 3))
             HSBSL.append(
-                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),3))
+                (float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]), 3))
         # CALCULATION OF VARIABLES FOR Q(GROUP B WEIGHTED ADD ON COUNTS) FROM STUDENT COUNTS FY2016_CLEAN
         Weighted_GB1_EDMIDSLD.append(float(GB1_EDMIDSLD[counter1]) * float(GroupB1))
         Weighted_GB2_K3Reading.append(float(GB2_K3Reading[counter1]) * float(GroupB2))
@@ -883,23 +900,29 @@ def wftf(yearnum,Yeardef):
         Weighted_GB14_MD_SSI.append(float(GB14_MD_SSI[counter1]) * float(GroupB14))
         # CALCULATION OF GROUP B WEIGHTED ADD ON COUNTS
         GroupBWeightedAddonCounts.append(
-            round(Weighted_GB1_EDMIDSLD[counter1],3) + round(Weighted_GB2_K3Reading[counter1],3) + round(Weighted_GB3_K3[counter1],3) + round(Weighted_[counter1],3) +
-            round(Weighted_GB5_OI_R[counter1],3) + round(Weighted_GB6_PS_D[counter1],3) + round(Weighted_GB7_MOID[counter1],3) + round(Weighted_GB8_HI[counter1],3) +
-            round(Weighted_GB9_VI[counter1],3) + round(Weighted_GB10_ED_P[counter1],3) + round(Weighted_GB11_MDSC[counter1],3) + round(Weighted_GB12_MD_R[counter1],3) +
-            round(Weighted_GB13_OI_SC[counter1],3) + round(Weighted_GB14_MD_SSI[counter1],3))
+            round(Weighted_GB1_EDMIDSLD[counter1], 3) + round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1], 3) + round(Weighted_[counter1], 3) +
+            round(Weighted_GB5_OI_R[counter1], 3) + round(Weighted_GB6_PS_D[counter1], 3) + round(
+                Weighted_GB7_MOID[counter1], 3) + round(Weighted_GB8_HI[counter1], 3) +
+            round(Weighted_GB9_VI[counter1], 3) + round(Weighted_GB10_ED_P[counter1], 3) + round(
+                Weighted_GB11_MDSC[counter1], 3) + round(Weighted_GB12_MD_R[counter1], 3) +
+            round(Weighted_GB13_OI_SC[counter1], 3) + round(Weighted_GB14_MD_SSI[counter1], 3))
         # CALCULATION OF GROUP B BSL
         if (d["FTFStatus"] == '0'):
-            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(GroupBWeightedAddonCounts[counter1]),3) * (float(HalfTimeAOI)))
+            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(
+                float(GroupBWeightedAddonCounts[counter1]), 3) * (float(HalfTimeAOI)))
 
         elif (d["FTFStatus"] == '1'):
-            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(float(GroupBWeightedAddonCounts[counter1]),3) *(float(FullTimeAOI)))
+            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(
+                float(GroupBWeightedAddonCounts[counter1]), 3) * (float(FullTimeAOI)))
         else:
-            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) *round(float(GroupBWeightedAddonCounts[counter1]),3))
+            GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round(
+                float(GroupBWeightedAddonCounts[counter1]), 3))
         # CALCULATION OF AuditBaseLevelAdjustment
         if (d["FTFStatus"] == None):
-            AuditBaseLevelAdjustment.append(float(0))
-        else:
             AuditBaseLevelAdjustment.append(float(d["MaxofBaseAdjsAmount"]))
+        else:
+            AuditBaseLevelAdjustment.append(float(0))
         # CALCULATION OF LOSS FROM SSW OF K-8 FUNDING AND LOSS FROM SSW OF 9-12 FUNDING
         AB2.append(float(LEABaseLevel[counter1]) * float(Final_K_8SmWgt[counter1]) * float(ELEMADM[counter1]))
         AH.append(0)
@@ -908,10 +931,14 @@ def wftf(yearnum,Yeardef):
         AI.append(0)
         # AI.append(float(AC2[counter1]) - float(AC2[counter1] * float(sixtyseven / 100)))
         # CALCULATION OF BSL VALUE
-        BSLWithoutAdjustment.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]), 3) + round(float(GroupBBSL[counter1]), 3)  ))
-        BSL.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]),3) + round(float(GroupBBSL[counter1]),3) + float(AuditBaseLevelAdjustment[counter1])))
-        SumofBSL[d['EntityID']]+=BSL[counter1]
-        sumofadm[d['EntityID']]+= ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
+        BSLWithoutAdjustment.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]),
+                                                                                                 3) + round(
+            float(GroupBBSL[counter1]), 3)))
+        BSL.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]), 3) + round(
+            float(GroupBBSL[counter1]), 3) + float(AuditBaseLevelAdjustment[counter1])))
+
+        SumofBSL[d['EntityID']] += BSL[counter1]
+        sumofadm[d['EntityID']] += ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
         if schooltype[d['EntityID']] not in bslbyschooltype:
             bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         else:
@@ -929,6 +956,7 @@ def wftf(yearnum,Yeardef):
             admbytype[d['Type']] = float(sumofadm[d['EntityID']])
         else:
             admbytype[d['Type']] += float(sumofadm[d['EntityID']])
+
         # calculate by type and schooltype
         if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
             bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = BSL[counter1]
@@ -948,13 +976,13 @@ def wftf(yearnum,Yeardef):
         # CALCULATION OF TOTOAL NET CHARTER AA
         if d['EntityID'] not in sumCharterElemADM.keys():
             LEApercentofCharterElemADM.append(0)
-        elif (sumCharterElemADM[d['EntityID']] == 0 or sumCharterElemADM[d['EntityID']] ==None) :
+        elif (sumCharterElemADM[d['EntityID']] == 0 or sumCharterElemADM[d['EntityID']] == None):
             LEApercentofCharterElemADM.append(0)
         else:
             LEApercentofCharterElemADM.append(float(sumCharterElemADM[d['EntityID']] / sum(sumCharterElemADM)))
         if d['EntityID'] not in sumCharterHSADM.keys():
             LEApercentofCharterHSADM.append(0)
-        elif sumCharterHSADM[d['EntityID']] == 0 or sumCharterHSADM[d['EntityID']] ==None:
+        elif sumCharterHSADM[d['EntityID']] == 0 or sumCharterHSADM[d['EntityID']] == None:
             LEApercentofCharterHSADM.append(0)
         else:
             LEApercentofCharterHSADM.append(float(sumCharterHSADM[d['EntityID']] / sum(sumCharterHSADM)))
@@ -964,10 +992,14 @@ def wftf(yearnum,Yeardef):
         else:
             K_8PercentofTotalcharterAA.append(float(sum(CharterElemAA) / (sum(CharterElemAA) + sum(CharterHSAA))))
         TotalCharterElemReduction.append(float(CharterReduction) * float(K_8PercentofTotalcharterAA[counter1]))
-        TotalCharterHSReduction.append(float(CharterReduction) * float((1 - float(K_8PercentofTotalcharterAA[counter1]))))
-        CharterElemAAReduction.append(float(LEApercentofCharterElemADM[counter1]) * float(TotalCharterElemReduction[counter1]))
-        CharterHSAAReduction.append(float(LEApercentofCharterHSADM[counter1]) * float(TotalCharterHSReduction[counter1]))
-        TotalNetCharterAA.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1])))
+        TotalCharterHSReduction.append(
+            float(CharterReduction) * float((1 - float(K_8PercentofTotalcharterAA[counter1]))))
+        CharterElemAAReduction.append(
+            float(LEApercentofCharterElemADM[counter1]) * float(TotalCharterElemReduction[counter1]))
+        CharterHSAAReduction.append(
+            float(LEApercentofCharterHSADM[counter1]) * float(TotalCharterHSReduction[counter1]))
+        TotalNetCharterAA.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (
+            float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1])))
         # CALCULATION OF FINAL FORUMULAADDITIONALASSISTANCE
         if d['Type'] == "Charter":
             DistrictHSTextbooksAA.append(0)
@@ -986,6 +1018,7 @@ def wftf(yearnum,Yeardef):
 
                 DistrictHSTextbooksAA.append(0)
                 DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
+
                 if HSRange[counter1] == "1to99":
                     DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
                 elif HSRange[counter1] == "100to499" or HSRange[counter1] == "100to499":
@@ -1019,14 +1052,19 @@ def wftf(yearnum,Yeardef):
                 d['PSElTransAdj'] = 0
             if d['HSTransAdj'] == None:
                 d['HSTransAdj'] = 0
+
             DistrictPreKElemReduction.append(float(d['PSElTransAdj']))
             DistrictHSReduction.append(float(d['HSTransAdj']))
             TotalDistrictAAReduction.append(float(DistrictPreKElemReduction[counter1] + DistrictHSReduction[counter1]))
-            TotalFormulaDistrictAA.append(float(DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[counter1]))
+            TotalFormulaDistrictAA.append(float(
+                DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[
+                    counter1]))
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[counter1] + TotalDistrictAAReduction[counter1]))
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[counter1])
             FinalFormulaAdditionalAssistance.append(TotalFormulaDistrictAA[counter1])
+
         # CALCULATION OF FINALAAALLOCATION
+
         if AdditonalAssistantReduction == 1:
             FinalAAAllocation.append(FinalFormulaAAwithReduction[counter1])
         else:
@@ -1042,73 +1080,78 @@ def wftf(yearnum,Yeardef):
         # CALCULATION OF  WEIGHTED PUPILS USER SPECIFIED SSW REDUCTION
         PreKWeightedPupilsuser_specifiedSWWreduction.append(
             float(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)) - 0))
-        K_8WeightedPupilsuser_specifiedSWWreduction.append((float(ELEMADM[counter1]) * float(Final_K_8SmWgt[counter1])) - 0)
-        nine_12WeightedPupilsuser_specifiedSWWreduction.append((float(HSADM[counter1]) * float(Final_9_12SmWgt[counter1])) - 0)
-        SumofPreKWeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += PreKWeightedPupilsuser_specifiedSWWreduction[counter1]
-        Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += K_8WeightedPupilsuser_specifiedSWWreduction[counter1]
-        Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
+        K_8WeightedPupilsuser_specifiedSWWreduction.append(
+            (float(ELEMADM[counter1]) * float(Final_K_8SmWgt[counter1])) - 0)
+        nine_12WeightedPupilsuser_specifiedSWWreduction.append(
+            (float(HSADM[counter1]) * float(Final_9_12SmWgt[counter1])) - 0)
+        SumofPreKWeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += \
+        PreKWeightedPupilsuser_specifiedSWWreduction[counter1]
+        Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += K_8WeightedPupilsuser_specifiedSWWreduction[
+            counter1]
+        Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += \
+        nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
         counter1 += 1
     counter2 = 0
-    for i in bslbytype:
 
-        perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
+    for i in bslbytype:
+        if admbytype[i] == 0:
+            perpupilpertype[i] = 0
+        else:
+            perpupilpertype[i] = (bslbytype[i] / 3) / (admbytype[i] / 3)
 
     for i in bslbyschooltype:
-        if admbyschooltype[i]==0:
-            perpupilbyschooltype[i] =0
+        if admbyschooltype[i] == 0:
+            perpupilbyschooltype[i] = 0
         else:
-            perpupilbyschooltype[i]=(bslbyschooltype[i]/admbyschooltype[i])
+            perpupilbyschooltype[i] = (bslbyschooltype[i] / admbyschooltype[i])
     for i in bslbyschooltypeanddistricttype:
-        if admbyschooltypeanddistricttype[i]==0:
-            perpupilbyschooltypeanddistricttype[i]=0
+        if admbyschooltypeanddistricttype[i] == 0:
+            perpupilbyschooltypeanddistricttype[i] = 0
         else:
-            perpupilbyschooltypeanddistricttype[i]=(bslbyschooltypeanddistricttype[i]/admbyschooltypeanddistricttype[i])
-    for d4 in decoded:
+            perpupilbyschooltypeanddistricttype[i] = (
+                        bslbyschooltypeanddistricttype[i] / admbyschooltypeanddistricttype[i])
+
+    for d4 in range(len(decoded)):
         dictionary = {}
         # Creating a dictionary of the values retrieved from the query
-        #d4 = dict(row1.items())
+        # d4 = dict(row1.items())
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
-        if (d4['Type'] == 'Charter Holder-Charter Board'):
-            d4['Type'] = "Charter"
-        elif (d4['Type'] == 'Charter Holder - University'):
-            d4['Type'] = "Charter"
-        elif (d4['Type'] == 'School District - Vocational/Technical'):
-            d4['Type'] = "JTED"
-        else:
-            d4['Type'] = "District"
+
         # CALCULATION OF PERCENTAGE OF PREK_8 OF TOTAL AND HS OF TOTAL
-        temp5 = SumofPreKWeightedPupilsuser_specifiedSWWreduction[d4['EntityID']] + \
-                Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d4['EntityID']]
-        temp6 = SumofPreKWeightedPupilsuser_specifiedSWWreduction[d4['EntityID']] + \
-                Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d4['EntityID']] + \
-                Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d4['EntityID']]
-        temp7 = Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d4['EntityID']]
+        temp5 = SumofPreKWeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']] + \
+                Sumofk_8WeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']]
+        temp6 = SumofPreKWeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']] + \
+                Sumof9_12WeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']] + \
+                Sumofk_8WeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']]
+        temp7 = Sumof9_12WeightedPupilsuser_specifiedSWWreduction[decoded[d4]['EntityID']]
         if temp6 == 0:
             PercPreK_8ofTotal.append(float(0))
             PercHSofTotal.append(float(0))
         else:
             PercPreK_8ofTotal.append(float(temp5) / float(temp6))
             PercHSofTotal.append(float(temp7) / float(temp6))
-        RCL.append(float(SumofBSL[d4['EntityID']]) + OppurtunityWeight[counter2] + TRCL[counter2])
-        DSL.append(float(SumofBSL[d4['EntityID']] + OppurtunityWeight[counter2] + TSL[counter2]))
+
+        RCL.append(float(SumofBSL[decoded[d4]['EntityID']]) + OppurtunityWeight[counter2] + TRCL[counter2])
+        DSL.append(float(SumofBSL[decoded[d4]['EntityID']] + OppurtunityWeight[counter2] + TSL[counter2]))
         TotalStateEqualisationFunding.append(min(RCL[counter2], DSL[counter2]))
         # CALCULATION OF ELEMENTARY AND HSTOTALSTATE FORMULA
-        ElemTotalStateFormula.append(float(TotalStateEqualisationFunding[counter2]) * float(PercPreK_8ofTotal[counter2]))
+        ElemTotalStateFormula.append(
+            float(TotalStateEqualisationFunding[counter2]) * float(PercPreK_8ofTotal[counter2]))
         HSTotalStateFormula.append(float(TotalStateEqualisationFunding[counter2]) * float(PercHSofTotal[counter2]))
         # CALCULATION OF lOCAL LEVY
-        if d4['TotalHSAssessValAmt'] == None:
-            d4['TotalHSAssessValAmt'] = 0
-        HSAssessedValuation.append(float(d4['TotalHSAssessValAmt']))
+        if decoded[d4]['TotalHSAssessValAmt'] == None:
+            decoded[d4]['TotalHSAssessValAmt'] = 0
+        HSAssessedValuation.append(float(decoded[d4]['TotalHSAssessValAmt']))
         if HSADM[counter2] == 0:
             HSQTRYield.append(0)
-        elif d4['Type'] == "JTED":
+        elif decoded[d4]['Type'] == "JTED":
             HSQTRYield.append(float(HSAssessedValuation[counter2]) * float(0.01) * float(QTRJTED))
         else:
             HSQTRYield.append(float(HSAssessedValuation[counter2]) * float(0.01) * float(QTR9_12))
         HSLL.append(min(HSTotalStateFormula[counter2], HSQTRYield[counter2]))
-        if d4['TotalPSElAssessValAmt'] == None:
-            d4['TotalPSElAssessValAmt'] = 0
-        ElemAssessedValuation.append(float(d4['TotalPSElAssessValAmt']))
+        if decoded[d4]['TotalPSElAssessValAmt'] == None:
+            decoded[d4]['TotalPSElAssessValAmt'] = 0
+        ElemAssessedValuation.append(float(decoded[d4]['TotalPSElAssessValAmt']))
         if ELEMADM[counter2] == 0:
             ElemQTRYield.append(0)
         else:
@@ -1134,17 +1177,18 @@ def wftf(yearnum,Yeardef):
             HSNoStateAidDistrict.append(float(1))
         else:
             HSNoStateAidDistrict.append(float(0))
-        if ((float(ElemNoStateAidDistrict[counter2]) + float(HSNoStateAidDistrict[counter2])) > 0) and (float(TotalStateAid[counter2]) == 0):
+        if ((float(ElemNoStateAidDistrict[counter2]) + float(HSNoStateAidDistrict[counter2])) > 0) and (
+                float(TotalStateAid[counter2]) == 0):
             NoStateAidDistrict.append(float(1))
         else:
             NoStateAidDistrict.append(float(0))
         TotalQTRYield.append(float(ElemQTRYield[counter2] + HSQTRYield[counter2]))
         UncapturedQTR.append(float(TotalQTRYield[counter2] - TotalLocalLevy[counter2]))
         TotalStateFundingEqualised.append(float(ElemTotalStateFormula[counter2] + HSTotalStateFormula[counter2]))
-        if d4['ESSmallIsolated'] == None:
-            d4['ESSmallIsolated'] = 0
-        if d4['HSSmallIsolated']==None:
-            d4['HSSmallIsolated']=0
+        if decoded[d4]['ESSmallIsolated'] == None:
+            decoded[d4]['ESSmallIsolated'] = 0
+        if decoded[d4]['HSSmallIsolated'] == None:
+            decoded[d4]['HSSmallIsolated'] = 0
         #df=pandas.DataFrame(entitynull)
         #df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
         dictionary['ElemAssessedValuation']=str(round(ElemAssessedValuation[counter2],4))
@@ -1153,23 +1197,23 @@ def wftf(yearnum,Yeardef):
         dictionary['DistrictPreKElemReduction']=str(round(DistrictPreKElemReduction[counter2], 4))
         dictionary['DistrictHSReduction'] = str(round(DistrictHSReduction[counter2], 4))
         dictionary['TotalDistrictAAReduction'] = str(round(TotalDistrictAAReduction[counter2], 4))
-        dictionary['NetworkForFundingPurposes']=str(d4['NetworkForFundingPurposes'])
+        dictionary['NetworkForFundingPurposes']=str(decoded[d4]['NetworkForFundingPurposes'])
         dictionary['EntityID'] = EID[counter2]
         dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
         dictionary['NoStateAidDistrict'] = str(round(NoStateAidDistrict[counter2], 4))
         dictionary['EntityName'] = Ename[counter2]
-        dictionary['schooltype']=str(schooltype[d4['EntityID']])
-        dictionary['County'] = d4['County']
-        dictionary['AOI'] = str(d4['FTFStatus'])
+        dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
+        dictionary['County'] = decoded[d4]['County']
+        dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
         dictionary['TEI'] = str(round(TEI[counter2], 5))
-        dictionary['Type']=str(d4['Type'])
-        dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[d4['EntityID']]],2))
-        dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[d4['EntityID']]],2))
-        dictionary['bslbytype']=str(round((bslbytype[d4['Type']]/3),2))
-        dictionary['admbytype']=str(round((admbytype[d4['Type']]/3),2))
-        dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[d4['EntityID']]]),2))
-        dictionary['perpupilpertype'] = str(round((perpupilpertype[d4['Type']]), 2))
-        dictionary['perpupilbyschooltypeanddistricttype'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[d4['EntityID']]]), 2))
+        dictionary['Type']=str(decoded[d4]['Type'])
+        dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
+        dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
+        dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
+        dictionary['perpupilpertype'] = str(round((perpupilpertype[decoded[d4]['Type']]), 2))
+        dictionary['perpupilbyschooltypeanddistricttype'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
         dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
         dictionary['DistrictPreKAA'] = str(round(DistrictPreKAA[counter2], 5))
@@ -1179,11 +1223,12 @@ def wftf(yearnum,Yeardef):
         dictionary['elembsl'] = str(round(ELEMBSL[counter2], 4))
         dictionary['hsbsl'] = str(round(HSBSL[counter2], 4))
         dictionary['BSL'] = str(round(BSL[counter2], 2))
-        if sumofadm[d4['EntityID']] ==0:
+        if sumofadm[decoded[d4]['EntityID']] ==0:
             dictionary['sumofBSLcalcperpupil'] = str(0)
         else:
-            dictionary['sumofBSLcalcperpupil']=str(round(round(SumofBSL[d4['EntityID']], 2)/(sumofadm[d4['EntityID']]),2))
-        dictionary['SumofBSL']=str(round(SumofBSL[d4['EntityID']], 4))
+            dictionary['sumofBSLcalcperpupil']=str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2))
+        dictionary['SumofBSL']=str(round(SumofBSL[decoded[d4]['EntityID']], 4))
+        dictionary['TotalBSL'] = str(round(sum(SumofBSL.values()), 2))
         dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
         dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
         dictionary['WeightedHSCounts'] = str(round(WeightedHSCounts[counter2], 3))
@@ -1215,11 +1260,11 @@ def wftf(yearnum,Yeardef):
         dictionary['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[counter2], 3))
         dictionary['ELEMRange'] = (ELEMRange[counter2])
         dictionary['HSRange'] = (HSRange[counter2])
-        dictionary['HSSmallIsolated'] = str(round(d4['HSSmallIsolated'], 3))
+        dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
         dictionary['AdditionalAssistance']=AdditionalAssistance[counter2]
         dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
         # print(type(d4['ESSmallIsolated']))
-        dictionary['ESSmallIsolated'] = str(round(d4['ESSmallIsolated'], 3))
+        dictionary['ESSmallIsolated'] = str(round(decoded[d4]['ESSmallIsolated'], 3))
         dictionary['TotalFormulaDistrictAA'] = str(round(TotalFormulaDistrictAA[counter2], 4))
         dictionary['TotalNetDistrictAA'] = str(round(TotalNetDistrictAA[counter2], 4))
         dictionary['FinalFormulaAAwithReduction'] = str(round(FinalFormulaAAwithReduction[counter2], 4))
@@ -2525,7 +2570,7 @@ def wftf2():
         else:
             pred['Type'] = "District"
         # calculation of PREKADM
-        if Yeardef=="CY" and pred['Type']!="Charter":
+        if Yeardef=="CY" and (pred['Type']!="Charter" and pred['Type']!="JTED"):
             if pred['sumOfPsdCYCount'] == None:
                 pred['sumOfPsdCYCount'] = 0
             PREKADM.append(float(pred['sumOfPsdCYCount']))
@@ -2663,9 +2708,8 @@ def wftf2():
 
 
         count += 1
-
     entitynull=[]
-    print(set(schooltypeanddistricttype.values()))
+
 
     for d in decoded:
         # Creating a dictionary of the values retrieved from the query
@@ -3071,9 +3115,9 @@ def wftf2():
             GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) *round(float(GroupBWeightedAddonCounts[counter1]),3))
         # CALCULATION OF AuditBaseLevelAdjustment
         if (d["FTFStatus"] == None):
-            AuditBaseLevelAdjustment.append(float(0))
-        else:
             AuditBaseLevelAdjustment.append(float(d["MaxofBaseAdjsAmount"]))
+        else:
+            AuditBaseLevelAdjustment.append(float(0))
         # CALCULATION OF LOSS FROM SSW OF K-8 FUNDING AND LOSS FROM SSW OF 9-12 FUNDING
         AB2.append(float(LEABaseLevel1[counter1]) * float(Final_K_8SmWgt[counter1]) * float(ELEMADM[counter1]))
         AH.append(0)
@@ -3231,8 +3275,10 @@ def wftf2():
     counter2 = 0
 
     for i in bslbytype:
-
-        perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
+        if admbytype[i]==0:
+            perpupilpertype[i] =0
+        else:
+            perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
 
     for i in bslbyschooltype:
         if admbyschooltype[i]==0:
@@ -3244,6 +3290,7 @@ def wftf2():
             perpupilbyschooltypeanddistricttype[i]=0
         else:
             perpupilbyschooltypeanddistricttype[i]=(bslbyschooltypeanddistricttype[i]/admbyschooltypeanddistricttype[i])
+
     for d4 in range(len(decoded)):
         dictionary = {}
         # Creating a dictionary of the values retrieved from the query
@@ -3321,6 +3368,7 @@ def wftf2():
             decoded[d4]['ESSmallIsolated'] = 0
         if decoded[d4]['HSSmallIsolated']==None:
             decoded[d4]['HSSmallIsolated']=0
+
         #df=pandas.DataFrame(entitynull)
         #df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
         dictionary['ElemAssessedValuation']=str(round(ElemAssessedValuation[counter2],4))
@@ -3362,6 +3410,9 @@ def wftf2():
         dictionary['elembsl'] = str(round(ELEMBSL[counter2], 4))
         dictionary['hsbsl'] = str(round(HSBSL[counter2], 4))
         dictionary['BSLcalc'] = str(round(BSL[counter2], 2))
+        dictionary['TotalBSLcalc']=str(round(sum(SumofBSL.values()),2))
+        dictionary['TotalBSLoriginal']=str(round(float(Original[counter2]['TotalBSL']),2))
+        dictionary['TotalBSLdifference'] = str(round(sum(SumofBSL.values())-float(Original[counter2]['TotalBSL']), 2))
         dictionary['BSLoriginal'] = str(round(float(Original[counter2]['BSL']), 2))
         dictionary['BSLdiffernce']=str((round(float(BSL[counter2])-float(Original[counter2]['BSL']), 2)))
         dictionary['SumofBSLcalc']=str(round(SumofBSL[decoded[d4]['EntityID']], 4))
@@ -3374,7 +3425,6 @@ def wftf2():
             dictionary['sumofBSLcalcperpupilcalc']=str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2))
             dictionary['sumofBSLcalcperpupildifference'] = round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']])-float(Original[counter2]['sumofBSLcalcperpupil']), 4)
         dictionary['sumofBSLcalcperpupildefault'] = str(round(float(Original[counter2]['sumofBSLcalcperpupil']), 4))
-
         dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
         dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
         dictionary['WeightedHSCounts'] = str(round(WeightedHSCounts[counter2], 3))
@@ -3428,6 +3478,7 @@ def wftf2():
         dictionary['HSLL'] = str(round(HSLL[counter2], 4))
         dictionary['SSWHSINCREMENTALWEIGHTPP'] = str(round(SSWHSINCREMENTALWEIGHTPP[counter2], 4))
         dictionary['color']="red"
+        dictionary['LEABaseLevel1']=str(round(LEABaseLevel1[counter2]))
         D.append(dictionary)
         counter2 += 1
         ti=time.time()

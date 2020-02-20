@@ -3423,7 +3423,7 @@ def wftf2():
             dictionary['sumofBSLcalcperpupildifference'] = round(0-(float(Original[counter2]['sumofBSLcalcperpupil'])), 4)
         else:
             dictionary['sumofBSLcalcperpupilcalc']=str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2))
-            dictionary['sumofBSLcalcperpupildifference'] = round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']])-float(Original[counter2]['sumofBSLcalcperpupil']), 4)
+            dictionary['sumofBSLcalcperpupildifference'] = str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2)-float(Original[counter2]['sumofBSLcalcperpupil']))
         dictionary['sumofBSLcalcperpupildefault'] = str(round(float(Original[counter2]['sumofBSLcalcperpupil']), 4))
         dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
         dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))

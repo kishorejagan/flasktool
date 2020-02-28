@@ -121,6 +121,27 @@
             <span ng-show="sortType == 'admbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalBSLcalc'; sortReverse = !sortReverse">
+          TotalBSLcalc
+            <span ng-show="sortType == 'TotalBSLcalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalBSLcalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalBSLoriginal'; sortReverse = !sortReverse">
+          TotalBSLoriginal
+            <span ng-show="sortType == 'TotalBSLoriginal' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalBSLoriginal' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalBSLdifference'; sortReverse = !sortReverse">
+          TotalBSLdifference
+            <span ng-show="sortType == 'TotalBSLdifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalBSLdifference' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
         <td>
           <a href="#" ng-click="sortType = 'bslbyschooltype'; sortReverse = !sortReverse">
           bslbyschooltype
@@ -601,6 +622,13 @@
           </a>
         </td>
           <td>
+          <a href="#" ng-click="sortType = 'NetworkHSADM'; sortReverse = !sortReverse">
+          NetworkHSADM
+            <span ng-show="sortType == 'NetworkHSADM' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'NetworkHSADM' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
           <a href="#" ng-click="sortType = 'SSWHSINCREMENTALWEIGHTPP'; sortReverse = !sortReverse">
           SSWHSINCREMENTALWEIGHTPP
             <span ng-show="sortType == 'SSWHSINCREMENTALWEIGHTPP' && !sortReverse" class="fa fa-caret-down"></span>
@@ -637,6 +665,9 @@
            <td>{{ roll.AOI }}</td>
           <td>{{ roll.schooltype }}</td>
           <td>{{ roll.admbyschooltype }}</td>
+        <td>{{ roll.TotalBSLcalc }}</td>
+        <td>{{ roll.TotalBSLoriginal }}</td>
+        <td>{{ roll.TotalBSLdifference }}</td>
           <td>{{ roll.bslbyschooltype }}</td>
           <td>{{ roll.perpupilbyschooltypecalc }}</td>
         <td>{{ roll.perpupilbyschooltypedefault }}</td>
@@ -705,7 +736,8 @@
           <td>{{ roll.ELEMRange }}</td>
           <td>{{ roll.HSRange }}</td>
           <td>{{ roll.HSBaseWeight }}</td>
-          <td>{{ roll.SSWHSINCREMENTALWEIGHTPP }}</td>
+          <td>{{ roll.NetworkHSADM }}</td>
+            <td>{{ roll.SSWHSINCREMENTALWEIGHTPP }}</td>
           <td>{{ roll.HSSmallIsolated }}</td>
           <td>{{ roll.ESSmallIsolated }}</td>
       </tr>

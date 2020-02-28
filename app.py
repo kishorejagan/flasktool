@@ -151,8 +151,6 @@ def wftf(yearnum,g,Yeardef):
     IncWtSmall600AndOver9_12 = 0
     FullTimeAOI = 0.95
     HalfTimeAOI = 0.85
-    Yeardef = "CY"
-    flask.session['Yeardef'] = Yeardef
     QTRK_8 = 2.0793
     QTR9_12 = 2.0793
     QTRCTED = 0.05
@@ -1285,7 +1283,7 @@ def wftf2():
     yearnum = int((flask.request.form['yearnum']))
     BaseSupport = float(flask.request.form['BaseSupport'])
     Yeardef = (flask.request.form['Yeardef'])
-
+    flask.session['Yeardef'] = Yeardef
     def alchemyencoder(obj):
         """JSON encoder function for SQLAlchemy special classes."""
         if isinstance(obj, datetime.date):

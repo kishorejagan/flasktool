@@ -191,8 +191,8 @@ def wftf(yearnum,g,Yeardef):
     sumprekadm={}
     sumelemadm={}
     sumhsadm={}
-    Final_9_12SmWgt=[]
-    Final_K_8SmWgt=[]
+    Final_9_12SmWgt={}
+    Final_K_8SmWgt={}
     AuditBaseLevelAdjustment=[]
     FinalFormulaAdditionalAssistance=[]
     FinalAAAllocation=[]
@@ -206,7 +206,7 @@ def wftf(yearnum,g,Yeardef):
     WeightedHSCounts=[]
     GroupBWeightedAddonCounts=[]
     ElemBaseWeight=[]
-    HSBaseWeight=[]
+    HSBaseWeight={}
     GroupBBSL=[]
     WeightedPreKCounts=[]
     GB1_EDMIDSLD=[]
@@ -304,8 +304,8 @@ def wftf(yearnum,g,Yeardef):
     admbytype = {}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = []
-    HSRange = []
-    ELEMRange = []
+    HSRange = {}
+    ELEMRange = {}
     TotalStateEqualisationFunding = []
     OppurtunityWeight = []
     TRCL = []
@@ -508,183 +508,183 @@ def wftf(yearnum,g,Yeardef):
             NetworkElemADM.append(sumofnetworkelemadm[d['ParentOrganization']])
             NetworkHSADM.append(sumofnetworkhsadm[d['ParentOrganization']])
             if NetworkHSADM[counter1] >= float(1) and NetworkHSADM[counter1] < float(100):
-                HSRange.append("1to99")
+                HSRange[d['EntityID']]=("1to99")
             elif NetworkHSADM[counter1] >= float(100) and NetworkHSADM[counter1] < float(500):
-                HSRange.append("100to499")
+                HSRange[d['EntityID']]=("100to499")
             elif NetworkHSADM[counter1] >= (float(500)) and NetworkHSADM[counter1] < (float(600)):
-                HSRange.append("500to599")
+                HSRange[d['EntityID']]=("500to599")
             elif (NetworkHSADM[counter1] >= float(600)):
-                HSRange.append(">600")
+                HSRange[d['EntityID']]=(">600")
             else:
-                HSRange.append(None)
+                HSRange[d['EntityID']]=(None)
             if NetworkElemADM[counter1] >= float(1) and NetworkElemADM[counter1] < float(100):
-                ELEMRange.append("1to99")
+                ELEMRange[d['EntityID']]=("1to99")
             elif NetworkElemADM[counter1] >= float(100) and NetworkElemADM[counter1] < float(500):
-                ELEMRange.append("100to499")
+                ELEMRange[d['EntityID']]=("100to499")
             elif NetworkElemADM[counter1] >= (float(500)) and NetworkElemADM[counter1] < (float(600)):
-                ELEMRange.append("500to599")
+                ELEMRange[d['EntityID']]=("500to599")
             elif (NetworkElemADM[counter1] >= float(600)):
-                ELEMRange.append(">600")
+                ELEMRange[d['EntityID']]=(">600")
             else:
-                ELEMRange.append(None)
+                ELEMRange[d['EntityID']]=(None)
         else:
             NetworkElemADM.append(0)
             NetworkHSADM.append(0)
             if sumhsadm[d['EntityID']] >= float(1) and sumhsadm[d['EntityID']] < float(100):
-                HSRange.append("1to99")
+                HSRange[d['EntityID']]=("1to99")
             elif sumhsadm[d['EntityID']] >= float(100) and sumhsadm[d['EntityID']] < float(500):
-                HSRange.append("100to499")
+                HSRange[d['EntityID']]=("100to499")
             elif sumhsadm[d['EntityID']] >= (float(500)) and sumhsadm[d['EntityID']] < (float(600)):
-                HSRange.append("500to599")
+                HSRange[d['EntityID']]=("500to599")
             elif (sumhsadm[d['EntityID']] >= float(600)):
-                HSRange.append(">600")
+                HSRange[d['EntityID']]=(">600")
             else:
-                HSRange.append(None)
+                HSRange[d['EntityID']]=(None)
             if sumelemadm[d['EntityID']] >= float(1) and sumelemadm[d['EntityID']] < float(100):
-                ELEMRange.append("1to99")
+                ELEMRange[d['EntityID']]=("1to99")
             elif sumelemadm[d['EntityID']] >= float(100) and sumelemadm[d['EntityID']] < float(500):
-                ELEMRange.append("100to499")
+                ELEMRange[d['EntityID']]=("100to499")
             elif sumelemadm[d['EntityID']] >= (float(500)) and sumelemadm[d['EntityID']] < (float(600)):
-                ELEMRange.append("500to599")
+                ELEMRange[d['EntityID']]=("500to599")
             elif (sumelemadm[d['EntityID']] >= float(600)):
-                ELEMRange.append(">600")
+                ELEMRange[d['EntityID']]=(">600")
             else:
-                ELEMRange.append(None)
+                ELEMRange[d['EntityID']]=(None)
         #CALCULATION OF SSWHSINCREMENTALWEIGHTPP
         if (d['Type'] == "CTED"):
             SSWHSINCREMENTALWEIGHTPP.append(0)
         else:
             if d['HSSmallIsolated'] == 1:
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso1to999_12)
-                elif HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso100to4999_12)
-                elif HSRange[counter1] == "500to599":
+                elif HSRange[d['EntityID']] == "500to599":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso500to5999_12)
                 else:
                     SSWHSINCREMENTALWEIGHTPP.append(0)
             else:
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall1to999_12)
-                elif HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall100to4999_12)
-                elif HSRange[counter1] == "500to599":
+                elif HSRange[d['EntityID']] == "500to599":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall500to5999_12)
                 else:
                     SSWHSINCREMENTALWEIGHTPP.append(0)
         #CALCULATION OF FinalHSBASEWEIGHT
         if (d['Type'] == "CTED"):
-            HSBaseWeight.append(0)
+            HSBaseWeight[d['EntityID']]=(0)
         else:
             if d['HSSmallIsolated'] == 1:
-                if HSRange[counter1] == "1to99":
-                    HSBaseWeight.append(WtSmallIso1to999_12)
-                elif HSRange[counter1] == "100to499":
-                    HSBaseWeight.append(WtSmallIso100to4999_12)
-                elif HSRange[counter1] == "500to599":
-                    HSBaseWeight.append(WtSmallIso500to5999_12)
+                if HSRange[d['EntityID']] == "1to99":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso1to999_12)
+                elif HSRange[d['EntityID']] == "100to499":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso100to4999_12)
+                elif HSRange[d['EntityID']] == "500to599":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso500to5999_12)
                 else:
-                    HSBaseWeight.append(0)
+                    HSBaseWeight[d['EntityID']]=(0)
             else:
-                if HSRange[counter1] == "1to99":
-                    HSBaseWeight.append(WtSmall1to999_12)
-                elif HSRange[counter1] == "100to499":
-                    HSBaseWeight.append(WtSmall100to4999_12)
-                elif HSRange[counter1] == "500to599":
-                    HSBaseWeight.append(WtSmall500to5999_12)
+                if HSRange[d['EntityID']] == "1to99":
+                    HSBaseWeight[d['EntityID']]=(WtSmall1to999_12)
+                elif HSRange[d['EntityID']] == "100to499":
+                    HSBaseWeight[d['EntityID']]=(WtSmall100to4999_12)
+                elif HSRange[d['EntityID']] == "500to599":
+                    HSBaseWeight[d['EntityID']]=(WtSmall500to5999_12)
                 else:
-                    HSBaseWeight.append(0)
-        if HSRange[counter1]==None and ELEMRange[counter1]==None:
+                    HSBaseWeight[d['EntityID']]=(0)
+        if HSRange[d['EntityID']]==None and ELEMRange[d['EntityID']]==None:
              entitynull.append(d['EntityID'])
         #     bothnull+=1
         # totalcount+=1
         #CALCUATION OF Final9-12WEIGHT
         if d['Type'] == "CTED":
-            Final_9_12SmWgt.append(GroupAFinalGroupAWeightsCTED)
+            Final_9_12SmWgt[d['EntityID']]=(GroupAFinalGroupAWeightsCTED)
         else:
-            if HSRange[counter1] == ">600":
-                Final_9_12SmWgt.append(GroupAFinalGroupAWeights9_12)
-            elif HSRange[counter1] == "1to99":
-                Final_9_12SmWgt.append(HSBaseWeight[counter1])
-            elif HSRange[counter1] == "100to499":
+            if HSRange[d['EntityID']] == ">600":
+                Final_9_12SmWgt[d['EntityID']]=(GroupAFinalGroupAWeights9_12)
+            elif HSRange[d['EntityID']] == "1to99":
+                Final_9_12SmWgt[d['EntityID']]=(HSBaseWeight[d['EntityID']])
+            elif HSRange[d['EntityID']] == "100to499":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (
                                 float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
                             float(float(500) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (
                                 float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                            float(float(500) - float(HSADM[counter1])))))
-            elif HSRange[counter1] == "500to599":
+                            float(float(500) - float(sumhsadm[d['EntityID']])))))
+            elif HSRange[d['EntityID']] == "500to599":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (
                                 float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
                             float(float(600) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (
                                 float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                            float(float(600) - float(HSADM[counter1])))))
+                            float(float(600) - float(sumhsadm[d['EntityID']])))))
             else:
-                Final_9_12SmWgt.append(GroupAFinalGroupAWeights9_12)
+                Final_9_12SmWgt[d['EntityID']]=(GroupAFinalGroupAWeights9_12)
         # CALCULATION OF SSWELEMINCREMENTALWEIGHTPP
         if d['ESSmallIsolated'] == 1:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso500to599K_8)
             else:
                 SSWELEMINCREMENTALWEIGHTPP.append(0)
         else:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall500to599K_8)
             else:
                 SSWELEMINCREMENTALWEIGHTPP.append(0)
         # CALCULATION OF FINALELEMBASEWEIGHT
         if d['ESSmallIsolated'] == 1:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 ElemBaseWeight.append(WtSmallIso1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 ElemBaseWeight.append(WtSmallIso100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 ElemBaseWeight.append(WtSmallIso500to599K_8)
             else:
                 ElemBaseWeight.append(0)
         else:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 ElemBaseWeight.append(WtSmall1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 ElemBaseWeight.append(WtSmall100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 ElemBaseWeight.append(WtSmall500to599K_8)
             else:
                 ElemBaseWeight.append(0)
         # CALCUATION OF K-8WEIGHT
-        if ELEMRange[counter1] == ">600":
-            Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
-        elif ELEMRange[counter1] == "1to99":
-            Final_K_8SmWgt.append(ElemBaseWeight[counter1])
-        elif ELEMRange[counter1] == "100to499":
+        if ELEMRange[d['EntityID']] == ">600":
+            Final_K_8SmWgt[d['EntityID']]=(GroupAFinalGroupAWeightsK_8)
+        elif ELEMRange[d['EntityID']] == "1to99":
+            Final_K_8SmWgt[d['EntityID']]=(ElemBaseWeight[counter1])
+        elif ELEMRange[d['EntityID']] == "100to499":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (
                             float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
-                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - ELEMADM[counter1]))))
-        elif ELEMRange[counter1] == "500to599":
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - sumelemadm[d['EntityID']]))))
+        elif ELEMRange[d['EntityID']] == "500to599":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (
                             float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (
-                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - ELEMADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (
+                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - sumelemadm[d['EntityID']]))))
         else:
-            Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
+            Final_K_8SmWgt[d['EntityID']]=(GroupAFinalGroupAWeightsK_8)
         # CALCULATION OF VARIABLES FOR GROUP B WEIGHTS
         if Yeardef=="PY":
             if d['sumOfDSCSEDMIMRCnt'] == None:
@@ -845,9 +845,9 @@ def wftf(yearnum,g,Yeardef):
         # else:
         LEABaseLevel.append(float(d["MaxOfBaseAmount"]))
         # calculation of O
-        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[counter1]), 3))
+        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[d['EntityID']]), 3))
         # calculation of P
-        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[counter1]), 3))
+        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[d['EntityID']]), 3))
         # CALCULATION of WEIGHTED PREKCOUNT
         WeightedPreKCounts.append(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)))
         # CALCULATION OF PREKBSL
@@ -924,10 +924,10 @@ def wftf(yearnum,g,Yeardef):
         else:
             AuditBaseLevelAdjustment.append(float(0))
         # CALCULATION OF LOSS FROM SSW OF K-8 FUNDING AND LOSS FROM SSW OF 9-12 FUNDING
-        AB2.append(float(LEABaseLevel[counter1]) * float(Final_K_8SmWgt[counter1]) * float(ELEMADM[counter1]))
+        AB2.append(float(LEABaseLevel[counter1]) * float(Final_K_8SmWgt[d['EntityID']]) * float(ELEMADM[counter1]))
         AH.append(0)
         # AH.append(float(AB2[counter1])-float(AB2[counter1]*float(sixtyseven/100)))
-        AC2.append(float(LEABaseLevel[counter1]) * float(Final_9_12SmWgt[counter1]) * float(HSADM[counter1]))
+        AC2.append(float(LEABaseLevel[counter1]) * float(Final_9_12SmWgt[d['EntityID']]) * float(HSADM[counter1]))
         AI.append(0)
         # AI.append(float(AC2[counter1]) - float(AC2[counter1] * float(sixtyseven / 100)))
         # CALCULATION OF BSL VALUE
@@ -1019,19 +1019,19 @@ def wftf(yearnum,g,Yeardef):
                 DistrictHSTextbooksAA.append(0)
                 DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
 
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[counter1] == "100to499" or HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
                     DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[counter1] == ">600":
+                elif HSRange[d['EntityID']] == ">600":
                     DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
                 else:
                     DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                if ELEMRange[counter1] == "1to99":
+                if ELEMRange[d['EntityID']] == "1to99":
                     DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[counter1] == "100to499" or ELEMRange[counter1] == "500to599":
+                elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
                     DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[counter1] == ">600":
+                elif ELEMRange[d['EntityID']] == ">600":
                     DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
                 else:
                     DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
@@ -1081,9 +1081,9 @@ def wftf(yearnum,g,Yeardef):
         PreKWeightedPupilsuser_specifiedSWWreduction.append(
             float(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)) - 0))
         K_8WeightedPupilsuser_specifiedSWWreduction.append(
-            (float(ELEMADM[counter1]) * float(Final_K_8SmWgt[counter1])) - 0)
+            (float(ELEMADM[counter1]) * float(Final_K_8SmWgt[d['EntityID']])) - 0)
         nine_12WeightedPupilsuser_specifiedSWWreduction.append(
-            (float(HSADM[counter1]) * float(Final_9_12SmWgt[counter1])) - 0)
+            (float(HSADM[counter1]) * float(Final_9_12SmWgt[d['EntityID']])) - 0)
         SumofPreKWeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += \
         PreKWeightedPupilsuser_specifiedSWWreduction[counter1]
         Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += K_8WeightedPupilsuser_specifiedSWWreduction[
@@ -1235,8 +1235,8 @@ def wftf(yearnum,g,Yeardef):
         dictionary['TotalLocalLevy'] = str(round(TotalLocalLevy[counter2], 3))
         dictionary['UncapturedQTR'] = str(round(UncapturedQTR[counter2], 3))
         dictionary['TotalStateAid'] = str(round(TotalStateAid[counter2], 3))
-        dictionary['Final_K_8SmWgt'] = str(round(Final_K_8SmWgt[counter2], 3))
-        dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[counter2], 3))
+        dictionary['Final_K_8SmWgt'] = str(round(Final_K_8SmWgt[decoded[d4]['EntityID']], 3))
+        dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[decoded[d4]['EntityID']], 3))
         dictionary['RCL'] = str(round(RCL[counter2], 4))
         dictionary['TRCL'] = str(round(TRCL[counter2], 4))
         dictionary['DSL'] = str(round(DSL[counter2], 4))
@@ -1258,8 +1258,8 @@ def wftf(yearnum,g,Yeardef):
         dictionary['GroupBBSL'] = str(round(GroupBBSL[counter2], 2))
         dictionary['HSBSL'] = str(round(HSBSL[counter2], 2))
         dictionary['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[counter2], 3))
-        dictionary['ELEMRange'] = (ELEMRange[counter2])
-        dictionary['HSRange'] = (HSRange[counter2])
+        dictionary['ELEMRange'] = (ELEMRange[decoded[d4]['EntityID']])
+        dictionary['HSRange'] = (HSRange[decoded[d4]['EntityID']])
         dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
         dictionary['AdditionalAssistance']=AdditionalAssistance[counter2]
         dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
@@ -1270,7 +1270,7 @@ def wftf(yearnum,g,Yeardef):
         dictionary['FinalFormulaAAwithReduction'] = str(round(FinalFormulaAAwithReduction[counter2], 4))
         dictionary['FinalFormulaAdditionalAssistance'] = str(round(FinalFormulaAdditionalAssistance[counter2], 4))
         dictionary['ElemLL'] = str(round(ElemLL[counter2], 4))
-        dictionary['HSBaseWeight'] = str(round(HSBaseWeight[counter2], 4))
+        dictionary['HSBaseWeight'] = str(round(HSBaseWeight[decoded[d4]['EntityID']], 4))
         dictionary['HSLL'] = str(round(HSLL[counter2], 4))
         dictionary['SSWHSINCREMENTALWEIGHTPP'] = str(round(SSWHSINCREMENTALWEIGHTPP[counter2], 4))
         D.append(dictionary)
@@ -1401,8 +1401,8 @@ def wftf2():
     sumprekadm={}
     sumelemadm={}
     sumhsadm={}
-    Final_9_12SmWgt=[]
-    Final_K_8SmWgt=[]
+    Final_9_12SmWgt={}
+    Final_K_8SmWgt={}
     AuditBaseLevelAdjustment=[]
     FinalFormulaAdditionalAssistance=[]
     FinalAAAllocation=[]
@@ -1416,7 +1416,7 @@ def wftf2():
     WeightedHSCounts=[]
     GroupBWeightedAddonCounts=[]
     ElemBaseWeight=[]
-    HSBaseWeight=[]
+    HSBaseWeight={}
     GroupBBSL=[]
     WeightedPreKCounts=[]
     GB1_EDMIDSLD=[]
@@ -1514,8 +1514,8 @@ def wftf2():
     admbytype={}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = []
-    HSRange = []
-    ELEMRange = []
+    HSRange = {}
+    ELEMRange = {}
     TotalStateEqualisationFunding = []
     OppurtunityWeight = []
     TRCL = []
@@ -1728,173 +1728,173 @@ def wftf2():
             NetworkElemADM.append(sumofnetworkelemadm[d['ParentOrganization']])
             NetworkHSADM.append(sumofnetworkhsadm[d['ParentOrganization']])
             if NetworkHSADM[counter1] >= float(1) and NetworkHSADM[counter1] < float(100):
-                HSRange.append("1to99")
+                HSRange[d['EntityID']]=("1to99")
             elif NetworkHSADM[counter1] >= float(100) and NetworkHSADM[counter1] < float(500):
-                HSRange.append("100to499")
+                HSRange[d['EntityID']]=("100to499")
             elif NetworkHSADM[counter1] >= (float(500)) and NetworkHSADM[counter1] < (float(600)):
-                HSRange.append("500to599")
+                HSRange[d['EntityID']]=("500to599")
             elif (NetworkHSADM[counter1] >= float(600)):
-                HSRange.append(">600")
+                HSRange[d['EntityID']]=(">600")
             else:
-                HSRange.append(None)
+                HSRange[d['EntityID']]=(None)
             if NetworkElemADM[counter1] >= float(1) and NetworkElemADM[counter1] < float(100):
-                ELEMRange.append("1to99")
+                ELEMRange[d['EntityID']]=("1to99")
             elif NetworkElemADM[counter1] >= float(100) and NetworkElemADM[counter1] < float(500):
-                ELEMRange.append("100to499")
+                ELEMRange[d['EntityID']]=("100to499")
             elif NetworkElemADM[counter1] >= (float(500)) and NetworkElemADM[counter1] < (float(600)):
-                ELEMRange.append("500to599")
+                ELEMRange[d['EntityID']]=("500to599")
             elif (NetworkElemADM[counter1] >= float(600)):
-                ELEMRange.append(">600")
+                ELEMRange[d['EntityID']]=(">600")
             else:
-                ELEMRange.append(None)
+                ELEMRange[d['EntityID']]=(None)
         else:
             NetworkElemADM.append(0)
             NetworkHSADM.append(0)
             if sumhsadm[d['EntityID']] >= float(1) and sumhsadm[d['EntityID']] < float(100):
-                HSRange.append("1to99")
+                HSRange[d['EntityID']]=("1to99")
             elif sumhsadm[d['EntityID']] >= float(100) and sumhsadm[d['EntityID']] < float(500):
-                HSRange.append("100to499")
+                HSRange[d['EntityID']]=("100to499")
             elif sumhsadm[d['EntityID']] >= (float(500)) and sumhsadm[d['EntityID']] < (float(600)):
-                HSRange.append("500to599")
+                HSRange[d['EntityID']]=("500to599")
             elif (sumhsadm[d['EntityID']] >= float(600)):
-                HSRange.append(">600")
+                HSRange[d['EntityID']]=(">600")
             else:
-                HSRange.append(None)
+                HSRange[d['EntityID']]=(None)
             if sumelemadm[d['EntityID']] >= float(1) and sumelemadm[d['EntityID']] < float(100):
-                ELEMRange.append("1to99")
+                ELEMRange[d['EntityID']]=("1to99")
             elif sumelemadm[d['EntityID']] >= float(100) and sumelemadm[d['EntityID']] < float(500):
-                ELEMRange.append("100to499")
+                ELEMRange[d['EntityID']]=("100to499")
             elif sumelemadm[d['EntityID']] >= (float(500)) and sumelemadm[d['EntityID']] < (float(600)):
-                ELEMRange.append("500to599")
+                ELEMRange[d['EntityID']]=("500to599")
             elif (sumelemadm[d['EntityID']] >= float(600)):
-                ELEMRange.append(">600")
+                ELEMRange[d['EntityID']]=(">600")
             else:
-                ELEMRange.append(None)
+                ELEMRange[d['EntityID']]=(None)
         #CALCULATION OF SSWHSINCREMENTALWEIGHTPP
         if (d['Type'] == "CTED"):
             SSWHSINCREMENTALWEIGHTPP.append(0)
         else:
             if d['HSSmallIsolated'] == 1:
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso1to999_12)
-                elif HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso100to4999_12)
-                elif HSRange[counter1] == "500to599":
+                elif HSRange[d['EntityID']] == "500to599":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmallIso500to5999_12)
                 else:
                     SSWHSINCREMENTALWEIGHTPP.append(0)
             else:
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall1to999_12)
-                elif HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall100to4999_12)
-                elif HSRange[counter1] == "500to599":
+                elif HSRange[d['EntityID']] == "500to599":
                     SSWHSINCREMENTALWEIGHTPP.append(IncWtSmall500to5999_12)
                 else:
                     SSWHSINCREMENTALWEIGHTPP.append(0)
         #CALCULATION OF FinalHSBASEWEIGHT
         if (d['Type'] == "CTED"):
-            HSBaseWeight.append(0)
+            HSBaseWeight[d['EntityID']]=(0)
         else:
             if d['HSSmallIsolated'] == 1:
-                if HSRange[counter1] == "1to99":
-                    HSBaseWeight.append(WtSmallIso1to999_12)
-                elif HSRange[counter1] == "100to499":
-                    HSBaseWeight.append(WtSmallIso100to4999_12)
-                elif HSRange[counter1] == "500to599":
-                    HSBaseWeight.append(WtSmallIso500to5999_12)
+                if HSRange[d['EntityID']] == "1to99":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso1to999_12)
+                elif HSRange[d['EntityID']] == "100to499":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso100to4999_12)
+                elif HSRange[d['EntityID']] == "500to599":
+                    HSBaseWeight[d['EntityID']]=(WtSmallIso500to5999_12)
                 else:
-                    HSBaseWeight.append(0)
+                    HSBaseWeight[d['EntityID']]=(0)
             else:
-                if HSRange[counter1] == "1to99":
-                    HSBaseWeight.append(WtSmall1to999_12)
-                elif HSRange[counter1] == "100to499":
-                    HSBaseWeight.append(WtSmall100to4999_12)
-                elif HSRange[counter1] == "500to599":
-                    HSBaseWeight.append(WtSmall500to5999_12)
+                if HSRange[d['EntityID']] == "1to99":
+                    HSBaseWeight[d['EntityID']]=(WtSmall1to999_12)
+                elif HSRange[d['EntityID']] == "100to499":
+                    HSBaseWeight[d['EntityID']]=(WtSmall100to4999_12)
+                elif HSRange[d['EntityID']] == "500to599":
+                    HSBaseWeight[d['EntityID']]=(WtSmall500to5999_12)
                 else:
-                    HSBaseWeight.append(0)
+                    HSBaseWeight[d['EntityID']]=(0)
 
-        if HSRange[counter1]==None and ELEMRange[counter1]==None:
+        if HSRange[d['EntityID']]==None and ELEMRange[d['EntityID']]==None:
              entitynull.append(d['EntityID'])
         #     bothnull+=1
         # totalcount+=1
         #CALCUATION OF Final9-12WEIGHT
         if d['Type'] == "CTED":
 
-            Final_9_12SmWgt.append(GroupAFinalGroupAWeightsCTED)
+            Final_9_12SmWgt[d['EntityID']]=GroupAFinalGroupAWeightsCTED
         else:
-            if HSRange[counter1] == ">600":
-                Final_9_12SmWgt.append(GroupAFinalGroupAWeights9_12)
-            elif HSRange[counter1] == "1to99":
-                Final_9_12SmWgt.append(HSBaseWeight[counter1])
-            elif HSRange[counter1] == "100to499":
+            if HSRange[d['EntityID']] == ">600":
+                Final_9_12SmWgt[d['EntityID']]=(GroupAFinalGroupAWeights9_12)
+            elif HSRange[d['EntityID']] == "1to99":
+                Final_9_12SmWgt[d['EntityID']]=(HSBaseWeight[d['EntityID']])
+            elif HSRange[d['EntityID']] == "100to499":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(HSADM[counter1])))))
-            elif HSRange[counter1] == "500to599":
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(sumhsadm[d['EntityID']])))))
+            elif HSRange[d['EntityID']] == "500to599":
                 if d['NetworkForFundingPurposes'] == 1:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt.append(float(HSBaseWeight[counter1]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(HSADM[counter1])))))
+                    Final_9_12SmWgt[d['EntityID']]=(float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(sumhsadm[d['EntityID']])))))
             else:
-                Final_9_12SmWgt.append(GroupAFinalGroupAWeights9_12)
+                Final_9_12SmWgt[d['EntityID']]=(GroupAFinalGroupAWeights9_12)
         # CALCULATION OF SSWELEMINCREMENTALWEIGHTPP
         if d['ESSmallIsolated'] == 1:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmallIso500to599K_8)
             else:
                 SSWELEMINCREMENTALWEIGHTPP.append(0)
         else:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 SSWELEMINCREMENTALWEIGHTPP.append(IncWtSmall500to599K_8)
             else:
                 SSWELEMINCREMENTALWEIGHTPP.append(0)
         # CALCULATION OF FINALELEMBASEWEIGHT
         if d['ESSmallIsolated'] == 1:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 ElemBaseWeight.append(WtSmallIso1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 ElemBaseWeight.append(WtSmallIso100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 ElemBaseWeight.append(WtSmallIso500to599K_8)
             else:
                 ElemBaseWeight.append(0)
         else:
-            if ELEMRange[counter1] == "1to99":
+            if ELEMRange[d['EntityID']] == "1to99":
                 ElemBaseWeight.append(WtSmall1to99K_8)
-            elif ELEMRange[counter1] == "100to499":
+            elif ELEMRange[d['EntityID']] == "100to499":
                 ElemBaseWeight.append(WtSmall100to499K_8)
-            elif ELEMRange[counter1] == "500to599":
+            elif ELEMRange[d['EntityID']] == "500to599":
                 ElemBaseWeight.append(WtSmall500to599K_8)
             else:
                 ElemBaseWeight.append(0)
         # CALCUATION OF K-8WEIGHT
-        if ELEMRange[counter1] == ">600":
-            Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
-        elif ELEMRange[counter1] == "1to99":
-            Final_K_8SmWgt.append(ElemBaseWeight[counter1])
-        elif ELEMRange[counter1] == "100to499":
+        if ELEMRange[d['EntityID']] == ">600":
+            Final_K_8SmWgt[d['EntityID']]=(GroupAFinalGroupAWeightsK_8)
+        elif ELEMRange[d['EntityID']] == "1to99":
+            Final_K_8SmWgt[d['EntityID']]=(ElemBaseWeight[counter1])
+        elif ELEMRange[d['EntityID']] == "100to499":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - ELEMADM[counter1]))))
-        elif ELEMRange[counter1] == "500to599":
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - sumelemadm[d['EntityID']]))))
+        elif ELEMRange[d['EntityID']] == "500to599":
             if d['NetworkForFundingPurposes'] == 1:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt.append(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - ELEMADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']]=(float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - sumelemadm[d['EntityID']]))))
         else:
-            Final_K_8SmWgt.append(GroupAFinalGroupAWeightsK_8)
+            Final_K_8SmWgt[d['EntityID']]=(GroupAFinalGroupAWeightsK_8)
         # CALCULATION OF VARIABLES FOR GROUP B WEIGHTS
         if Yeardef=="PY":
             if d['sumOfDSCSEDMIMRCnt'] == None:
@@ -2059,9 +2059,9 @@ def wftf2():
         # else:
 
         # calculation of O
-        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[counter1]),3))
+        WeightedElemCounts.append(float(ELEMADM[counter1]) * round(float(Final_K_8SmWgt[d['EntityID']]),3))
         # calculation of P
-        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[counter1]),3))
+        WeightedHSCounts.append(float(HSADM[counter1]) * round(float(Final_9_12SmWgt[d['EntityID']]),3))
         # CALCULATION of WEIGHTED PREKCOUNT
         WeightedPreKCounts.append(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)))
         # CALCULATION OF PREKBSL
@@ -2119,10 +2119,10 @@ def wftf2():
         else:
             AuditBaseLevelAdjustment.append(float(0))
         # CALCULATION OF LOSS FROM SSW OF K-8 FUNDING AND LOSS FROM SSW OF 9-12 FUNDING
-        AB2.append(float(LEABaseLevel1[counter1]) * float(Final_K_8SmWgt[counter1]) * float(ELEMADM[counter1]))
+        AB2.append(float(LEABaseLevel1[counter1]) * float(Final_K_8SmWgt[d['EntityID']]) * float(ELEMADM[counter1]))
         AH.append(0)
         # AH.append(float(AB2[counter1])-float(AB2[counter1]*float(sixtyseven/100)))
-        AC2.append(float(LEABaseLevel1[counter1]) * float(Final_9_12SmWgt[counter1]) * float(HSADM[counter1]))
+        AC2.append(float(LEABaseLevel1[counter1]) * float(Final_9_12SmWgt[d['EntityID']]) * float(HSADM[counter1]))
         AI.append(0)
         # AI.append(float(AC2[counter1]) - float(AC2[counter1] * float(sixtyseven / 100)))
         # CALCULATION OF BSL VALUE
@@ -2207,19 +2207,19 @@ def wftf2():
                 DistrictHSTextbooksAA.append(0)
                 DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
 
-                if HSRange[counter1] == "1to99":
+                if HSRange[d['EntityID']] == "1to99":
                     DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[counter1] == "100to499" or HSRange[counter1] == "100to499":
+                elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
                     DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[counter1] == ">600":
+                elif HSRange[d['EntityID']] == ">600":
                     DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
                 else:
                     DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                if ELEMRange[counter1] == "1to99":
+                if ELEMRange[d['EntityID']] == "1to99":
                     DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[counter1] == "100to499" or ELEMRange[counter1] == "500to599":
+                elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
                     DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[counter1] == ">600":
+                elif ELEMRange[d['EntityID']] == ">600":
                     DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
                 else:
                     DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
@@ -2266,8 +2266,8 @@ def wftf2():
         # CALCULATION OF  WEIGHTED PUPILS USER SPECIFIED SSW REDUCTION
         PreKWeightedPupilsuser_specifiedSWWreduction.append(
             float(float(PREKADM[counter1] * float(GroupAFinalGroupAWeightsPSD)) - 0))
-        K_8WeightedPupilsuser_specifiedSWWreduction.append((float(ELEMADM[counter1]) * float(Final_K_8SmWgt[counter1])) - 0)
-        nine_12WeightedPupilsuser_specifiedSWWreduction.append((float(HSADM[counter1]) * float(Final_9_12SmWgt[counter1])) - 0)
+        K_8WeightedPupilsuser_specifiedSWWreduction.append((float(ELEMADM[counter1]) * float(Final_K_8SmWgt[d['EntityID']])) - 0)
+        nine_12WeightedPupilsuser_specifiedSWWreduction.append((float(HSADM[counter1]) * float(Final_9_12SmWgt[d['EntityID']])) - 0)
         SumofPreKWeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += PreKWeightedPupilsuser_specifiedSWWreduction[counter1]
         Sumofk_8WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += K_8WeightedPupilsuser_specifiedSWWreduction[counter1]
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
@@ -2423,7 +2423,7 @@ def wftf2():
             dictionary['sumofBSLcalcperpupildifference'] = str(0-round(float(Original[counter2]['sumofBSLcalcperpupil']),4))
         else:
             dictionary['sumofBSLcalcperpupilcalc']=str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2))
-            dictionary['sumofBSLcalcperpupildifference'] = str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2)-float(Original[counter2]['sumofBSLcalcperpupil']))
+            dictionary['sumofBSLcalcperpupildifference'] = str(round(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2)-round(float(Original[counter2]['sumofBSLcalcperpupil']), 4),2))
         dictionary['sumofBSLcalcperpupildefault'] = str(round(float(Original[counter2]['sumofBSLcalcperpupil']), 4))
         dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
         dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
@@ -2435,8 +2435,8 @@ def wftf2():
         dictionary['TotalStateAidcalc'] = str(round(TotalStateAid[counter2], 3))
         dictionary['TotalStateAidoriginal'] = str(round(float(Original[counter2]['TotalStateAid']), 3))
         dictionary['TotalStateAiddifference'] = str(round(TotalStateAid[counter2]-float(Original[counter2]['TotalStateAid']), 3))
-        dictionary['Final_K_8SmWgt'] = str(round(Final_K_8SmWgt[counter2], 3))
-        dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[counter2], 3))
+        dictionary['Final_K_8SmWgt'] = str(round(Final_K_8SmWgt[decoded[d4]['EntityID']], 3))
+        dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[decoded[d4]['EntityID']], 3))
         dictionary['RCLcalc'] = str(round(RCL[counter2], 4))
         dictionary['RCLoriginal'] = str(round(float(Original[counter2]['RCL']), 4))
         dictionary['RCLdifference'] = str(round(RCL[counter2], 4)-round(float(Original[counter2]['RCL']), 4))
@@ -2462,8 +2462,8 @@ def wftf2():
         dictionary['GroupBBSL'] = str(round(GroupBBSL[counter2], 2))
         dictionary['HSBSL'] = str(round(HSBSL[counter2], 2))
         dictionary['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[counter2], 3))
-        dictionary['ELEMRange'] = (ELEMRange[counter2])
-        dictionary['HSRange'] = (HSRange[counter2])
+        dictionary['ELEMRange'] = (ELEMRange[decoded[d4]['EntityID']])
+        dictionary['HSRange'] = (HSRange[decoded[d4]['EntityID']])
         dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
         dictionary['AdditionalAssistance']=AdditionalAssistance[counter2]
         dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
@@ -2474,7 +2474,7 @@ def wftf2():
         dictionary['FinalFormulaAAwithReduction'] = str(round(FinalFormulaAAwithReduction[counter2], 4))
         dictionary['FinalFormulaAdditionalAssistance'] = str(round(FinalFormulaAdditionalAssistance[counter2], 4))
         dictionary['ElemLL'] = str(round(ElemLL[counter2], 4))
-        dictionary['HSBaseWeight'] = str(round(HSBaseWeight[counter2], 4))
+        dictionary['HSBaseWeight'] = str(round(HSBaseWeight[decoded[d4]['EntityID']], 4))
         dictionary['HSLL'] = str(round(HSLL[counter2], 4))
         dictionary['SSWHSINCREMENTALWEIGHTPP'] = str(round(SSWHSINCREMENTALWEIGHTPP[counter2], 4))
         dictionary['color']="red"

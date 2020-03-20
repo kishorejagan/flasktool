@@ -122,6 +122,50 @@
           </a>
         </td>
           <td>
+          <a href="#" ng-click="sortType = 'DistrictHSTextbooksAA'; sortReverse = !sortReverse">
+          DistrictHSTextbooksAA
+            <span ng-show="sortType == 'DistrictHSTextbooksAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictHSTextbooksAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictHSAA'; sortReverse = !sortReverse">
+          DistrictHSAA
+            <span ng-show="sortType == 'DistrictHSAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictHSAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictElemAA'; sortReverse = !sortReverse">
+          DistrictElemAA
+            <span ng-show="sortType == 'DistrictElemAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictElemAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'DistrictPreKAA'; sortReverse = !sortReverse">
+          DistrictPreKAA
+            <span ng-show="sortType == 'DistrictPreKAA' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'DistrictPreKAA' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TutionoutCount'; sortReverse = !sortReverse">
+          TutionoutCount
+            <span ng-show="sortType == 'TutionoutCount' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TutionoutCount' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'HSTuitionOutAmt'; sortReverse = !sortReverse">
+          HSTuitionOutAmt
+            <span ng-show="sortType == 'HSTuitionOutAmt' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'HSTuitionOutAmt' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
+
+          <td>
           <a href="#" ng-click="sortType = 'TotalBSLcalc'; sortReverse = !sortReverse">
           TotalBSLcalc
             <span ng-show="sortType == 'TotalBSLcalc' && !sortReverse" class="fa fa-caret-down"></span>
@@ -290,6 +334,7 @@
             <span ng-show="sortType == 'admbytype' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+
           <td>
           <a href="#" ng-click="sortType = 'perpupilpertypecalc'; sortReverse = !sortReverse">
           perpupilpertypecalc
@@ -432,6 +477,7 @@
             <span ng-show="sortType == 'TSL' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+
           <td>
           <a href="#" ng-click="sortType = 'AuditBaseLevelAdjustment'; sortReverse = !sortReverse">
           AuditBaseLevelAdjustment
@@ -481,13 +527,7 @@
             <span ng-show="sortType == 'TotalDistrictAAReduction' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
-          <td>
-          <a href="#" ng-click="sortType = 'TotalFormulaDistrictAA'; sortReverse = !sortReverse">
-          TotalFormulaDistrictAA
-            <span ng-show="sortType == 'TotalFormulaDistrictAA' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'TotalFormulaDistrictAA' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
+
           <td>
           <a href="#" ng-click="sortType = 'TotalNetDistrictAA'; sortReverse = !sortReverse">
           TotalNetDistrictAA
@@ -542,27 +582,6 @@
           ElemAssessedValuation
             <span ng-show="sortType == 'ElemAssessedValuation' && !sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="sortType == 'ElemAssessedValuation' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'DistrictHSAA'; sortReverse = !sortReverse">
-          DistrictHSAA
-            <span ng-show="sortType == 'DistrictHSAA' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'DistrictHSAA' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'DistrictElemAA'; sortReverse = !sortReverse">
-          DistrictElemAA
-            <span ng-show="sortType == 'DistrictElemAA' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'DistrictElemAA' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'DistrictPreKAA'; sortReverse = !sortReverse">
-          DistrictPreKAA
-            <span ng-show="sortType == 'DistrictPreKAA' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'DistrictPreKAA' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
           <td>
@@ -665,6 +684,13 @@
            <td>{{ roll.AOI }}</td>
           <td>{{ roll.schooltype }}</td>
           <td>{{ roll.admbyschooltype }}</td>
+
+        <td>{{ roll.DistrictHSTextbooksAA }}</td>
+        <td>{{ roll.DistrictHSAA }}</td>
+        <td>{{ roll.DistrictElemAA }}</td>
+        <td>{{ roll.DistrictPreKAA }}</td>
+        <td>{{ roll.TutionoutCount }}</td>
+        <td>{{ roll.HSTuitionOutAmt }}</td>
         <td>{{ roll.TotalBSLcalc }}</td>
         <td>{{ roll.TotalBSLoriginal }}</td>
         <td>{{ roll.TotalBSLdifference }}</td>
@@ -716,7 +742,7 @@
           <td>{{ roll.DistrictPreKElemReduction }}</td>
           <td>{{ roll.DistrictHSReduction }}</td>
           <td>{{ roll.TotalDistrictAAReduction }}</td>
-          <td>{{ roll.TotalFormulaDistrictAA }}</td>
+
           <td>{{ roll.TotalNetDistrictAA }}</td>
           <td>{{ roll.FinalFormulaAAwithReduction }}</td>
           <td>{{ roll.FinalFormulaAdditionalAssistance }}</td>
@@ -725,9 +751,6 @@
           <td>{{ roll.ElemQTRYield }}</td>
           <td>{{ roll.ElemTotalStateFormula }}</td>
           <td>{{ roll.ElemAssessedValuation }}</td>
-          <td>{{ roll.DistrictHSAA }}</td>
-          <td>{{ roll.DistrictElemAA }}</td>
-          <td>{{ roll.DistrictPreKAA }}</td>
           <td>{{ roll.Final_K_8SmWgt }}</td>
           <td>{{ roll.Final_9_12SmWgt }}</td>
           <td>{{ roll.WeightedPreKCounts }}</td>
@@ -750,7 +773,7 @@ table {
     border-collapse: collapse;
 }
 
-tr:nth-child(n + 20) {
+tr:nth-child(n + 1000) {
     visibility: hidden;
 }
 body { padding-top:50px; }

@@ -101,6 +101,13 @@
           </a>
         </td>
           <td>
+          <a href="#" ng-click="sortType = 'EHType'; sortReverse = !sortReverse">
+          EHType
+            <span ng-show="sortType == 'EHType' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'EHType' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
           <a href="#" ng-click="sortType = 'AOI'; sortReverse = !sortReverse">
           AOI
             <span ng-show="sortType == 'AOI' && !sortReverse" class="fa fa-caret-down"></span>
@@ -681,7 +688,8 @@
           <td>{{ roll.hsadm }}</td>
           <td>{{ roll.EntityName }}</td>
           <td>{{ roll.County }}</td>
-           <td>{{ roll.AOI }}</td>
+        <td>{{ roll.EHType }}</td>
+        <td>{{ roll.AOI }}</td>
           <td>{{ roll.schooltype }}</td>
           <td>{{ roll.admbyschooltype }}</td>
 

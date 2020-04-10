@@ -170,7 +170,7 @@ def wftf(yearnum,g,Yeardef):
     DistSuppLvl100to5999_12 = 405.59
     DistSuppLvl600AndOver9_12 = 492.94
     TEI10 = 1
-    AdditionalAssistant_eqformula = 2
+    AdditionalAssistant_eqformula = 1
     AdditonalAssistantReduction = 1
     # End of input variables to be posted  in front end
     QTRUnified = QTRK_8 + QTR9_12
@@ -348,6 +348,16 @@ def wftf(yearnum,g,Yeardef):
         Sumofk_8WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
+        if (pred['EHTYPE']=='Charter Holder - University' or pred['EHTYPE']=='Charter Holder-Charter Board'):
+            pred['EHTYPE']="Charter"
+        elif(pred['EHTYPE']=='School District - Vocational/Technical'):
+            pred['EHTYPE']="CTED"
+        elif(pred['EHTYPE']==None):
+            pass
+        elif(pred['EHTYPE']=='School District - Accommodation'):
+            pred['EHTYPE']="District-Accomodation"
+        else:
+            pred['EHTYPE']="District"
         if (pred['Type'] == 'Charter Holder-Charter Board'):
             pred['Type'] = "Charter"
         elif (pred['Type'] == 'Charter Holder - University'):
@@ -1558,6 +1568,18 @@ def wftf2():
         Sumofk_8WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
+        if (pred['EHTYPE']=='Charter Holder - University' or pred['EHTYPE']=='Charter Holder-Charter Board'):
+            pred['EHTYPE']="Charter"
+        elif(pred['EHTYPE']=='School District - Vocational/Technical'):
+            pred['EHTYPE']="CTED"
+        elif(pred['EHTYPE']==None):
+            pass
+        elif(pred['EHTYPE']=='School District - Accommodation'):
+            pred['EHTYPE']="District-Accomodation"
+        else:
+            pred['EHTYPE']="District"
+
+
         if (pred['Type'] == 'Charter Holder-Charter Board'):
 
             pred['Type'] = "Charter"

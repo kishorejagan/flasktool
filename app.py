@@ -333,6 +333,7 @@ def wftf(yearnum,g,Yeardef):
             sumofnetworkhsadm[d2]=0
     count = 0
     schooltype = {}
+    schoolEHType={}
     schooltypeanddistricttype = {}
     admbyschooltype = {}
     bslbyschooltype = {}
@@ -348,16 +349,21 @@ def wftf(yearnum,g,Yeardef):
         Sumofk_8WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[entityid] = 0
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
-        if (pred['EHType']=='Charter Holder - University' or pred['EHType']=='Charter Holder-Charter Board'):
-            pred['EHType']="Charter"
-        elif(pred['EHType']=='School District - Vocational/Technical'):
-            pred['EHType']="CTED"
-        elif(pred['EHType']==None):
+        if (pred['EHType'] == 'Charter Holder - University' or pred['EHType'] == 'Charter Holder-Charter Board'):
+            pred['EHType'] = "Charter"
+        elif (pred['EHType'] == 'School District - Vocational/Technical'):
+            pred['EHType'] = "CTED"
+        elif (pred['EHType'] == None):
             pass
-        elif(pred['EHType']=='School District - Accommodation'):
-            pred['EHType']="District-Accomodation"
-        else:
-            pred['EHType']="District"
+        elif (pred['EHType'] == 'School District - Accommodation'):
+            pred['EHType'] = "Accomodation"
+        elif (pred['EHType'] == 'School District - Elementary In High School'):
+            pred['EHType'] = "Elementary with HS Students"
+        elif (pred['EHType'] == "School District - Elementary Not In High School"):
+            pred['EHType'] = "Elementary district"
+        elif (pred['EHType'] == "School District - Unified"):
+            pred['EHType'] = "Unified district"
+
         if (pred['Type'] == 'Charter Holder-Charter Board'):
             pred['Type'] = "Charter"
         elif (pred['Type'] == 'Charter Holder - University'):
@@ -1318,7 +1324,7 @@ def wftf2():
     actualTeachercomp= round(actualBaseSupport * (1 + (1.25/100)),2)
 
     actualTeacherCompAnd200DayCalender =round((actualBaseSupport * (1 + (1.25/100)))+(actualBaseSupport * (1 + (1.25/100)))*(5/100),2)
-    
+
     actual200daycalender=round(actualBaseSupport + (actualBaseSupport * (5)/100),2)
 
     diffBaseSupport=actualBaseSupport-BaseSupport
@@ -1575,10 +1581,13 @@ def wftf2():
         elif(pred['EHType']==None):
             pass
         elif(pred['EHType']=='School District - Accommodation'):
-            pred['EHType']="District-Accomodation"
-        else:
-            pred['EHType']="District"
-
+            pred['EHType']="Accomodation"
+        elif(pred['EHType']=='School District - Elementary In High School'):
+            pred['EHType']="Elementary with HS Students"
+        elif(pred['EHType']=="School District - Elementary Not In High School"):
+            pred['EHType']="Elementary district"
+        elif(pred['EHType']=="School District - Unified"):
+            pred['EHType']="Unified district"
 
         if (pred['Type'] == 'Charter Holder-Charter Board'):
 

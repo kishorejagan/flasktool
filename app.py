@@ -301,6 +301,8 @@ def wftf(yearnum,g,Yeardef):
     sumofnetworkhsadm = {}
     bslbytype = {}
     admbytype = {}
+    bslbyEHType = {}
+    admbyEHType = {}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = []
     HSRange = {}
@@ -324,6 +326,7 @@ def wftf(yearnum,g,Yeardef):
     SumofBSL={}
     sumofadm = {}
     perpupilpertype = {}
+    perpupilbyEHType={}
     # STORE THE NETWORK NAMES
     parentorg = engine.execute('select distinct (ParentOrganization) from ChartersWithNetwork')
     for row2 in parentorg:
@@ -351,10 +354,11 @@ def wftf(yearnum,g,Yeardef):
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
         if (pred['EHType'] == 'Charter Holder - University' or pred['EHType'] == 'Charter Holder-Charter Board'):
             pred['EHType'] = "Charter"
+
         elif (pred['EHType'] == 'School District - Vocational/Technical'):
             pred['EHType'] = "CTED"
         elif (pred['EHType'] == None):
-            pass
+            pred['EHType']="None"
         elif (pred['EHType'] == 'School District - Accommodation'):
             pred['EHType'] = "Accomodation"
         elif (pred['EHType'] == 'School District - Elementary In High School'):
@@ -363,7 +367,7 @@ def wftf(yearnum,g,Yeardef):
             pred['EHType'] = "Elementary district"
         elif (pred['EHType'] == "School District - Unified"):
             pred['EHType'] = "Unified district"
-
+        schoolEHType[pred['EntityID']] = pred['EHType']
         if (pred['Type'] == 'Charter Holder-Charter Board'):
             pred['Type'] = "Charter"
         elif (pred['Type'] == 'Charter Holder - University'):
@@ -954,6 +958,14 @@ def wftf(yearnum,g,Yeardef):
 
         SumofBSL[d['EntityID']] += BSL[counter1]
         sumofadm[d['EntityID']] += ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
+        if d['EHType'] not in bslbyEHType:
+            bslbyEHType[d['EHType']]=BSL[counter1]
+        else:
+            bslbyEHType[d['EHType']]+=BSL[counter1]
+        if d['EHType'] not in admbyEHType:
+            admbyEHType[d['EHType']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+        else:
+            admbyEHType[d['EHType']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
         if schooltype[d['EntityID']] not in bslbyschooltype:
             bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         else:
@@ -1113,7 +1125,11 @@ def wftf(yearnum,g,Yeardef):
             perpupilpertype[i] = 0
         else:
             perpupilpertype[i] = (bslbytype[i] / 3) / (admbytype[i] / 3)
-
+    for i in bslbyEHType:
+        if admbyEHType[i]==0:
+            perpupilbyEHType[i]=0
+        else:
+            perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
     for i in bslbyschooltype:
         if admbyschooltype[i] == 0:
             perpupilbyschooltype[i] = 0
@@ -1225,6 +1241,9 @@ def wftf(yearnum,g,Yeardef):
         dictionary['Type']=str(decoded[d4]['Type'])
         dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
         dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        dictionary['bslbyEHType']=str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
+        dictionary['admbyEHType']=str(round(admbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
+        dictionary['perpupilbyEHType']=str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
         dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
         dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
@@ -1559,13 +1578,17 @@ def wftf2():
             sumofnetworkhsadm[d2]=0
     count = 0
     schooltype = {}
+    schoolEHType={}
     schooltypeanddistricttype={}
     admbyschooltype={}
     bslbyschooltype={}
+    bslbyEHType={}
+    admbyEHType={}
     admbyschooltypeanddistricttype={}
     bslbyschooltypeanddistricttype={}
     perpupilbyschooltypeanddistricttype={}
     perpupilbyschooltype={}
+    perpupilbyEHType={}
     # CALCULATION OF ADM VALUES
     for pred in decoded:
         #pred = dict(prerow.items())
@@ -1579,7 +1602,7 @@ def wftf2():
         elif(pred['EHType']=='School District - Vocational/Technical'):
             pred['EHType']="CTED"
         elif(pred['EHType']==None):
-            pass
+            pred['EHType'] = "None"
         elif(pred['EHType']=='School District - Accommodation'):
             pred['EHType']="Accomodation"
         elif(pred['EHType']=='School District - Elementary In High School'):
@@ -1588,7 +1611,7 @@ def wftf2():
             pred['EHType']="Elementary district"
         elif(pred['EHType']=="School District - Unified"):
             pred['EHType']="Unified district"
-
+        schoolEHType[pred['EntityID']] = pred['EHType']
         if (pred['Type'] == 'Charter Holder-Charter Board'):
 
             pred['Type'] = "Charter"
@@ -2161,6 +2184,14 @@ def wftf2():
 
         SumofBSL[d['EntityID']]+=BSL[counter1]
         sumofadm[d['EntityID']]+=ELEMADM[counter1]+PREKADM[counter1]+HSADM[counter1]
+        if d['EHType'] not in bslbyEHType:
+            bslbyEHType[d['EHType']]=BSL[counter1]
+        else:
+            bslbyEHType[d['EHType']]+=BSL[counter1]
+        if d['EHType'] not in admbyEHType:
+            admbyEHType[d['EHType']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+        else:
+            admbyEHType[d['EHType']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
         if schooltype[d['EntityID']] not in bslbyschooltype:
             bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         else:
@@ -2309,7 +2340,11 @@ def wftf2():
             perpupilpertype[i] =0
         else:
             perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
-
+    for i in bslbyEHType:
+        if admbyEHType[i]==0:
+            perpupilbyEHType[i]=0
+        else:
+            perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
     for i in bslbyschooltype:
         if admbyschooltype[i]==0:
             perpupilbyschooltype[i] =0
@@ -2435,6 +2470,11 @@ def wftf2():
         dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
         dictionary['DistrictPreKAA'] = str(round(DistrictPreKAA[counter2], 5))
+        dictionary['bslbyEHType'] = str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
+        dictionary['admbyEHType'] = str(round(admbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
+        dictionary['perpupilbyEHTypedefault'] = str(round(float(Original[counter2]['perpupilbyEHType']), 4))
+        dictionary['perpupilbyEHTypecalc'] = str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
+        dictionary['perpupilbyEHTypedifference'] = str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]]-float(Original[counter2]['perpupilbyEHType']), 2))
         dictionary['hsadm'] = str(round(HSADM[counter2], 4))
         dictionary['elemadm'] = str(round(ELEMADM[counter2], 4))
         dictionary['sumofadm']=str(round(sumofadm[decoded[d4]['EntityID']],2))

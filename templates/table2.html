@@ -142,6 +142,43 @@
             <span ng-show="sortType == 'perpupilbyEHTypedifference' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+
+          <td>
+          <a href="#" ng-click="sortType = 'bslbyCounty'; sortReverse = !sortReverse">
+          bslbyCounty
+            <span ng-show="sortType == 'bslbyCounty' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'bslbyCounty' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'admbyCounty'; sortReverse = !sortReverse">
+          admbyCounty
+            <span ng-show="sortType == 'admbyCounty' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'admbyCounty' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
+          <td>
+          <a href="#" ng-click="sortType = 'perpupilbyCountycalc'; sortReverse = !sortReverse">
+          perpupilbyCountycalc
+            <span ng-show="sortType == 'perpupilbyCountycalc' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'perpupilbyCountycalc' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'perpupilbyCountydefault'; sortReverse = !sortReverse">
+          perpupilbyCountydefault
+            <span ng-show="sortType == 'perpupilbyCountydefault' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'perpupilbyCountydefault' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'perpupilbyCountydifference'; sortReverse = !sortReverse">
+          perpupilbyCountydifference
+            <span ng-show="sortType == 'perpupilbyCountydifference' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'perpupilbyCountydifference' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
           <td>
           <a href="#" ng-click="sortType = 'AOI'; sortReverse = !sortReverse">
           AOI
@@ -149,20 +186,7 @@
             <span ng-show="sortType == 'AOI' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
-          <td>
-          <a href="#" ng-click="sortType = 'schooltype'; sortReverse = !sortReverse">
-          schooltype
-            <span ng-show="sortType == 'schooltype' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'schooltype' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'admbyschooltype'; sortReverse = !sortReverse">
-          admbyschooltype
-            <span ng-show="sortType == 'admbyschooltype' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'admbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
+
           <td>
           <a href="#" ng-click="sortType = 'DistrictHSTextbooksAA'; sortReverse = !sortReverse">
           DistrictHSTextbooksAA
@@ -228,55 +252,9 @@
             <span ng-show="sortType == 'TotalBSLdifference' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
-        <td>
-          <a href="#" ng-click="sortType = 'bslbyschooltype'; sortReverse = !sortReverse">
-          bslbyschooltype
-            <span ng-show="sortType == 'bslbyschooltype' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'bslbyschooltype' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'perpupilbyschooltypecalc'; sortReverse = !sortReverse">
-          perpupilbyschooltypecalc
-            <span ng-show="sortType == 'perpupilbyschooltypecalc' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypecalc' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'perpupilbyschooltypedefault'; sortReverse = !sortReverse">
-          perpupilbyschooltypedefault
-            <span ng-show="sortType == 'perpupilbyschooltypedefault' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypedefault' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-          <a href="#" ng-click="sortType = 'perpupilbyschooltypedifference'; sortReverse = !sortReverse">
-          perpupilbyschooltypedifference
-            <span ng-show="sortType == 'perpupilbyschooltypedifference' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypedifference' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-          <td>
-              <a href="#" ng-click="sortType = 'perpupilbyschooltypeanddistricttypecalc'; sortReverse = !sortReverse">
-          perpupilbyschooltypeanddistricttypecalc
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypecalc' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypecalc' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-           <td>
-              <a href="#" ng-click="sortType = 'perpupilbyschooltypeanddistricttypedefault'; sortReverse = !sortReverse">
-          perpupilbyschooltypeanddistricttypedefault
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypedefault' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypedefault' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
-           <td>
-              <a href="#" ng-click="sortType = 'perpupilbyschooltypeanddistricttypedifference'; sortReverse = !sortReverse">
-          perpupilbyschooltypeanddistricttypedifference
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypediffernece' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'perpupilbyschooltypeanddistricttypedifference' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
+
+
+
           <td>
           <a href="#" ng-click="sortType = 'LEABaseLevel'; sortReverse = !sortReverse">
           LEABaseLevel
@@ -726,13 +704,16 @@
         <td>{{ roll.EHType }}</td>
         <td>{{ roll.bslbyEHType }}</td>
         <td>{{ roll.admbyEHType }}</td>
+
         <td>{{ roll.perpupilbyEHTypecalc }}</td>
         <td>{{ roll.perpupilbyEHTypedefault }}</td>
         <td>{{ roll.perpupilbyEHTypedifference }}</td>
+        <td>{{ roll.bslbyCounty }}</td>
+        <td>{{ roll.admbyCounty }}</td>
+        <td>{{ roll.perpupilbyCountycalc }}</td>
+        <td>{{ roll.perpupilbyCountydefault }}</td>
+        <td>{{ roll.perpupilbyCountydifference }}</td>
         <td>{{ roll.AOI }}</td>
-          <td>{{ roll.schooltype }}</td>
-          <td>{{ roll.admbyschooltype }}</td>
-
         <td>{{ roll.DistrictHSTextbooksAA }}</td>
         <td>{{ roll.DistrictHSAA }}</td>
         <td>{{ roll.DistrictElemAA }}</td>
@@ -742,13 +723,6 @@
         <td>{{ roll.TotalBSLcalc }}</td>
         <td>{{ roll.TotalBSLoriginal }}</td>
         <td>{{ roll.TotalBSLdifference }}</td>
-          <td>{{ roll.bslbyschooltype }}</td>
-          <td>{{ roll.perpupilbyschooltypecalc }}</td>
-        <td>{{ roll.perpupilbyschooltypedefault }}</td>
-        <td>{{ roll.perpupilbyschooltypedifference }}</td>
-        <td>{{ roll.perpupilbyschooltypeanddistricttypecalc }}</td>
-        <td>{{ roll.perpupilbyschooltypeanddistricttypedefault }}</td>
-        <td>{{ roll.perpupilbyschooltypeanddistricttypedifference }}</td>
           <td>{{ roll.LEABaseLevel }}</td>
           <td >{{ roll.BSLcalc }}</td>
            <td >{{ roll.BSLoriginal }}</td>

@@ -303,6 +303,9 @@ def wftf(yearnum,g,Yeardef):
     admbytype = {}
     bslbyEHType = {}
     admbyEHType = {}
+    bslbyCounty={}
+    admbyCounty={}
+    perpupilbyCounty={}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = []
     HSRange = {}
@@ -336,6 +339,7 @@ def wftf(yearnum,g,Yeardef):
             sumofnetworkhsadm[d2]=0
     count = 0
     schooltype = {}
+
     schoolEHType={}
     schooltypeanddistricttype = {}
     admbyschooltype = {}
@@ -438,76 +442,75 @@ def wftf(yearnum,g,Yeardef):
             sumCharterHSADM[pred['EntityID']]=0
         SumofBSL[pred['EntityID']]=0
         sumofadm[pred['EntityID']] = 0
-        if (PREKADM[count] == 0 and ELEMADM[count] == 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "novalue"
-        elif (PREKADM[count] == 0 and ELEMADM[count] == 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "High School District"
-
-        elif (PREKADM[count] == 0 and ELEMADM[count] > 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Elementary District"
-
-        elif (PREKADM[count] == 0 and ELEMADM[count] > 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Unified District"
-
-        elif (PREKADM[count] > 0 and ELEMADM[count] == 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Nottype"
-
-        elif (PREKADM[count] > 0 and ELEMADM[count] == 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Nottype"
-
-        elif (PREKADM[count] > 0 and ELEMADM[count] > 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Elementary District"
-
-        elif (PREKADM[count] > 0 and ELEMADM[count] > 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']] = "Unified District"
+        # if (PREKADM[count] == 0 and ELEMADM[count] == 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "novalue"
+        # elif (PREKADM[count] == 0 and ELEMADM[count] == 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "High School District"
+        #
+        # elif (PREKADM[count] == 0 and ELEMADM[count] > 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Elementary District"
+        #
+        # elif (PREKADM[count] == 0 and ELEMADM[count] > 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Unified District"
+        #
+        # elif (PREKADM[count] > 0 and ELEMADM[count] == 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Nottype"
+        #
+        # elif (PREKADM[count] > 0 and ELEMADM[count] == 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Nottype"
+        #
+        # elif (PREKADM[count] > 0 and ELEMADM[count] > 0 and HSADM[count] == 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Elementary District"
+        #
+        # elif (PREKADM[count] > 0 and ELEMADM[count] > 0 and HSADM[count] > 0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']] = "Unified District"
 
         # calcschooltypeanddistricttype
 
-        if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "Charter":
-            schooltypeanddistricttype[pred['EntityID']] = "novalue and Charter"
-
-        elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "Charter":
-            schooltypeanddistricttype[pred['EntityID']] = "High School District and Charter"
-
-        elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "Charter":
-            schooltypeanddistricttype[pred['EntityID']] = "Elementary District and Charter"
-
-        elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "Charter":
-            schooltypeanddistricttype[pred['EntityID']] = "Unified District and Charter"
-
-        elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "Charter":
-            schooltypeanddistricttype[pred['EntityID']] = "Nottype and Charter"
-
-        if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "CTED":
-            schooltypeanddistricttype[pred['EntityID']] = "novalue and CTED"
-
-        elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "CTED":
-            schooltypeanddistricttype[pred['EntityID']] = "High School District and CTED"
-
-        elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "CTED":
-            schooltypeanddistricttype[pred['EntityID']] = "Elementary District and CTED"
-
-        elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "CTED":
-            schooltypeanddistricttype[pred['EntityID']] = "Unified District and CTED"
-
-        elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "CTED":
-            schooltypeanddistricttype[pred['EntityID']] = "Nottype and CTED"
-
-        if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "District":
-            schooltypeanddistricttype[pred['EntityID']] = "novalue and District"
-
-        elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "District":
-            schooltypeanddistricttype[pred['EntityID']] = "High School District and District"
-
-        elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "District":
-            schooltypeanddistricttype[pred['EntityID']] = "Elementary District and District"
-
-        elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "District":
-            schooltypeanddistricttype[pred['EntityID']] = "Unified District and District"
-
-        elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "District":
-            schooltypeanddistricttype[pred['EntityID']] = "Nottype and District"
-
+        # if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "Charter":
+        #     schooltypeanddistricttype[pred['EntityID']] = "novalue and Charter"
+        #
+        # elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "Charter":
+        #     schooltypeanddistricttype[pred['EntityID']] = "High School District and Charter"
+        #
+        # elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "Charter":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Elementary District and Charter"
+        #
+        # elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "Charter":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Unified District and Charter"
+        #
+        # elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "Charter":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Nottype and Charter"
+        #
+        # if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "CTED":
+        #     schooltypeanddistricttype[pred['EntityID']] = "novalue and CTED"
+        #
+        # elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "CTED":
+        #     schooltypeanddistricttype[pred['EntityID']] = "High School District and CTED"
+        #
+        # elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "CTED":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Elementary District and CTED"
+        #
+        # elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "CTED":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Unified District and CTED"
+        #
+        # elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "CTED":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Nottype and CTED"
+        #
+        # if schooltype[pred['EntityID']] == "novalue" and pred['Type'] == "District":
+        #     schooltypeanddistricttype[pred['EntityID']] = "novalue and District"
+        #
+        # elif schooltype[pred['EntityID']] == "High School District" and pred['Type'] == "District":
+        #     schooltypeanddistricttype[pred['EntityID']] = "High School District and District"
+        #
+        # elif schooltype[pred['EntityID']] == "Elementary District" and pred['Type'] == "District":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Elementary District and District"
+        #
+        # elif schooltype[pred['EntityID']] == "Unified District" and pred['Type'] == "District":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Unified District and District"
+        #
+        # elif schooltype[pred['EntityID']] == "Nottype" and pred['Type'] == "District":
+        #     schooltypeanddistricttype[pred['EntityID']] = "Nottype and District"
 
         count += 1
     entitynull=[]
@@ -957,7 +960,18 @@ def wftf(yearnum,g,Yeardef):
             float(GroupBBSL[counter1]), 3) + float(AuditBaseLevelAdjustment[counter1])))
 
         SumofBSL[d['EntityID']] += BSL[counter1]
-        sumofadm[d['EntityID']] += ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
+        sumofadm[d['EntityID']]+= ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
+
+        if d['County'] not in bslbyCounty:
+            bslbyCounty[d['County']]=BSL[counter1]
+        else:
+            bslbyCounty[d['County']]+=BSL[counter1]
+        if d['County'] not in admbyCounty:
+            admbyCounty[d['County']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+        else:
+            admbyCounty[d['County']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+
+
         if d['EHType'] not in bslbyEHType:
             bslbyEHType[d['EHType']]=BSL[counter1]
         else:
@@ -966,14 +980,14 @@ def wftf(yearnum,g,Yeardef):
             admbyEHType[d['EHType']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
         else:
             admbyEHType[d['EHType']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
-        if schooltype[d['EntityID']] not in bslbyschooltype:
-            bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
-        else:
-            bslbyschooltype[schooltype[d['EntityID']]] += BSL[counter1]
-        if schooltype[d['EntityID']] not in admbyschooltype:
-            admbyschooltype[schooltype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
-        else:
-            admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # if schooltype[d['EntityID']] not in bslbyschooltype:
+        #     bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
+        # else:
+        #     bslbyschooltype[schooltype[d['EntityID']]] += BSL[counter1]
+        # if schooltype[d['EntityID']] not in admbyschooltype:
+        #     admbyschooltype[schooltype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # else:
+        #     admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
         if d['Type'] not in bslbytype:
             bslbytype[d['Type']] = float(SumofBSL[d['EntityID']])
@@ -985,16 +999,16 @@ def wftf(yearnum,g,Yeardef):
             admbytype[d['Type']] += float(sumofadm[d['EntityID']])
 
         # calculate by type and schooltype
-        if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
-            bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = BSL[counter1]
-        else:
-            bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += BSL[counter1]
-        if schooltypeanddistricttype[d['EntityID']] not in admbyschooltypeanddistricttype:
-            admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = (
-                        PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
-        else:
-            admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += (
-                        PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
+        #     bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = BSL[counter1]
+        # else:
+        #     bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += BSL[counter1]
+        # if schooltypeanddistricttype[d['EntityID']] not in admbyschooltypeanddistricttype:
+        #     admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = (
+        #                 PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # else:
+        #     admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += (
+        #                 PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
         # STORING ENTITY ID
         EID.append(d['EntityID'])
@@ -1119,7 +1133,11 @@ def wftf(yearnum,g,Yeardef):
         nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
         counter1 += 1
     counter2 = 0
-
+    for i in bslbyCounty:
+        if admbyCounty[i]==0:
+            perpupilbyCounty[i]=0
+        else:
+            perpupilbyCounty[i]=(bslbyCounty[i]/admbyCounty[i])
     for i in bslbytype:
         if admbytype[i] == 0:
             perpupilpertype[i] = 0
@@ -1130,17 +1148,17 @@ def wftf(yearnum,g,Yeardef):
             perpupilbyEHType[i]=0
         else:
             perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
-    for i in bslbyschooltype:
-        if admbyschooltype[i] == 0:
-            perpupilbyschooltype[i] = 0
-        else:
-            perpupilbyschooltype[i] = (bslbyschooltype[i] / admbyschooltype[i])
-    for i in bslbyschooltypeanddistricttype:
-        if admbyschooltypeanddistricttype[i] == 0:
-            perpupilbyschooltypeanddistricttype[i] = 0
-        else:
-            perpupilbyschooltypeanddistricttype[i] = (
-                        bslbyschooltypeanddistricttype[i] / admbyschooltypeanddistricttype[i])
+    # for i in bslbyschooltype:
+    #     if admbyschooltype[i] == 0:
+    #         perpupilbyschooltype[i] = 0
+    #     else:
+    #         perpupilbyschooltype[i] = (bslbyschooltype[i] / admbyschooltype[i])
+    # for i in bslbyschooltypeanddistricttype:
+    #     if admbyschooltypeanddistricttype[i] == 0:
+    #         perpupilbyschooltypeanddistricttype[i] = 0
+    #     else:
+    #         perpupilbyschooltypeanddistricttype[i] = (
+    #                     bslbyschooltypeanddistricttype[i] / admbyschooltypeanddistricttype[i])
 
     for d4 in range(len(decoded)):
         dictionary = {}
@@ -1234,21 +1252,21 @@ def wftf(yearnum,g,Yeardef):
         dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
         dictionary['NoStateAidDistrict'] = str(round(NoStateAidDistrict[counter2], 4))
         dictionary['EntityName'] = Ename[counter2]
-        dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
+        # dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
         dictionary['County'] = decoded[d4]['County']
         dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
         dictionary['TEI'] = str(round(TEI[counter2], 5))
         dictionary['Type']=str(decoded[d4]['Type'])
-        dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
-        dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        # dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        # dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
         dictionary['bslbyEHType']=str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['admbyEHType']=str(round(admbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['perpupilbyEHType']=str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
         dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
-        dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
+        # dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
         dictionary['perpupilpertype'] = str(round((perpupilpertype[decoded[d4]['Type']]), 2))
-        dictionary['perpupilbyschooltypeanddistricttype'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
+        # dictionary['perpupilbyschooltypeanddistricttype'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
         dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
         dictionary['DistrictPreKAA'] = str(round(DistrictPreKAA[counter2], 5))
@@ -1272,6 +1290,9 @@ def wftf(yearnum,g,Yeardef):
         dictionary['TotalStateAid'] = str(round(TotalStateAid[counter2], 3))
         dictionary['Final_K_8SmWgt'] = str(round(Final_K_8SmWgt[decoded[d4]['EntityID']], 3))
         dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[decoded[d4]['EntityID']], 3))
+        dictionary['bslbyCounty'] = str(round(bslbyCounty[decoded[d4]['County']], 2))
+        dictionary['admbyCounty'] = str(round(admbyCounty[decoded[d4]['County']], 2))
+        dictionary['perpupilbyCounty'] = str(round(perpupilbyCounty[decoded[d4]['County']], 2))
         dictionary['RCL'] = str(round(RCL[counter2], 4))
         dictionary['TRCL'] = str(round(TRCL[counter2], 4))
         dictionary['DSL'] = str(round(DSL[counter2], 4))
@@ -1296,6 +1317,7 @@ def wftf(yearnum,g,Yeardef):
         dictionary['ELEMRange'] = (ELEMRange[decoded[d4]['EntityID']])
         dictionary['HSRange'] = (HSRange[decoded[d4]['EntityID']])
         dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
+
         dictionary['AdditionalAssistance']=AdditionalAssistance[counter2]
         dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
         # print(type(d4['ESSmallIsolated']))
@@ -1577,17 +1599,21 @@ def wftf2():
             sumofnetworkelemadm[d2]=0
             sumofnetworkhsadm[d2]=0
     count = 0
-    schooltype = {}
+    # schooltype = {}
     schoolEHType={}
-    schooltypeanddistricttype={}
-    admbyschooltype={}
-    bslbyschooltype={}
+    # schooltypeanddistricttype={}
+    # admbyschooltype={}
+    # bslbyschooltype={}
     bslbyEHType={}
     admbyEHType={}
-    admbyschooltypeanddistricttype={}
-    bslbyschooltypeanddistricttype={}
-    perpupilbyschooltypeanddistricttype={}
-    perpupilbyschooltype={}
+    bslbyCounty={}
+    admbyCounty={}
+    perpupilbyCounty={}
+
+    # admbyschooltypeanddistricttype={}
+    # bslbyschooltypeanddistricttype={}
+    # perpupilbyschooltypeanddistricttype={}
+    # perpupilbyschooltype={}
     perpupilbyEHType={}
     # CALCULATION OF ADM VALUES
     for pred in decoded:
@@ -1686,78 +1712,78 @@ def wftf2():
 
         SumofBSL[pred['EntityID']]=0
         sumofadm[pred['EntityID']]=0
-        if (PREKADM[count]==0 and ELEMADM[count]==0 and HSADM[count]==0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="novalue"
-        elif (PREKADM[count]==0 and ELEMADM[count]==0 and HSADM[count]>0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="High School District"
-
-        elif (PREKADM[count]==0 and ELEMADM[count]>0 and HSADM[count]==0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Elementary District"
-
-        elif (PREKADM[count]==0 and ELEMADM[count]>0 and HSADM[count]>0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Unified District"
-
-        elif (PREKADM[count]>0 and ELEMADM[count]==0 and HSADM[count]==0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Nottype"
-
-        elif (PREKADM[count]>0 and ELEMADM[count]==0 and HSADM[count]>0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Nottype"
-
-        elif (PREKADM[count]>0 and ELEMADM[count]>0 and HSADM[count]==0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Elementary District"
-
-        elif (PREKADM[count]>0 and ELEMADM[count]>0 and HSADM[count]>0) and pred["FTFStatus"] == None:
-            schooltype[pred['EntityID']]="Unified District"
+        # if (PREKADM[count]==0 and ELEMADM[count]==0 and HSADM[count]==0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="novalue"
+        # elif (PREKADM[count]==0 and ELEMADM[count]==0 and HSADM[count]>0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="High School District"
+        #
+        # elif (PREKADM[count]==0 and ELEMADM[count]>0 and HSADM[count]==0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Elementary District"
+        #
+        # elif (PREKADM[count]==0 and ELEMADM[count]>0 and HSADM[count]>0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Unified District"
+        #
+        # elif (PREKADM[count]>0 and ELEMADM[count]==0 and HSADM[count]==0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Nottype"
+        #
+        # elif (PREKADM[count]>0 and ELEMADM[count]==0 and HSADM[count]>0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Nottype"
+        #
+        # elif (PREKADM[count]>0 and ELEMADM[count]>0 and HSADM[count]==0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Elementary District"
+        #
+        # elif (PREKADM[count]>0 and ELEMADM[count]>0 and HSADM[count]>0) and pred["FTFStatus"] == None:
+        #     schooltype[pred['EntityID']]="Unified District"
 
         #calcschooltypeanddistricttype
 
 
-        if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="Charter":
-            schooltypeanddistricttype[pred['EntityID']]="novalue and Charter"
-
-        elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="Charter":
-            schooltypeanddistricttype[pred['EntityID']]="High School District and Charter"
-
-        elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="Charter":
-            schooltypeanddistricttype[pred['EntityID']]="Elementary District and Charter"
-
-        elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="Charter":
-            schooltypeanddistricttype[pred['EntityID']]="Unified District and Charter"
-
-        elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="Charter":
-            schooltypeanddistricttype[pred['EntityID']]="Nottype and Charter"
-
-
-        if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="CTED":
-            schooltypeanddistricttype[pred['EntityID']]="novalue and CTED"
-
-        elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="CTED":
-            schooltypeanddistricttype[pred['EntityID']]="High School District and CTED"
-
-        elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="CTED":
-            schooltypeanddistricttype[pred['EntityID']]="Elementary District and CTED"
-
-        elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="CTED":
-            schooltypeanddistricttype[pred['EntityID']]="Unified District and CTED"
-
-        elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="CTED":
-            schooltypeanddistricttype[pred['EntityID']]="Nottype and CTED"
-
-
-        if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="District":
-            schooltypeanddistricttype[pred['EntityID']]="novalue and District"
-
-        elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="District":
-            schooltypeanddistricttype[pred['EntityID']]="High School District and District"
-
-        elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="District":
-            schooltypeanddistricttype[pred['EntityID']]="Elementary District and District"
-
-        elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="District":
-            schooltypeanddistricttype[pred['EntityID']]="Unified District and District"
-
-        elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="District":
-            schooltypeanddistricttype[pred['EntityID']]="Nottype and District"
+        # if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="Charter":
+        #     schooltypeanddistricttype[pred['EntityID']]="novalue and Charter"
+        #
+        # elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="Charter":
+        #     schooltypeanddistricttype[pred['EntityID']]="High School District and Charter"
+        #
+        # elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="Charter":
+        #     schooltypeanddistricttype[pred['EntityID']]="Elementary District and Charter"
+        #
+        # elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="Charter":
+        #     schooltypeanddistricttype[pred['EntityID']]="Unified District and Charter"
+        #
+        # elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="Charter":
+        #     schooltypeanddistricttype[pred['EntityID']]="Nottype and Charter"
+        #
+        #
+        # if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="CTED":
+        #     schooltypeanddistricttype[pred['EntityID']]="novalue and CTED"
+        #
+        # elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="CTED":
+        #     schooltypeanddistricttype[pred['EntityID']]="High School District and CTED"
+        #
+        # elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="CTED":
+        #     schooltypeanddistricttype[pred['EntityID']]="Elementary District and CTED"
+        #
+        # elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="CTED":
+        #     schooltypeanddistricttype[pred['EntityID']]="Unified District and CTED"
+        #
+        # elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="CTED":
+        #     schooltypeanddistricttype[pred['EntityID']]="Nottype and CTED"
+        #
+        #
+        # if schooltype[pred['EntityID']]=="novalue" and pred['Type']=="District":
+        #     schooltypeanddistricttype[pred['EntityID']]="novalue and District"
+        #
+        # elif schooltype[pred['EntityID']]=="High School District" and pred['Type']=="District":
+        #     schooltypeanddistricttype[pred['EntityID']]="High School District and District"
+        #
+        # elif schooltype[pred['EntityID']]=="Elementary District" and pred['Type']=="District":
+        #     schooltypeanddistricttype[pred['EntityID']]="Elementary District and District"
+        #
+        # elif schooltype[pred['EntityID']]=="Unified District" and pred['Type']=="District":
+        #     schooltypeanddistricttype[pred['EntityID']]="Unified District and District"
+        #
+        # elif schooltype[pred['EntityID']]=="Nottype" and pred['Type']=="District":
+        #     schooltypeanddistricttype[pred['EntityID']]="Nottype and District"
 
 
         count += 1
@@ -2184,6 +2210,15 @@ def wftf2():
 
         SumofBSL[d['EntityID']]+=BSL[counter1]
         sumofadm[d['EntityID']]+=ELEMADM[counter1]+PREKADM[counter1]+HSADM[counter1]
+        if d['County'] not in bslbyCounty:
+            bslbyCounty[d['County']]=BSL[counter1]
+        else:
+            bslbyCounty[d['County']]+=BSL[counter1]
+        if d['County'] not in admbyCounty:
+            admbyCounty[d['County']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+        else:
+            admbyCounty[d['County']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
+
         if d['EHType'] not in bslbyEHType:
             bslbyEHType[d['EHType']]=BSL[counter1]
         else:
@@ -2192,14 +2227,14 @@ def wftf2():
             admbyEHType[d['EHType']]=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
         else:
             admbyEHType[d['EHType']]+=(PREKADM[counter1]+ELEMADM[counter1]+HSADM[counter1])
-        if schooltype[d['EntityID']] not in bslbyschooltype:
-            bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
-        else:
-            bslbyschooltype[schooltype[d['EntityID']]] += BSL[counter1]
-        if schooltype[d['EntityID']] not in admbyschooltype:
-            admbyschooltype[schooltype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
-        else:
-            admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # if schooltype[d['EntityID']] not in bslbyschooltype:
+        #     bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
+        # else:
+        #     bslbyschooltype[schooltype[d['EntityID']]] += BSL[counter1]
+        # if schooltype[d['EntityID']] not in admbyschooltype:
+        #     admbyschooltype[schooltype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # else:
+        #     admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
         if d['Type'] not in bslbytype:
             bslbytype[d['Type']]=float(SumofBSL[d['EntityID']])
@@ -2211,14 +2246,14 @@ def wftf2():
             admbytype[d['Type']]+=float(sumofadm[d['EntityID']])
 
         #calculate by type and schooltype
-        if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
-            bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = BSL[counter1]
-        else:
-            bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += BSL[counter1]
-        if schooltypeanddistricttype[d['EntityID']] not in admbyschooltypeanddistricttype:
-            admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
-        else:
-            admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
+        #     bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = BSL[counter1]
+        # else:
+        #     bslbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += BSL[counter1]
+        # if schooltypeanddistricttype[d['EntityID']] not in admbyschooltypeanddistricttype:
+        #     admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] = (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
+        # else:
+        #     admbyschooltypeanddistricttype[schooltypeanddistricttype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
 
 
@@ -2334,7 +2369,11 @@ def wftf2():
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
         counter1 += 1
     counter2 = 0
-
+    for i in bslbyCounty:
+        if admbyCounty[i]==0:
+            perpupilbyCounty[i]=0
+        else:
+            perpupilbyCounty[i]=(bslbyCounty[i]/admbyCounty[i])
     for i in bslbytype:
         if admbytype[i]==0:
             perpupilpertype[i] =0
@@ -2345,16 +2384,16 @@ def wftf2():
             perpupilbyEHType[i]=0
         else:
             perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
-    for i in bslbyschooltype:
-        if admbyschooltype[i]==0:
-            perpupilbyschooltype[i] =0
-        else:
-            perpupilbyschooltype[i]=(bslbyschooltype[i]/admbyschooltype[i])
-    for i in bslbyschooltypeanddistricttype:
-        if admbyschooltypeanddistricttype[i]==0:
-            perpupilbyschooltypeanddistricttype[i]=0
-        else:
-            perpupilbyschooltypeanddistricttype[i]=(bslbyschooltypeanddistricttype[i]/admbyschooltypeanddistricttype[i])
+    # for i in bslbyschooltype:
+    #     if admbyschooltype[i]==0:
+    #         perpupilbyschooltype[i] =0
+    #     else:
+    #         perpupilbyschooltype[i]=(bslbyschooltype[i]/admbyschooltype[i])
+    # for i in bslbyschooltypeanddistricttype:
+    #     if admbyschooltypeanddistricttype[i]==0:
+    #         perpupilbyschooltypeanddistricttype[i]=0
+    #     else:
+    #         perpupilbyschooltypeanddistricttype[i]=(bslbyschooltypeanddistricttype[i]/admbyschooltypeanddistricttype[i])
 
     for d4 in range(len(decoded)):
         dictionary = {}
@@ -2448,21 +2487,21 @@ def wftf2():
         dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
         dictionary['NoStateAidDistrict'] = str(round(NoStateAidDistrict[counter2], 4))
         dictionary['EntityName'] = Ename[counter2]
-        dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
+        # dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
         dictionary['County'] = decoded[d4]['County']
         dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
         dictionary['TEI'] = str(round(TEI[counter2], 5))
         dictionary['Type']=str(decoded[d4]['Type'])
-        dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
-        dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        # dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
+        # dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
         dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
         dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
-        dictionary['perpupilbyschooltypecalc']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
-        dictionary['perpupilbyschooltypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltype']), 4))
-        dictionary['perpupilbyschooltypedifference'] = round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]])-(float(Original[counter2]['perpupilbyschooltype'])),2)
-        dictionary['perpupilbyschooltypeanddistricttypecalc'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
-        dictionary['perpupilbyschooltypeanddistricttypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 4))
-        dictionary['perpupilbyschooltypeanddistricttypedifference'] = round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]])-float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 2)
+        # dictionary['perpupilbyschooltypecalc']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
+        # dictionary['perpupilbyschooltypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltype']), 4))
+        # dictionary['perpupilbyschooltypedifference'] = round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]])-(float(Original[counter2]['perpupilbyschooltype'])),2)
+        # dictionary['perpupilbyschooltypeanddistricttypecalc'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
+        # dictionary['perpupilbyschooltypeanddistricttypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 4))
+        # dictionary['perpupilbyschooltypeanddistricttypedifference'] = round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]])-float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 2)
         dictionary['perpupilpertypecalc']=str(round((perpupilpertype[decoded[d4]['Type']]),2))
         dictionary['perpupilpertypedefault'] = str(round(float(Original[counter2]['perpupilpertype']), 4))
         dictionary['perpupilpertypedifference'] = round(perpupilpertype[decoded[d4]['Type']]-float(Original[counter2]['perpupilpertype']),2)
@@ -2470,6 +2509,11 @@ def wftf2():
         dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
         dictionary['DistrictPreKAA'] = str(round(DistrictPreKAA[counter2], 5))
+        dictionary['bslbyCounty'] = str(round(bslbyCounty[decoded[d4]['County']], 2))
+        dictionary['admbyCounty'] = str(round(admbyCounty[decoded[d4]['County']], 2))
+        dictionary['perpupilbyCountycalc'] = str(round(perpupilbyCounty[decoded[d4]['County']], 2))
+        dictionary['perpupilbyCountydefault'] = str(round(float(Original[counter2]['perpupilbyCounty']), 4))
+        dictionary['perpupilbyCountydifference'] = str(round(perpupilbyCounty[decoded[d4]['County']] - float(Original[counter2]['perpupilbyCounty']), 2))
         dictionary['bslbyEHType'] = str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
         dictionary['admbyEHType'] = str(round(admbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
         dictionary['perpupilbyEHTypedefault'] = str(round(float(Original[counter2]['perpupilbyEHType']), 4))

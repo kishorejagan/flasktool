@@ -433,13 +433,7 @@
             <span ng-show="sortType == 'TotalStateAid' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
-          <td>
-          <a href="#" ng-click="sortType = 'TotalStateFundingEqualised'; sortReverse = !sortReverse">
-          TotalStateFundingEqualised
-            <span ng-show="sortType == 'TotalStateFundingEqualised' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'TotalStateFundingEqualised' && sortReverse" class="fa fa-caret-up"></span>
-          </a>
-        </td>
+
 
           <td>
           <a href="#" ng-click="sortType = 'RCLcalc'; sortReverse = !sortReverse">
@@ -583,6 +577,13 @@
             <span ng-show="sortType == 'HSLL' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'EqualisationAssistance'; sortReverse = !sortReverse">
+          EqualisationAssistance
+            <span ng-show="sortType == 'EqualisationAssistance' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'EqualisationAssistance' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
          <td>
           <a href="#" ng-click="sortType = 'ElemQTRYield'; sortReverse = !sortReverse">
           ElemQTRYield
@@ -597,6 +598,29 @@
             <span ng-show="sortType == 'ElemTotalStateFormula' && sortReverse" class="fa fa-caret-up"></span>
           </a>
         </td>
+          <td>
+          <a href="#" ng-click="sortType = 'HSTotalStateFormula'; sortReverse = !sortReverse">
+          HSTotalStateFormula
+            <span ng-show="sortType == 'HSTotalStateFormula' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'HSTotalStateFormula' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+          <td>
+          <a href="#" ng-click="sortType = 'TotalStateEqualisationFunding'; sortReverse = !sortReverse">
+          TotalStateEqualisationFunding
+            <span ng-show="sortType == 'TotalStateEqualisationFunding' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalStateEqualisationFunding' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
+          <td>
+          <a href="#" ng-click="sortType = 'TotalStateFundingEqualised'; sortReverse = !sortReverse">
+          TotalStateFundingEqualised
+            <span ng-show="sortType == 'TotalStateFundingEqualised' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'TotalStateFundingEqualised' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </td>
+
           <td>
           <a href="#" ng-click="sortType = 'ElemAssessedValuation'; sortReverse = !sortReverse">
           ElemAssessedValuation
@@ -748,7 +772,7 @@
           <td>{{ roll.TotalStateAidcalc }}</td>
           <td>{{ roll.TotalStateAidoriginal }}</td>
           <td>{{ roll.TotalStateAiddifference }}</td>
-          <td>{{ roll.TotalStateFundingEqualised}}</td>
+
           <td>{{ roll.RCLcalc }}</td>
           <td>{{ roll.RCLoriginal }}</td>
           <td>{{ roll.RCLdifference }}</td>
@@ -770,9 +794,14 @@
           <td>{{ roll.FinalFormulaAdditionalAssistance }}</td>
           <td>{{ roll.ElemLL }}</td>
           <td>{{ roll.HSLL }}</td>
+        <td>{{ roll.EqualisationAssistance }}</td>
+
           <td>{{ roll.ElemQTRYield }}</td>
           <td>{{ roll.ElemTotalStateFormula }}</td>
-          <td>{{ roll.ElemAssessedValuation }}</td>
+          <td>{{ roll.HSTotalStateFormula }}</td>
+          <td>{{ roll.TotalStateEqualisationFunding }}</td>
+        <td>{{ roll.TotalStateFundingEqualised}}</td>
+        <td>{{ roll.ElemAssessedValuation }}</td>
           <td>{{ roll.Final_K_8SmWgt }}</td>
           <td>{{ roll.Final_9_12SmWgt }}</td>
           <td>{{ roll.WeightedPreKCounts }}</td>

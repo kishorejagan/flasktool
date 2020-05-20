@@ -1378,8 +1378,8 @@ def wftf(yearnum,g,Yeardef):
     E['sumEqualisationbasedefault']=str(round(sum(EqualisationBase.values()),3))
     E['Reductionsumdefault']=str(round(sum(Reductionsum.values()),3))
     E['sumHSTutiondefault']=str(round(sum(sumHSTution.values()),3))
-    E['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
-    E['NoStateAidDistricts'] = str((sum(NoStateAidDistrict) / 3))
+    E['SumTotalStateFundingEqualiseddefault'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
+    E['NoStateAidDistrictsdefault'] = str((sum(NoStateAidDistrict) / 3))
     E['CAAdefault']=str(round(sum(CAAdefault.values()),3))
     E['DAAdefault'] = str(round(sum(DAAdefault.values()),3))
     #dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
@@ -1626,7 +1626,7 @@ def wftf2():
     AdditionalAssistance = {}
     sumtotalstateaid=0
     sumAdditionalAssistance=0
-    Reductionsum=0
+    Reductionsum={}
     CAA={}
     DAA={}
     HSRange = {}
@@ -2342,7 +2342,7 @@ def wftf2():
         CharterElemAAReduction.append(float(LEApercentofCharterElemADM[counter1]) * float(TotalCharterElemReduction[counter1]))
         CharterHSAAReduction.append(float(LEApercentofCharterHSADM[counter1]) * float(TotalCharterHSReduction[counter1]))
         TotalNetCharterAA.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1])))
-        Reductionsum += (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1]))
+        Reductionsum[d['EntityID']]= (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1]))
         # CALCULATION OF FINAL FORUMULAADDITIONALASSISTANCE
         if d['Type'] == "Charter":
             DistrictHSTextbooksAA.append(0)
@@ -2403,7 +2403,7 @@ def wftf2():
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[counter1] + TotalDistrictAAReduction[counter1]))
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[counter1])
             FinalFormulaAdditionalAssistance.append(TotalFormulaDistrictAA[counter1])
-            Reductionsum += (TotalDistrictAAReduction[counter1] * (-1))
+            Reductionsum[d['EntityID']]= (TotalDistrictAAReduction[counter1] * (-1))
         # CALCULATION OF FINALAAALLOCATION
 
         if AdditonalAssistantReduction == 1:
@@ -2558,7 +2558,7 @@ def wftf2():
         #dictionary['TotalStateEqualisationFunding'] = str(round(TotalStateEqualisationFunding[counter2], 4))
         #dictionary['DistrictPreKElemReduction']=str(round(DistrictPreKElemReduction[counter2], 4))
         #dictionary['DistrictHSReduction'] = str(round(DistrictHSReduction[counter2], 4))
-        #dictionary['TotalDistrictAAReduction'] = str(round(TotalDistrictAAReduction[counter2], 4))
+        dictionary['TotalDistrictAAReduction'] = str(round(TotalDistrictAAReduction[counter2], 4))
         #dictionary['NetworkForFundingPurposes']=str(decoded[d4]['NetworkForFundingPurposes'])
         dictionary['EntityID'] = EID[counter2]
         dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
@@ -2693,11 +2693,11 @@ def wftf2():
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()),3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistance.values()),3))
     F['sumEqualisationbase'] = str(round(sum(EqualisationBase.values()),3))
-    F['Reductionsum'] = str(Reductionsum/ 3)
+    F['Reductionsum'] = str(round(sum(Reductionsum.values()),3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()),3))
     F['SumTotalStateFundingEqualised']=str(round(sum(TotalStateFundingEqualised.values()),3))
-    F['CAA']=str(sum(CAA.values()))
-    F['DAA'] = str(sum(DAA.values()))
+    F['CAA']=str(round(sum(CAA.values()),3))
+    F['DAA'] = str(round(sum(DAA.values()),3))
     print(wholevalues())
     print(ti-gi)
     return flask.render_template('table2.html', string1=D,g='green',r='red')

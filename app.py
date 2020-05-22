@@ -1244,7 +1244,7 @@ def wftf(yearnum,g,Yeardef):
         TotalStateAid[decoded[d4]['EntityID']]=(ElemStateAid[decoded[d4]['EntityID']] + HSStateAid[decoded[d4]['EntityID']])
         #sumTotalStateAiddefualt+=ElemStateAid[counter2] + HSStateAid[counter2]
         # CALCULATION OF NO STATE AID
-        if ((float(PREKADM[counter2]) + float(sumelemadm[decoded[d4]['EntityID']])) > 0) and (float(ElemStateAid[decoded[d4]['EntityID']]) == 0):
+        if ((float(sumprekadm[decoded[d4]['EntityID']]) + float(sumelemadm[decoded[d4]['EntityID']])) > 0) and (float(ElemStateAid[decoded[d4]['EntityID']]) == 0):
             ElemNoStateAidDistrict.append(float(1))
         else:
             ElemNoStateAidDistrict.append(float(0))
@@ -1311,7 +1311,7 @@ def wftf(yearnum,g,Yeardef):
         else:
             dictionary['sumofBSLcalcperpupil']=str(round(round(SumofBSL[decoded[d4]['EntityID']], 2)/(sumofadm[decoded[d4]['EntityID']]),2))
         dictionary['SumofBSL']=str(round(SumofBSL[decoded[d4]['EntityID']], 4))
-        dictionary['TotalBSL'] = str(round(sum(SumofBSL.values()), 2))
+        #dictionary['TotalBSL'] = str(round(sum(SumofBSL.values()), 2))
         #dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
         #dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
         #dictionary['WeightedHSCounts'] = str(round(WeightedHSCounts[counter2], 3))
@@ -2525,7 +2525,7 @@ def wftf2():
         TotalStateAid[decoded[d4]['EntityID']]=(ElemStateAid[decoded[d4]['EntityID']] + HSStateAid[decoded[d4]['EntityID']])
 
         # CALCULATION OF NO STATE AID
-        if ((float(PREKADM[counter2]) + float(sumelemadm[decoded[d4]['EntityID']])) > 0) and (float(ElemStateAid[decoded[d4]['EntityID']]) == 0):
+        if ((float(sumprekadm[decoded[d4]['EntityID']]) + float(sumelemadm[decoded[d4]['EntityID']])) > 0) and (float(ElemStateAid[decoded[d4]['EntityID']]) == 0):
             ElemNoStateAidDistrict.append(float(1))
         else:
             ElemNoStateAidDistrict.append(float(0))
@@ -2603,9 +2603,9 @@ def wftf2():
         dictionary['elembsl'] = str(round(ELEMBSL[counter2], 4))
         dictionary['hsbsl'] = str(round(HSBSL[counter2], 4))
         dictionary['BSLcalc'] = str(round(BSL[counter2], 2))
-        dictionary['TotalBSLcalc']=str(round(sum(SumofBSL.values()),2))
-        dictionary['TotalBSLoriginal']=str(round(float(Original[counter2]['TotalBSL']),2))
-        dictionary['TotalBSLdifference'] = str(round(sum(SumofBSL.values())-float(Original[counter2]['TotalBSL']), 2))
+        #dictionary['TotalBSLcalc']=str(round(sum(SumofBSL.values()),2))
+        #dictionary['TotalBSLoriginal']=str(round(float(Original[counter2]['TotalBSL']),2))
+        #dictionary['TotalBSLdifference'] = str(round(sum(SumofBSL.values())-float(Original[counter2]['TotalBSL']), 2))
         dictionary['BSLoriginal'] = str(round(float(Original[counter2]['BSL']), 2))
         dictionary['BSLdiffernce']=str((round(float(BSL[counter2])-float(Original[counter2]['BSL']), 2)))
         dictionary['SumofBSLcalc']=str(round(SumofBSL[decoded[d4]['EntityID']], 4))

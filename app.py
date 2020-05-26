@@ -304,10 +304,13 @@ def wftf(yearnum,g,Yeardef):
     bslbytype = {}
     admbytype = {}
     bslbyEHType = {}
+    EqAssisbyEHType={}
+    aabyCounty={}
     admbyEHType = {}
     bslbyCounty={}
     admbyCounty={}
     perpupilbyCounty={}
+    perpupilaabyCounty={}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = {}
     EqualisationBase={}
@@ -1001,14 +1004,14 @@ def wftf(yearnum,g,Yeardef):
         # else:
         #     admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
-        if d['Type'] not in bslbytype:
-            bslbytype[d['Type']] = float(SumofBSL[d['EntityID']])
-        else:
-            bslbytype[d['Type']] += float(SumofBSL[d['EntityID']])
-        if d['Type'] not in admbytype:
-            admbytype[d['Type']] = float(sumofadm[d['EntityID']])
-        else:
-            admbytype[d['Type']] += float(sumofadm[d['EntityID']])
+        #if d['Type'] not in bslbytype:
+         #   bslbytype[d['Type']] = float(SumofBSL[d['EntityID']])
+        #else:
+         #   bslbytype[d['Type']] += float(SumofBSL[d['EntityID']])
+        #if d['Type'] not in admbytype:
+         #   admbytype[d['Type']] = float(sumofadm[d['EntityID']])
+        #else:
+         #   admbytype[d['Type']] += float(sumofadm[d['EntityID']])
 
         # calculate by type and schooltype
         # if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
@@ -1132,6 +1135,10 @@ def wftf(yearnum,g,Yeardef):
                 DAAdefault[d['EntityID']]= FinalFormulaAdditionalAssistance[counter1]
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
         AdditionalAssistance[d['EntityID']]=(FinalAAAllocation[counter1])
+        if d['County'] not in aabyCounty:
+            aabyCounty[d['County']]=AdditionalAssistance[d['EntityID']]
+        else:
+            aabyCounty[d['County']]+=AdditionalAssistance[d['EntityID']]
         OppurtunityWeight.append(float(0))
         if d['TRCL'] == None:
             d['TRCL'] = 0
@@ -1159,16 +1166,22 @@ def wftf(yearnum,g,Yeardef):
             perpupilbyCounty[i]=0
         else:
             perpupilbyCounty[i]=(bslbyCounty[i]/admbyCounty[i])
-    for i in bslbytype:
-        if admbytype[i] == 0:
-            perpupilpertype[i] = 0
-        else:
-            perpupilpertype[i] = (bslbytype[i] / 3) / (admbytype[i] / 3)
+    #for i in bslbytype:
+     #   if admbytype[i] == 0:
+      #      perpupilpertype[i] = 0
+       # else:
+        #    perpupilpertype[i] = (bslbytype[i] / 3) / (admbytype[i] / 3)
     for i in bslbyEHType:
         if admbyEHType[i]==0:
             perpupilbyEHType[i]=0
         else:
             perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
+    for i in aabyCounty:
+        if admbyCounty[i]==0:
+            perpupilaabyCounty[i]=0
+        else:
+            perpupilaabyCounty[i]=((aabyCounty[i]/3)/admbyCounty[i])
+
     # for i in bslbyschooltype:
     #     if admbyschooltype[i] == 0:
     #         perpupilbyschooltype[i] = 0
@@ -1292,10 +1305,10 @@ def wftf(yearnum,g,Yeardef):
         dictionary['bslbyEHType']=str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['admbyEHType']=str(round(admbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
         dictionary['perpupilbyEHType']=str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]],2))
-        dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
-        dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
+        #dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
+        #dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
         # dictionary['perpupilbyschooltype']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
-        dictionary['perpupilpertype'] = str(round((perpupilpertype[decoded[d4]['Type']]), 2))
+        #dictionary['perpupilpertype'] = str(round((perpupilpertype[decoded[d4]['Type']]), 2))
         # dictionary['perpupilbyschooltypeanddistricttype'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
         #dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         #dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
@@ -1322,6 +1335,7 @@ def wftf(yearnum,g,Yeardef):
         #dictionary['Final_9_12SmWgt'] = str(round(Final_9_12SmWgt[decoded[d4]['EntityID']], 3))
         dictionary['bslbyCounty'] = str(round(bslbyCounty[decoded[d4]['County']], 2))
         dictionary['admbyCounty'] = str(round(admbyCounty[decoded[d4]['County']], 2))
+        dictionary['perpupilaabyCounty']=str(round(perpupilaabyCounty[decoded[d4]['County']],2))
         dictionary['perpupilbyCounty'] = str(round(perpupilbyCounty[decoded[d4]['County']], 2))
         dictionary['RCL'] = str(round(RCL[decoded[d4]['EntityID']], 4))
         dictionary['TRCL'] = str(round(TRCL[decoded[d4]['EntityID']], 4))
@@ -1625,7 +1639,7 @@ def wftf2():
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = {}
     sumtotalstateaid=0
-    sumAdditionalAssistance=0
+    #sumAdditionalAssistance=0
     Reductionsum={}
     CAA={}
     DAA={}
@@ -1664,10 +1678,14 @@ def wftf2():
     # admbyschooltype={}
     # bslbyschooltype={}
     bslbyEHType={}
+    EqAssisbyEHType={}
     admbyEHType={}
     bslbyCounty={}
+    AabyCounty={}
     admbyCounty={}
     perpupilbyCounty={}
+    perpupilaabyCounty={}
+
     # admbyschooltypeanddistricttype={}
     # bslbyschooltypeanddistricttype={}
     # perpupilbyschooltypeanddistricttype={}
@@ -2294,14 +2312,14 @@ def wftf2():
         # else:
         #     admbyschooltype[schooltype[d['EntityID']]] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
-        if d['Type'] not in bslbytype:
-            bslbytype[d['Type']]=float(SumofBSL[d['EntityID']])
-        else:
-            bslbytype[d['Type']]+=float(SumofBSL[d['EntityID']])
-        if d['Type'] not in admbytype:
-            admbytype[d['Type']]=float(sumofadm[d['EntityID']])
-        else:
-            admbytype[d['Type']]+=float(sumofadm[d['EntityID']])
+        #if d['Type'] not in bslbytype:
+         #   bslbytype[d['Type']]=float(SumofBSL[d['EntityID']])
+        #else:
+         #   bslbytype[d['Type']]+=float(SumofBSL[d['EntityID']])
+        #if d['Type'] not in admbytype:
+         #   admbytype[d['Type']]=float(sumofadm[d['EntityID']])
+        #else:
+         #   admbytype[d['Type']]+=float(sumofadm[d['EntityID']])
 
         #calculate by type and schooltype
         # if schooltypeanddistricttype[d['EntityID']] not in bslbyschooltypeanddistricttype:
@@ -2420,7 +2438,11 @@ def wftf2():
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
 
         AdditionalAssistance[d['EntityID']]=(FinalAAAllocation[counter1])
-        sumAdditionalAssistance+=FinalAAAllocation[counter1]
+        if d['County'] not in AabyCounty:
+            AabyCounty[d['County']]=AdditionalAssistance[d['EntityID']]
+        else:
+            AabyCounty[d['County']]+= AdditionalAssistance[d['EntityID']]
+        #sumAdditionalAssistance+=FinalAAAllocation[counter1]
         OppurtunityWeight.append(float(0))
         if d['TRCL'] == None:
             d['TRCL'] = 0
@@ -2443,16 +2465,22 @@ def wftf2():
             perpupilbyCounty[i]=0
         else:
             perpupilbyCounty[i]=(bslbyCounty[i]/admbyCounty[i])
-    for i in bslbytype:
-        if admbytype[i]==0:
-            perpupilpertype[i] =0
-        else:
-            perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
+    #for i in bslbytype:
+     #   if admbytype[i]==0:
+      #      perpupilpertype[i] =0
+       # else:
+        #    perpupilpertype[i]=(bslbytype[i]/3)/(admbytype[i]/3)
     for i in bslbyEHType:
         if admbyEHType[i]==0:
             perpupilbyEHType[i]=0
         else:
             perpupilbyEHType[i]=(bslbyEHType[i]/admbyEHType[i])
+    for i in AabyCounty:
+        if admbyCounty[i]==0:
+            perpupilaabyCounty[i]=0
+        else:
+            perpupilaabyCounty[i]=((AabyCounty[i]/3)/admbyCounty[i])
+
     # for i in bslbyschooltype:
     #     if admbyschooltype[i]==0:
     #         perpupilbyschooltype[i] =0
@@ -2547,6 +2575,10 @@ def wftf2():
         sumHSTution[decoded[d4]['EntityID']]= decoded[d4]["HSTuitionOutAmt1"]
         EqualisationBase[decoded[d4]['EntityID']]=(TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
         EqualisationAssistance[decoded[d4]['EntityID']]=(EqualisationBase[decoded[d4]['EntityID']]-TotalLocalLevy[decoded[d4]['EntityID']])
+        if decoded[d4]['EHType'] not in EqAssisbyEHType:
+            EqAssisbyEHType[decoded[d4]['EHType']]=EqualisationAssistance[decoded[d4]['EntityID']]
+        else:
+            EqAssisbyEHType[decoded[d4]['EHType']]+=EqualisationAssistance[decoded[d4]['EntityID']]
         #df=pandas.DataFrame(entitynull)
         #df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
 
@@ -2571,23 +2603,26 @@ def wftf2():
         dictionary['Type']=str(decoded[d4]['Type'])
         # dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
         # dictionary['admbyschooltype'] = str(round(admbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
-        dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
-        dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
+        #dictionary['bslbytype']=str(round((bslbytype[decoded[d4]['Type']]/3),2))
+        #dictionary['admbytype']=str(round((admbytype[decoded[d4]['Type']]/3),2))
         #dictionary['perpupilbyschooltypecalc']=str(round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]]),2))
         #dictionary['perpupilbyschooltypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltype']), 4))
         #dictionary['perpupilbyschooltypedifference'] = round((perpupilbyschooltype[schooltype[decoded[d4]['EntityID']]])-(float(Original[counter2]['perpupilbyschooltype'])),2)
         #dictionary['perpupilbyschooltypeanddistricttypecalc'] = str(round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]]), 2))
         #dictionary['perpupilbyschooltypeanddistricttypedefault'] = str(round(float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 4))
         #dictionary['perpupilbyschooltypeanddistricttypedifference'] = round((perpupilbyschooltypeanddistricttype[schooltypeanddistricttype[decoded[d4]['EntityID']]])-float(Original[counter2]['perpupilbyschooltypeanddistricttype']), 2)
-        dictionary['perpupilpertypecalc']=str(round((perpupilpertype[decoded[d4]['Type']]),2))
-        dictionary['perpupilpertypedefault'] = str(round(float(Original[counter2]['perpupilpertype']), 4))
-        dictionary['perpupilpertypedifference'] = round(perpupilpertype[decoded[d4]['Type']]-float(Original[counter2]['perpupilpertype']),2)
+        #dictionary['perpupilpertypecalc']=str(round((perpupilpertype[decoded[d4]['Type']]),2))
+        #dictionary['perpupilpertypedefault'] = str(round(float(Original[counter2]['perpupilpertype']), 4))
+        #dictionary['perpupilpertypedifference'] = round(perpupilpertype[decoded[d4]['Type']]-float(Original[counter2]['perpupilpertype']),2)
         #dictionary['DistrictHSTextbooksAA'] = str(round(DistrictHSTextbooksAA[counter2], 5))
         #dictionary['DistrictHSAA'] = str(round(DistrictHSAA[counter2], 5))
         #dictionary['DistrictElemAA'] = str(round(DistrictElemAA[counter2], 5))
         #dictionary['DistrictPreKAA'] = str(round(DistrictPreKAA[counter2], 5))
         dictionary['bslbyCounty'] = str(round(bslbyCounty[decoded[d4]['County']], 2))
         dictionary['admbyCounty'] = str(round(admbyCounty[decoded[d4]['County']], 2))
+        dictionary['perpupilaabyCountycalc']=str(round(perpupilaabyCounty[decoded[d4]['County']],2))
+        dictionary['perpupilaabyCountydefault'] = str(round(float(Original[counter2]['perpupilaabyCounty']), 4))
+        dictionary['perpupilaabyCountydifference'] = str(round(perpupilaabyCounty[decoded[d4]['County']] - float(Original[counter2]['perpupilaabyCounty']), 2))
         dictionary['perpupilbyCountycalc'] = str(round(perpupilbyCounty[decoded[d4]['County']], 2))
         dictionary['perpupilbyCountydefault'] = str(round(float(Original[counter2]['perpupilbyCounty']), 4))
         dictionary['perpupilbyCountydifference'] = str(round(perpupilbyCounty[decoded[d4]['County']] - float(Original[counter2]['perpupilbyCounty']), 2))

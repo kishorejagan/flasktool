@@ -292,6 +292,9 @@ def wftf(yearnum,g,Yeardef):
     DistrictHSAA = []
     DistrictElemAA = []
     DistrictPreKAA = []
+    DistrictHSAAnew = []
+    DistrictElemAAnew = []
+    DistrictPreKAAnew = []
     TotalFormulaDistrictAA = []
     DistrictPreKElemReduction = []
     DistrictHSReduction = []
@@ -313,6 +316,7 @@ def wftf(yearnum,g,Yeardef):
     perpupilaabyCounty={}
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = {}
+    AdditionalAssistancenew={}
     EqualisationBase={}
     Equalisationassistance={}
     Reductionsum={}
@@ -1074,24 +1078,25 @@ def wftf(yearnum,g,Yeardef):
             if AdditionalAssistant_eqformula == 2:
 
                 DistrictHSTextbooksAA.append(0)
-                DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
-
-                if HSRange[d['EntityID']] == "1to99":
-                    DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
-                    DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[d['EntityID']] == ">600":
-                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                else:
-                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                if ELEMRange[d['EntityID']] == "1to99":
-                    DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
-                    DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[d['EntityID']] == ">600":
-                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
-                else:
-                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                DistrictPreKAA.append(float(CharSuppLvlAllK_8 * sumprekadm[d['EntityID']]))
+                DistrictElemAA.append(float(CharSuppLvlAllK_8 * sumelemadm[d['EntityID']]))
+                DistrictHSAA.append(float(CharSuppLvlAll9_12 * sumhsadm[d['EntityID']]))
+                #if HSRange[d['EntityID']] == "1to99":
+                 #   DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
+                #elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
+                #    DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
+                #elif HSRange[d['EntityID']] == ">600":
+                 #   DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                #else:
+                 #   DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                #if ELEMRange[d['EntityID']] == "1to99":
+                 #   DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
+                #elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
+                 #   DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
+                #elif ELEMRange[d['EntityID']] == ">600":
+                 #   DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                #else:
+                 #   DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
             else:
                 if d['HsBooksCapOutlayRevLimitAmt'] == None:
                     d['HsBooksCapOutlayRevLimitAmt'] = 0
@@ -1519,7 +1524,9 @@ def wftf2():
 
     # DEFINING VARIABLES FOR FURTHER CALCULATION
     EqualisationBase={}
+    EqualisationBasenew = {}
     EqualisationAssistance={}
+    EqualisationAssistancenew = {}
     sumprekadm={}
     sumelemadm={}
     sumhsadm={}
@@ -1527,7 +1534,9 @@ def wftf2():
     Final_K_8SmWgt={}
     AuditBaseLevelAdjustment=[]
     FinalFormulaAdditionalAssistance=[]
+    FinalFormulaAdditionalAssistancenew = []
     FinalAAAllocation=[]
+    FinalAAAllocationnew = []
 
     EID=[]
     Ename=[]
@@ -1625,11 +1634,16 @@ def wftf2():
     DistrictHSAA = []
     DistrictElemAA = []
     DistrictPreKAA = []
+    DistrictHSAAnew = []
+    DistrictElemAAnew = []
+    DistrictPreKAAnew = []
     TotalFormulaDistrictAA = []
+    TotalFormulaDistrictAAnew = []
     DistrictPreKElemReduction = []
     DistrictHSReduction = []
     TotalDistrictAAReduction = []
     TotalNetDistrictAA = []
+    TotalNetDistrictAAnew = []
     NetworkElemADM = []
     NetworkHSADM = []
     sumofnetworkelemadm = {}
@@ -1637,7 +1651,9 @@ def wftf2():
     bslbytype={}
     admbytype={}
     FinalFormulaAAwithReduction = []
+    FinalFormulaAAwithReductionnew = []
     AdditionalAssistance = {}
+    AdditionalAssistancenew={}
     sumtotalstateaid=0
     #sumAdditionalAssistance=0
     Reductionsum={}
@@ -1685,7 +1701,8 @@ def wftf2():
     admbyCounty={}
     perpupilbyCounty={}
     perpupilaabyCounty={}
-
+    savingsflag=0
+    savingsflag1=0
     # admbyschooltypeanddistricttype={}
     # bslbyschooltypeanddistricttype={}
     # perpupilbyschooltypeanddistricttype={}
@@ -2367,35 +2384,46 @@ def wftf2():
             DistrictHSAA.append(0)
             DistrictElemAA.append(0)
             DistrictPreKAA.append(0)
+            DistrictHSAAnew.append(0)
+            DistrictElemAAnew.append(0)
+            DistrictPreKAAnew.append(0)
             DistrictPreKElemReduction.append(float(0))
             DistrictHSReduction.append(float(0))
             TotalDistrictAAReduction.append(float(0))
             TotalFormulaDistrictAA.append(float(0))
+            TotalFormulaDistrictAAnew.append(float(0))
             TotalNetDistrictAA.append(float(0))
+            TotalNetDistrictAAnew.append(float(0))
             FinalFormulaAAwithReduction.append(float(TotalNetCharterAA[counter1]))
+            FinalFormulaAAwithReductionnew.append(float(TotalNetCharterAA[counter1]))
             FinalFormulaAdditionalAssistance.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
+            FinalFormulaAdditionalAssistancenew.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
         else:
             if AdditionalAssistant_eqformula == 2:
 
                 DistrictHSTextbooksAA.append(0)
-                DistrictPreKAA.append(float(DistSuppLvlAllPSD * sumprekadm[d['EntityID']]))
-
-                if HSRange[d['EntityID']] == "1to99":
-                    DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
-                    DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
-                elif HSRange[d['EntityID']] == ">600":
-                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                else:
-                    DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
-                if ELEMRange[d['EntityID']] == "1to99":
-                    DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
-                    DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
-                elif ELEMRange[d['EntityID']] == ">600":
-                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
-                else:
-                    DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                DistrictPreKAA.append(float(CharSuppLvlAllK_8 * sumprekadm[d['EntityID']]))
+                DistrictElemAA.append(float(CharSuppLvlAllK_8 * sumelemadm[d['EntityID']]))
+                DistrictHSAA.append(float(CharSuppLvlAll9_12 * sumhsadm[d['EntityID']]))
+                DistrictPreKAAnew.append(float(CharSuppLvlAllK_8 * sumprekadm[d['EntityID']]))
+                DistrictElemAAnew.append(float(CharSuppLvlAllK_8 * sumelemadm[d['EntityID']]))
+                DistrictHSAAnew.append(float(CharSuppLvlAll9_12 * sumhsadm[d['EntityID']]))
+                #if HSRange[d['EntityID']] == "1to99":
+                 #   DistrictHSAA.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
+                #elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
+                 #   DistrictHSAA.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
+                #elif HSRange[d['EntityID']] == ">600":
+                 #   DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                #else:
+                 #   DistrictHSAA.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                #if ELEMRange[d['EntityID']] == "1to99":
+                 #   DistrictElemAA.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
+                #elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
+                 #   DistrictElemAA.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
+                #elif ELEMRange[d['EntityID']] == ">600":
+                 #   DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                #else:
+                 #   DistrictElemAA.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
             else:
                 if d['HsBooksCapOutlayRevLimitAmt'] == None:
                     d['HsBooksCapOutlayRevLimitAmt'] = 0
@@ -2409,6 +2437,23 @@ def wftf2():
                 DistrictHSAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
                 DistrictElemAA.append(float(d['ElemCapOutlayRevLimitAmt']))
                 DistrictPreKAA.append(float(d['PsdCapOutlayRevLimitAmt']))
+                DistrictPreKAAnew.append(float(DistSuppLvlAllPSD* sumprekadm[d['EntityID']]))
+                if HSRange[d['EntityID']] == "1to99":
+                  DistrictHSAAnew.append(float(DistSuppLvl1to999_12 * sumhsadm[d['EntityID']]))
+                elif HSRange[d['EntityID']] == "100to499" or HSRange[d['EntityID']] == "100to499":
+                  DistrictHSAAnew.append(float(DistSuppLvl100to5999_12 * sumhsadm[d['EntityID']]))
+                elif HSRange[d['EntityID']] == ">600":
+                  DistrictHSAAnew.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                else:
+                  DistrictHSAAnew.append(float(DistSuppLvl600AndOver9_12 * sumhsadm[d['EntityID']]))
+                if ELEMRange[d['EntityID']] == "1to99":
+                  DistrictElemAAnew.append(float(DistSuppLvl1to99K_8 * sumelemadm[d['EntityID']]))
+                elif ELEMRange[d['EntityID']] == "100to499" or ELEMRange[d['EntityID']] == "500to599":
+                  DistrictElemAAnew.append(float(DistSuppLvl100to599K_8 * sumelemadm[d['EntityID']]))
+                elif ELEMRange[d['EntityID']] == ">600":
+                  DistrictElemAAnew.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
+                else:
+                  DistrictElemAAnew.append(float(DistSuppLvl600AndOverK_8 * sumelemadm[d['EntityID']]))
             if d['PSElTransAdj'] == None:
                 d['PSElTransAdj'] = 0
             if d['HSTransAdj'] == None:
@@ -2418,9 +2463,13 @@ def wftf2():
             DistrictHSReduction.append(float(d['HSTransAdj']))
             TotalDistrictAAReduction.append(float(DistrictPreKElemReduction[counter1] + DistrictHSReduction[counter1]))
             TotalFormulaDistrictAA.append(float(DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[counter1]))
+            TotalFormulaDistrictAAnew.append(float(DistrictHSTextbooksAA[counter1] + DistrictHSAAnew[counter1] + DistrictElemAAnew[counter1] + DistrictPreKAAnew[counter1]))
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[counter1] + TotalDistrictAAReduction[counter1]))
+            TotalNetDistrictAAnew.append(float(TotalFormulaDistrictAAnew[counter1] + TotalDistrictAAReduction[counter1]))
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[counter1])
+            FinalFormulaAAwithReductionnew.append(TotalNetDistrictAAnew[counter1])
             FinalFormulaAdditionalAssistance.append(TotalFormulaDistrictAA[counter1])
+            FinalFormulaAdditionalAssistancenew.append(TotalFormulaDistrictAAnew[counter1])
             Reductionsum[d['EntityID']]= (TotalDistrictAAReduction[counter1] * (-1))
         # CALCULATION OF FINALAAALLOCATION
 
@@ -2430,14 +2479,17 @@ def wftf2():
             else:
                 DAA[d['EntityID']]=(FinalFormulaAAwithReduction[counter1])
             FinalAAAllocation.append(FinalFormulaAAwithReduction[counter1])
+            FinalAAAllocationnew.append(FinalFormulaAAwithReductionnew[counter1])
         else:
             if d['Type']=="Charter":
                 CAA[d['EntityID']]=FinalFormulaAdditionalAssistance[counter1]
             else:
                 DAA[d['EntityID']]=FinalFormulaAdditionalAssistance[counter1]
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
+            FinalAAAllocationnew.append(FinalFormulaAdditionalAssistancenew[counter1])
 
         AdditionalAssistance[d['EntityID']]=(FinalAAAllocation[counter1])
+        AdditionalAssistancenew[d['EntityID']] = (FinalAAAllocationnew[counter1])
         if d['County'] not in AabyCounty:
             AabyCounty[d['County']]=AdditionalAssistance[d['EntityID']]
         else:
@@ -2574,7 +2626,13 @@ def wftf2():
             decoded[d4]['HSSmallIsolated']=0
         sumHSTution[decoded[d4]['EntityID']]= decoded[d4]["HSTuitionOutAmt1"]
         EqualisationBase[decoded[d4]['EntityID']]=(TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
+        EqualisationBasenew[decoded[d4]['EntityID']] = (TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistancenew[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
+        if EqualisationBase[decoded[d4]['EntityID']]==TotalLocalLevy[decoded[d4]['EntityID']]:
+            savingsflag+=1
+        elif EqualisationBase[decoded[d4]['EntityID']]==TotalLocalLevy[decoded[d4]['EntityID']]:
+            savingsflag1+=1
         EqualisationAssistance[decoded[d4]['EntityID']]=(EqualisationBase[decoded[d4]['EntityID']]-TotalLocalLevy[decoded[d4]['EntityID']])
+        EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
             EqAssisbyEHType[decoded[d4]['EHType']]=EqualisationAssistance[decoded[d4]['EntityID']]
         else:
@@ -2714,7 +2772,8 @@ def wftf2():
         D.append(dictionary)
         counter2 += 1
         ti=time.time()
-
+    F['savingsflag1'] = str((savingsflag1))
+    F['savingsflag'] = str((savingsflag)) 
     F['sumbsl'] = str(round(sum(SumofBSL.values()),3))
     F['sumtrcl'] = str(round(sum(TRCL.values()),3))
     F['sumtsl'] = str(round(sum(TSL.values()),3))

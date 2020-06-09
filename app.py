@@ -1673,6 +1673,7 @@ def wftf2():
     FinalFormulaAAwithReductionnew = []
     FinalFormulaAAwithReductionnew1 = []
     AdditionalAssistance = {}
+    AdditionalAssistancesplit={}
     AdditionalAssistancenew={}
     AdditionalAssistancenew1 = {}
     sumtotalstateaid=0
@@ -2532,6 +2533,7 @@ def wftf2():
                 DAA[d['EntityID']]=(FinalFormulaAAwithReduction[counter1])
                 AAHS[counter1] = AAHS[counter1] + AAReductionHS[counter1]
                 AAElem[counter1] = AAElem[counter1] + AAReductionElem[counter1]
+            AdditionalAssistancesplit[d['EntityID']]=(AAElem[counter1]+AAHS[counter1])*(1-(Reductionpercent/100))
             FinalAAAllocation.append(FinalFormulaAAwithReduction[counter1])
             FinalAAAllocationnew.append(FinalFormulaAAwithReductionnew[counter1])
             FinalAAAllocationnew1.append(FinalFormulaAAwithReductionnew1[counter1])
@@ -2543,9 +2545,11 @@ def wftf2():
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
             FinalAAAllocationnew.append(FinalFormulaAdditionalAssistancenew[counter1])
             FinalAAAllocationnew1.append(FinalFormulaAdditionalAssistancenew[counter1])
+            AdditionalAssistancesplit[d['EntityID']] = (AAElem[counter1] + AAHS[counter1])
         AdditionalAssistance[d['EntityID']]=(FinalAAAllocation[counter1])
         AdditionalAssistancenew[d['EntityID']] = (FinalAAAllocationnew[counter1])
         AdditionalAssistancenew1[d['EntityID']] = (FinalAAAllocationnew1[counter1])
+
         if d['County'] not in AabyCounty:
             AabyCounty[d['County']]=AdditionalAssistance[d['EntityID']]
         else:

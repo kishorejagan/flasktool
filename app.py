@@ -1724,6 +1724,7 @@ def wftf2():
     AAElem=[]
     EqualisationBaseHS={}
     EqualisationBaseElem={}
+    EqualisationBasesplit={}
     EqualisationAssisHS={}
     EqualisationAssisElem={}
     AdditionalAssistancenew = {}
@@ -2798,6 +2799,7 @@ def wftf2():
 
         EqualisationBase[decoded[d4]['EntityID']] = (
                     TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
+        EqualisationBasesplit[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']] +EqualisationBaseHS[decoded[d4]['EntityID']]
         EqualisationBasenew[decoded[d4]['EntityID']] = (
                     TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistancenew[
                 decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
@@ -2831,7 +2833,7 @@ def wftf2():
             if iterator%3==0:
                 print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3),round(EqualisationAssistance[decoded[d4]['EntityID']],3),decoded[d4]['EntityName'])
             iterator+=1
-        AdditionalAssistancesplit[decoded[d4]['EntityID']]=AAHS[counter2]+AAElem[counter2]
+        AdditionalAssistancesplit[decoded[d4]['EntityID']]=(AAHS[counter2]+AAElem[counter2])
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
             EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]
         else:
@@ -3002,13 +3004,13 @@ def wftf2():
     F['sumdsl'] = str(round(sum(DSL.values()), 3))
     F['sumtotaladditionalassistance'] = str(round(sum(AdditionalAssistance.values()), 3))
     F['sumtotaladditionalassistancenew'] = str(round(sum(AdditionalAssistancenew.values()), 3))
-    F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevy.values()), 3))
+    F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevynew.values()), 3))
     F['sumTotalStateAid'] = str(round(sum(TotalStateAid.values()), 3))
     F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict) / 3))
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
-    F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistance.values()), 3))
-    F['sumEqualisationbase'] = str(round(sum(EqualisationBase.values()), 3))
+    F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
+    F['sumEqualisationbase'] = str(round(sum(EqualisationBasesplit.values()), 3))
     F['Reductionsum'] = str(round(sum(Reductionsum.values()), 3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))

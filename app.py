@@ -2731,9 +2731,9 @@ def wftf2():
             zerocount += 1
             iterator1+=1
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
-            EqAssisbyEHType[decoded[d4]['EHType']]=EqualisationAssistance[decoded[d4]['EntityID']]
+            EqAssisbyEHType[decoded[d4]['EHType']]=EqualisationAssistancesplit[decoded[d4]['EntityID']]
         else:
-            EqAssisbyEHType[decoded[d4]['EHType']]+=EqualisationAssistance[decoded[d4]['EntityID']]
+            EqAssisbyEHType[decoded[d4]['EHType']]+=EqualisationAssistancesplit[decoded[d4]['EntityID']]
         counter2+=1
     counter2 = 0
     for d4 in range(len(decoded)):

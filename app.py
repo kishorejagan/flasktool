@@ -199,6 +199,7 @@ def wftf(yearnum, g, Yeardef):
     DistSuppLvl100to5999_12 = 405.59
     DistSuppLvl600AndOver9_12 = 492.94
     TEI10 = 1
+
     AdditionalAssistant_eqformula = 1
     AdditonalAssistantReduction = 1
     # End of input variables to be posted  in front end
@@ -1441,7 +1442,7 @@ def wftf(yearnum, g, Yeardef):
     E['sumTotalStateAiddefualt'] = str(round(sum(TotalStateAid.values()), 3))
     E['sumtotalqtryeilddefault'] = str(round(sum(TotalQTRYield.values()), 3))
     E['sumtotaluncapturedqtrdefault'] = str(round(sum(UncapturedQTR.values(), 3)))
-    E['sumEqualisationAssistancedefault'] = str(round(sum(Equalisationassistance.values()), 3))
+    E['sumEqualisationAssistancedefault'] = str(round(sum(EqualisationAssistancedef.values()), 3))
     E['sumEqualisationbasedefault'] = str(round(sum(EqualisationBase.values()), 3))
     E['Reductionsumdefault'] = str(round(sum(Reductionsum.values()), 3))
     E['sumHSTutiondefault'] = str(round(sum(sumHSTution.values()), 3))
@@ -1470,9 +1471,7 @@ def wftf2():
             return float(obj)
 
     def example():
-        preresult = engine.execute(
-            'Select flight.*,fm.TuitionOutCnt,fm.HSTuitionOutAmt1 from (select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type,Entityshort.EHType from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt,t.MDSCCYCnt, t.MDSCCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) group by EntityID,FiscalYear having FiscalYear=(%s)) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth and tm.FiscalYear=t.FiscalYear   ) union all select yy.EntityID,yy.FiscalYear,yy.PsdCYCount,yy.PsdCount,yy.ElemCYCount, yy.ElemCount, yy.DSCSElemCnt,yy.HsCYCount,yy.HsCount,yy.DSCSHsCnt,yy.DSCSK3Cnt,yy.TEI,yy.PaymentMonth,yy.FTFStatus,yy.BaseAmount,yy.BaseAdjsAmount, yy.MDSSICnt, yy.MDSSICYCnt,yy.DSCSMDSSICnt, yy.DSCSVICnt,yy.DSCSOISCCnt,yy.DSCSPSDCnt,yy.DSCSMDSCCnt,yy.DSCSHICnt,yy.DSCSMOMRCnt,yy.DSCSEDPPrivateCnt,yy.DSCSMDResCnt,yy.DSCSOIResCnt,yy.DSCSEDMIMRCnt,yy.DSCSLEPCnt,yy.PSDCYCnt,yy.PSDCnt, yy.VICYCnt,yy.VICnt,yy.OISCCYCnt,yy.OISCCnt,yy.MDSCCYCnt, yy.MDSCCnt,yy.HICYCnt,yy.HICnt,yy.MOMRCYCnt,yy.MOMRCnt,yy.EDPPrivateCYCnt, yy.EDPPrivateCnt,yy.MDResCYCnt,yy.MDResCnt,yy.OIResCYCnt,yy.OIResCnt, yy.EDMIMRCYCnt,yy.EDMIMRCnt,yy.LEPCYCnt,yy.LEPCnt,yy.K3CYCnt,yy.K3Cnt from SaCharBaseSupportLevelCalcs2 yy use index(cbasei,cbasei2,cbasei3,cbasei4) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaCharBaseSupportLevelCalcs2 use index(cbasei,cbasei2,cbasei3,cbasei4) group by EntityID,FiscalYear having FiscalYear=(%s))ym on yy.EntityId=ym.EntityID and yy.PaymentMonth=ym.MaxPaymentMonth and ym.FiscalYear=yy.FiscalYear  )uni where FiscalYear=(%s) group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Type,Type as EHType from Entity use index(Enti))Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j  Use index(TRCLi) inner join ( select EntityID,FiscalYear,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 Use index(TRCLi) group by EntityID,FiscalYear having FiscalYear=(%s)) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and jm.FiscalYear=j.FiscalYear   ))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k use index(TSLi)  inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 use index(TSLi) group by EntityID,FiscalYear having FiscalYear=(%s))km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and km.FiscalYear=k.FiscalYear   ))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear  ))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, s1.Name as EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork use index(chneti) left join Charters4Funding use index(charfundi) on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join SmallIsolatedList s1 use index(smallisoi) on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g use index(acapoutlaycalci) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 use index(acapoutlaycalci) group by EntityID,FiscalYear having FiscalYear=(%s) ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and gm.FiscalYear=g.FiscalYear   ) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d use index(aporsoftcapi) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 use index(aporsoftcapi) group by EntityID,FiscalYear having FiscalYear=(%s))dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and dm.FiscalYear=d.FiscalYear   ) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID)flight left join(SELECT EntityID,FiscalYear,TuitionOutCnt,HSTuitionOutAmt1 FROM Tutionoutcount use index(Tui) where FiscalYear=(%s))fm on fm.EntityID=flight.EntityID',
-            (yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum))
+        preresult = engine.execute('Select auto.*,auto1.EqualisationAssistanceoriginal from (Select flight.*,fm.TuitionOutCnt,fm.HSTuitionOutAmt1 from (select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type,Entityshort.EHType from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt,t.MDSCCYCnt, t.MDSCCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs2 t use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs2 use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) group by EntityID,FiscalYear having FiscalYear=(%s)) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth and tm.FiscalYear=t.FiscalYear   ) union all select yy.EntityID,yy.FiscalYear,yy.PsdCYCount,yy.PsdCount,yy.ElemCYCount, yy.ElemCount, yy.DSCSElemCnt,yy.HsCYCount,yy.HsCount,yy.DSCSHsCnt,yy.DSCSK3Cnt,yy.TEI,yy.PaymentMonth,yy.FTFStatus,yy.BaseAmount,yy.BaseAdjsAmount, yy.MDSSICnt, yy.MDSSICYCnt,yy.DSCSMDSSICnt, yy.DSCSVICnt,yy.DSCSOISCCnt,yy.DSCSPSDCnt,yy.DSCSMDSCCnt,yy.DSCSHICnt,yy.DSCSMOMRCnt,yy.DSCSEDPPrivateCnt,yy.DSCSMDResCnt,yy.DSCSOIResCnt,yy.DSCSEDMIMRCnt,yy.DSCSLEPCnt,yy.PSDCYCnt,yy.PSDCnt, yy.VICYCnt,yy.VICnt,yy.OISCCYCnt,yy.OISCCnt,yy.MDSCCYCnt, yy.MDSCCnt,yy.HICYCnt,yy.HICnt,yy.MOMRCYCnt,yy.MOMRCnt,yy.EDPPrivateCYCnt, yy.EDPPrivateCnt,yy.MDResCYCnt,yy.MDResCnt,yy.OIResCYCnt,yy.OIResCnt, yy.EDMIMRCYCnt,yy.EDMIMRCnt,yy.LEPCYCnt,yy.LEPCnt,yy.K3CYCnt,yy.K3Cnt from SaCharBaseSupportLevelCalcs2 yy use index(cbasei,cbasei2,cbasei3,cbasei4) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaCharBaseSupportLevelCalcs2 use index(cbasei,cbasei2,cbasei3,cbasei4) group by EntityID,FiscalYear having FiscalYear=(%s))ym on yy.EntityId=ym.EntityID and yy.PaymentMonth=ym.MaxPaymentMonth and ym.FiscalYear=yy.FiscalYear  )uni where FiscalYear=(%s) group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Type,Type as EHType from Entity use index(Enti))Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit2 j  Use index(TRCLi) inner join ( select EntityID,FiscalYear,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit2 Use index(TRCLi) group by EntityID,FiscalYear having FiscalYear=(%s)) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and jm.FiscalYear=j.FiscalYear   ))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl2 k use index(TSLi)  inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl2 use index(TSLi) group by EntityID,FiscalYear having FiscalYear=(%s))km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and km.FiscalYear=k.FiscalYear   ))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear  ))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, s1.Name as EntityName, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork use index(chneti) left join Charters4Funding use index(charfundi) on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join SmallIsolatedList s1 use index(smallisoi) on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs2 g use index(acapoutlaycalci) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs2 use index(acapoutlaycalci) group by EntityID,FiscalYear having FiscalYear=(%s) ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and gm.FiscalYear=g.FiscalYear   ) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc2 d use index(aporsoftcapi) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc2 use index(aporsoftcapi) group by EntityID,FiscalYear having FiscalYear=(%s))dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and dm.FiscalYear=d.FiscalYear   ) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID)flight left join(SELECT EntityID,FiscalYear,TuitionOutCnt,HSTuitionOutAmt1 FROM Tutionoutcount use index(Tui) where FiscalYear=(%s))fm on fm.EntityID=flight.EntityID)auto left join (select a.EntityID,a.EqualisationAssistanceoriginal from SaAporEqualAssistance a use index(EqA) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporEqualAssistance use index(EqA) group by EntityID,FiscalYear having FiscalYear=(%s))am where a.EntityID=am.EntityID and a.PaymentMonth=am.MaxPaymentMonth and am.FiscalYear=a.FiscalYear   )auto1 on auto.EntityID=auto1.EntityID',(yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum,yearnum))
 
         # use special handler for dates and decimals
         return json.dumps([dict(r) for r in preresult], default=alchemyencoder)
@@ -1704,6 +1703,8 @@ def wftf2():
     DistrictPreKAAnew = []
     TotalFormulaDistrictAA = []
     TotalFormulaDistrictAAnew = []
+    checkflag = 0
+    passcount=0
     DistrictPreKElemReduction = []
     DistrictHSReduction = []
     TotalDistrictAAReduction = []
@@ -1720,13 +1721,22 @@ def wftf2():
     FinalFormulaAAwithReductionnew = []
     FinalFormulaAAwithReductionnew1 = []
     AdditionalAssistance = {}
-    AAHS=[]
-    AAElem=[]
+    AAHS={}
+    AAElem={}
+    AAHSNoreduction={}
+    AAElemNoreduction={}
+    AAdelta={}
+    AAdelta={}
     EqualisationBaseHS={}
     EqualisationBaseElem={}
+    EqualisationBaseHSdef={}
+    EqualisationBaseElemdef={}
     EqualisationBasesplit={}
     EqualisationAssisHS={}
     EqualisationAssisElem={}
+    EqualisationAssisElemdef={}
+    EqualisationAssisHSdef={}
+    EqualisationAssistancedef={}
     AdditionalAssistancenew = {}
     AdditionalAssistancenew1 = {}
     AdditionalAssistancesplit={}
@@ -1779,6 +1789,7 @@ def wftf2():
     perpupilaabyCounty = {}
     savingsflag = 0
     savingsflag1 = 0
+    zerocount=0
     # admbyschooltypeanddistricttype={}
     # bslbyschooltypeanddistricttype={}
     # perpupilbyschooltypeanddistricttype={}
@@ -2515,8 +2526,8 @@ def wftf2():
             FinalFormulaAAwithReduction.append(float(TotalNetCharterAA[counter1]))
             FinalFormulaAAwithReductionnew.append(float(TotalNetCharterAAnew[counter1]))
             FinalFormulaAAwithReductionnew1.append(float(TotalNetCharterAAnew1[counter1]))
-            AAElem.append(float(CharterElemAA[d['EntityID']]))
-            AAHS.append(float(CharterHSAA[d['EntityID']]))
+            AAElem[d['EntityID']]=(float(CharterElemAA[d['EntityID']]))
+            AAHS[d['EntityID']]=(float(CharterHSAA[d['EntityID']]))
             FinalFormulaAdditionalAssistance.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
             FinalFormulaAdditionalAssistancenew.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
         else:
@@ -2579,8 +2590,8 @@ def wftf2():
                 d['PSElTransAdj'] = 0
             if d['HSTransAdj'] == None:
                 d['HSTransAdj'] = 0
-            AAElem.append(float(DistrictElemAA[counter1]+DistrictPreKAA[counter1]))
-            AAHS.append(float(DistrictHSAA[counter1]+DistrictHSTextbooksAA[counter1]))
+            AAElem[d['EntityID']]=(float(DistrictElemAA[counter1]+DistrictPreKAA[counter1]))
+            AAHS[d['EntityID']]=(float(DistrictHSAA[counter1]+DistrictHSTextbooksAA[counter1]))
             DistrictPreKElemReduction.append(float(d['PSElTransAdj']))
             DistrictHSReduction.append(float(d['HSTransAdj']))
             TotalDistrictAAReduction.append(float(DistrictPreKElemReduction[counter1] + DistrictHSReduction[counter1]))
@@ -2606,32 +2617,43 @@ def wftf2():
 
         if AdditonalAssistantReduction == 1:
             if d['Type'] == "Charter":
-                CAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
-                AAHS[counter1]-= float(CharterHSAAReduction[counter1])
-                AAElem[counter1]-= float(CharterElemAAReduction[counter1])
+                #CAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
+                AAHS[d['EntityID']]-= float(CharterHSAAReduction[counter1])
+                AAElem[d['EntityID']]-= float(CharterElemAAReduction[counter1])
 
             else:
-                DAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
-                AAHS[counter1] += float( DistrictHSReduction[counter1])
-                AAElem[counter1] += float(DistrictPreKElemReduction[counter1] )
+                #DAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
+                AAHS[d['EntityID']] += float( DistrictHSReduction[counter1])
+                AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
+
             FinalAAAllocation.append(FinalFormulaAAwithReduction[counter1])
             FinalAAAllocationnew.append(FinalFormulaAAwithReductionnew[counter1])
             FinalAAAllocationnew1.append(FinalFormulaAAwithReductionnew1[counter1])
         else:
-            if d['Type'] == "Charter":
-                CAA[d['EntityID']] = FinalFormulaAdditionalAssistance[counter1]
-            else:
-                DAA[d['EntityID']] = FinalFormulaAdditionalAssistance[counter1]
+
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
             FinalAAAllocationnew.append(FinalFormulaAdditionalAssistancenew[counter1])
             FinalAAAllocationnew1.append(FinalFormulaAdditionalAssistancenew[counter1])
+        AAHSNoreduction[d['EntityID']]=AAHS[d['EntityID']]
+        AAElemNoreduction[d['EntityID']] = AAElem[d['EntityID']]
+        AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (Reductionpercent / 100))
+        AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (Reductionpercent / 100))
+        AAdelta[d['EntityID']]=(AAHSNoreduction[d['EntityID']]+AAElemNoreduction[d['EntityID']])-(AAHS[d['EntityID']]+AAElem[d['EntityID']])
         AdditionalAssistance[d['EntityID']] = (FinalAAAllocation[counter1])
         AdditionalAssistancenew[d['EntityID']] = (FinalAAAllocationnew[counter1])
         AdditionalAssistancenew1[d['EntityID']] = (FinalAAAllocationnew1[counter1])
-        if d['County'] not in AabyCounty:
-            AabyCounty[d['County']] = AdditionalAssistance[d['EntityID']]
+        AdditionalAssistancesplit[d['EntityID']] = (AAHS[d['EntityID']] + AAElem[d['EntityID']])
+        if d['Type'] == "Charter":
+            CAA[d['EntityID']] = AdditionalAssistancesplit[d['EntityID']]
         else:
-            AabyCounty[d['County']] += AdditionalAssistance[d['EntityID']]
+            DAA[d['EntityID']] = AdditionalAssistancesplit[d['EntityID']]
+
+
+
+        if d['County'] not in AabyCounty:
+            AabyCounty[d['County']] = AdditionalAssistancesplit[d['EntityID']]
+        else:
+            AabyCounty[d['County']] += AdditionalAssistancesplit[d['EntityID']]
         # sumAdditionalAssistance+=FinalAAAllocation[counter1]
         OppurtunityWeight[d['EntityID']] = (float(0))
         if d['TRCL'] == None:
@@ -2750,8 +2772,7 @@ def wftf2():
             min(ElemTotalStateFormula[decoded[d4]['EntityID']], ElemQTRYield[decoded[d4]['EntityID']]))
         ElemLLnew[decoded[d4]['EntityID']] = ElemQTRYield[decoded[d4]['EntityID']]
         TotalLocalLevy[decoded[d4]['EntityID']] = (ElemLL[decoded[d4]['EntityID']] + HSLL[decoded[d4]['EntityID']])
-        TotalLocalLevynew[decoded[d4]['EntityID']] = (
-                    ElemLLnew[decoded[d4]['EntityID']] + HSLLnew[decoded[d4]['EntityID']])
+        TotalLocalLevynew[decoded[d4]['EntityID']] = (ElemLLnew[decoded[d4]['EntityID']] + HSLLnew[decoded[d4]['EntityID']])
         # sumTotalLocalLevy+=ElemLL[counter2] + HSLL[counter2]
         # CALCUALTION OF TOTAL STATE AID
         if ElemTotalStateFormula[decoded[d4]['EntityID']] > ElemQTRYield[decoded[d4]['EntityID']]:
@@ -2794,9 +2815,13 @@ def wftf2():
         if decoded[d4]['HSSmallIsolated'] == None:
             decoded[d4]['HSSmallIsolated'] = 0
         sumHSTution[decoded[d4]['EntityID']] = decoded[d4]["HSTuitionOutAmt1"]
-        EqualisationBaseHS[decoded[d4]['EntityID']] = (HSTotalStateFormula[decoded[d4]['EntityID']] + AAHS[counter2] + decoded[d4]['HSTuitionOutAmt1'])
-        EqualisationBaseElem[decoded[d4]['EntityID']] = (ElemTotalStateFormula[decoded[d4]['EntityID']] + AAElem[counter2] )
-
+        EqualisationBaseHS[decoded[d4]['EntityID']] = (HSTotalStateFormula[decoded[d4]['EntityID']] + AAHS[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
+        EqualisationBaseElem[decoded[d4]['EntityID']] = (ElemTotalStateFormula[decoded[d4]['EntityID']] + AAElem[decoded[d4]['EntityID']] )
+        EqualisationBaseHSdef[decoded[d4]['EntityID']] = (
+                    HSTotalStateFormula[decoded[d4]['EntityID']] + AAHSNoreduction[decoded[d4]['EntityID']] + decoded[d4][
+                'HSTuitionOutAmt1'])
+        EqualisationBaseElemdef[decoded[d4]['EntityID']] = (
+                    ElemTotalStateFormula[decoded[d4]['EntityID']] + AAElemNoreduction[decoded[d4]['EntityID']])
         EqualisationBase[decoded[d4]['EntityID']] = (
                     TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
         EqualisationBasesplit[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']] +EqualisationBaseHS[decoded[d4]['EntityID']]
@@ -2812,7 +2837,17 @@ def wftf2():
             EqualisationAssisHS[decoded[d4]['EntityID']]=0
         else:
             EqualisationAssisHS[decoded[d4]['EntityID']]=EqualisationBaseHS[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
+        if EqualisationBaseElemdef[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
+            EqualisationAssisElemdef[decoded[d4]['EntityID']]=0
+        else:
+            EqualisationAssisElemdef[decoded[d4]['EntityID']]=EqualisationBaseElemdef[decoded[d4]['EntityID']]-ElemLLnew[decoded[d4]['EntityID']]
+        if EqualisationBaseHSdef[decoded[d4]['EntityID']]<HSLLnew[decoded[d4]['EntityID']]:
+            EqualisationAssisHSdef[decoded[d4]['EntityID']]=0
+        else:
+            EqualisationAssisHSdef[decoded[d4]['EntityID']]=EqualisationBaseHSdef[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
 
+        EqualisationAssistancedef[decoded[d4]['EntityID']] = EqualisationAssisElemdef[decoded[d4]['EntityID']] + \
+                                                               EqualisationAssisHSdef[decoded[d4]['EntityID']]
         EqualisationAssistancesplit[decoded[d4]['EntityID']]=EqualisationAssisElem[decoded[d4]['EntityID']]+EqualisationAssisHS[decoded[d4]['EntityID']]
         if EqualisationBase[decoded[d4]['EntityID']] >= TotalLocalLevy[decoded[d4]['EntityID']]:
             savingsflag += 1
@@ -2825,19 +2860,30 @@ def wftf2():
         else:
             EqualisationAssistancenew1[decoded[d4]['EntityID']] = (
                         EqualisationBase[decoded[d4]['EntityID']] - TotalLocalLevynew[decoded[d4]['EntityID']])
-        EqualisationAssistancenew[decoded[d4]['EntityID']] = (
-                    EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
+        EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
         if round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3)==round(EqualisationAssistance[decoded[d4]['EntityID']],3):
             eqcount+=1
+
         else:
             if iterator%3==0:
-                print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3),round(EqualisationAssistance[decoded[d4]['EntityID']],3),decoded[d4]['EntityName'])
+                pass
+                #print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3),round(EqualisationAssistance[decoded[d4]['EntityID']],3),decoded[d4]['EntityName'])
             iterator+=1
-        AdditionalAssistancesplit[decoded[d4]['EntityID']]=(AAHS[counter2]+AAElem[counter2])
+        if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 3) == 0:
+            zerocount += 1
+
+
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
             EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]
         else:
             EqAssisbyEHType[decoded[d4]['EHType']] += EqualisationAssistancesplit[decoded[d4]['EntityID']]
+        if decoded[d4]['EqualisationAssistanceoriginal']==None:
+            passcount+=1
+        else:
+            pass
+            #print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2), round(decoded[d4]['EqualisationAssistanceoriginal'], 2), decoded[d4]['EntityID'])
+            if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)==round(decoded[d4]['EqualisationAssistanceoriginal'], 2):
+                checkflag+=1
         counter2 += 1
     counter2 = 0
 
@@ -2973,8 +3019,8 @@ def wftf2():
         # dictionary['HSRange'] = (HSRange[decoded[d4]['EntityID']])
         # dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
         dictionary['AdditionalAssistance'] = str(round(AdditionalAssistance[decoded[d4]['EntityID']], 3))
-        dictionary['AdditionalAssistancenew'] = str(round(AdditionalAssistancenew[decoded[d4]['EntityID']], 3))
-        dictionary['AdditionalAssistancenew1'] = str(round(AdditionalAssistancenew1[decoded[d4]['EntityID']], 3))
+        #dictionary['AdditionalAssistancenew'] = str(round(AdditionalAssistancenew[decoded[d4]['EntityID']], 3))
+        #dictionary['AdditionalAssistancenew1'] = str(round(AdditionalAssistancenew1[decoded[d4]['EntityID']], 3))
         dictionary['TotalFormulaDistrictAA'] = str(round(TotalFormulaDistrictAA[counter2], 3))
         # dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
         dictionary['EHType'] = decoded[d4]['EHType']
@@ -2995,6 +3041,10 @@ def wftf2():
         ti = time.time()
     print(eqcount/3)
     print(counter1/3)
+    print(zerocount/3)
+    print(checkflag/3)
+    print(passcount/3)
+    F['AAdelta']=str(round(sum(AAdelta.values()),3))
     F['savingsflag1'] = str((savingsflag1))
     F['savingsflag'] = str((savingsflag))
     F['sumbsl'] = str(round(sum(SumofBSL.values()), 3))
@@ -3002,11 +3052,11 @@ def wftf2():
     F['sumtsl'] = str(round(sum(TSL.values()), 3))
     F['sumrcl'] = str(round(sum(RCL.values()), 3))
     F['sumdsl'] = str(round(sum(DSL.values()), 3))
-    F['sumtotaladditionalassistance'] = str(round(sum(AdditionalAssistance.values()), 3))
+    F['sumtotaladditionalassistance'] = str(round(sum(AdditionalAssistancesplit.values()), 3))
     F['sumtotaladditionalassistancenew'] = str(round(sum(AdditionalAssistancenew.values()), 3))
     F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevynew.values()), 3))
     F['sumTotalStateAid'] = str(round(sum(TotalStateAid.values()), 3))
-    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict) / 3))
+    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values()) / 3))
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
@@ -3016,8 +3066,10 @@ def wftf2():
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
-    print(wholevalues())
-    print(ti - gi)
+    print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
+    #print("AAdelta:",F['AAdelta'])
+    #print(wholevalues())
+    #print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')
 
 

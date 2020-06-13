@@ -1442,7 +1442,7 @@ def wftf(yearnum, g, Yeardef):
     E['sumTotalStateAiddefualt'] = str(round(sum(TotalStateAid.values()), 3))
     E['sumtotalqtryeilddefault'] = str(round(sum(TotalQTRYield.values()), 3))
     E['sumtotaluncapturedqtrdefault'] = str(round(sum(UncapturedQTR.values(), 3)))
-    E['sumEqualisationAssistancedefault'] = str(round(sum(EqualisationAssistancedef.values()), 3))
+    E['sumEqualisationAssistancedef'] = str(round(sum(Equalisationassistance.values()), 3))
     E['sumEqualisationbasedefault'] = str(round(sum(EqualisationBase.values()), 3))
     E['Reductionsumdefault'] = str(round(sum(Reductionsum.values()), 3))
     E['sumHSTutiondefault'] = str(round(sum(sumHSTution.values()), 3))
@@ -1725,8 +1725,10 @@ def wftf2():
     AAElem={}
     AAHSNoreduction={}
     AAElemNoreduction={}
+    AAstatedelta={}
     AAdelta={}
-    AAdelta={}
+    AAstateHSdelta={}
+    AAstateElemdelta={}
     EqualisationBaseHS={}
     EqualisationBaseElem={}
     EqualisationBaseHSdef={}
@@ -2835,17 +2837,21 @@ def wftf2():
             EqualisationAssisElem[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']]-ElemLLnew[decoded[d4]['EntityID']]
         if EqualisationBaseHS[decoded[d4]['EntityID']]<HSLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisHS[decoded[d4]['EntityID']]=0
+            AAstateHSdelta[decoded[d4]['EntityID']] = AAHSNoreduction[decoded[d4]['EntityID']] - AAHS[decoded[d4]['EntityID']]
         else:
             EqualisationAssisHS[decoded[d4]['EntityID']]=EqualisationBaseHS[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
+            AAstateHSdelta[decoded[d4]['EntityID']] =0
         if EqualisationBaseElemdef[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisElemdef[decoded[d4]['EntityID']]=0
+            AAstateElemdelta[decoded[d4]['EntityID']] = AAElemNoreduction[decoded[d4]['EntityID']] - AAElem[decoded[d4]['EntityID']]
         else:
             EqualisationAssisElemdef[decoded[d4]['EntityID']]=EqualisationBaseElemdef[decoded[d4]['EntityID']]-ElemLLnew[decoded[d4]['EntityID']]
+            AAstateElemdelta[decoded[d4]['EntityID']] =0
         if EqualisationBaseHSdef[decoded[d4]['EntityID']]<HSLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisHSdef[decoded[d4]['EntityID']]=0
         else:
             EqualisationAssisHSdef[decoded[d4]['EntityID']]=EqualisationBaseHSdef[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
-
+        AAstatedelta[decoded[d4]['EntityID']]=AAstateElemdelta[decoded[d4]['EntityID']]+AAstateHSdelta[decoded[d4]['EntityID']]
         EqualisationAssistancedef[decoded[d4]['EntityID']] = EqualisationAssisElemdef[decoded[d4]['EntityID']] + \
                                                                EqualisationAssisHSdef[decoded[d4]['EntityID']]
         EqualisationAssistancesplit[decoded[d4]['EntityID']]=EqualisationAssisElem[decoded[d4]['EntityID']]+EqualisationAssisHS[decoded[d4]['EntityID']]
@@ -3064,10 +3070,13 @@ def wftf2():
     F['Reductionsum'] = str(round(sum(Reductionsum.values()), 3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
+    E['sumEqualisationAssistancedefault'] = str(round(sum(EqualisationAssistancedef.values()), 3))
+    F['AAstatedelta']=str(round(sum(AAstatedelta.values()),3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
-    print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
+    #print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
     #print("AAdelta:",F['AAdelta'])
+    #print("AAstatedelta:",F['AAstatedelta'])
     #print(wholevalues())
     #print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')

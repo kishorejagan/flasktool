@@ -212,8 +212,8 @@ def wftf(yearnum, g, Yeardef):
     QTR9_12 = flask.session['hsqtr']
     QTRCTED = 0.05
     CharterReduction = 18656000
-    CharSuppLvlAllK_8 = 1775.05 #1752.1 for 2017
-    CharSuppLvlAll9_12 = 2068.79#2042.04 for 2017
+    CharSuppLvlAllK_8 = 1775.05 #1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
+    CharSuppLvlAll9_12 = 2068.79#2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
     GroupAFinalGroupAWeightsPSD = 1.45
     GroupAFinalGroupAWeightsK_8 = 1.158
     GroupAFinalGroupAWeights9_12 = 1.268
@@ -1398,7 +1398,7 @@ def wftf(yearnum, g, Yeardef):
 
         EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + \
                                                                        EqualisationAssisHS[decoded[d4]['EntityID']]
-        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (5 / 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
             checkflag+=1
         else:
             if iterator%3==0:

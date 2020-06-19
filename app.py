@@ -3200,9 +3200,9 @@ def wftf2():
     print("Total districts:",counter1/3)
     print("Total districts with zeros:",zerocount/3)
     print("Values matching with original",checkflag/3)
-    df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
-                     columns=['IDCY', 'NameCY','TypeCY','equasscalcCY','eqassasoriginalCY'])
-    df.to_csv('NotmatchsplitCY2018.csv',header=True)
+    #df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
+                    # columns=['IDCY', 'NameCY','TypeCY','equasscalcCY','eqassasoriginalCY'])
+    #df.to_csv('NotmatchsplitCY2018.csv',header=True)
     F['AAdelta']=str(round(sum(AAdelta.values()),3))
     F['savingsflag1'] = str((savingsflag1))
     F['savingsflag'] = str((savingsflag))

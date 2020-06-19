@@ -85,8 +85,8 @@ def year():
     qtrhs = (example3())
     df = json.loads(qtrelem)
     dg = json.loads(qtrhs)
-    qtrelem = float(df[0]['elemqtr'])
-    qtrhs = float(dg[0]['hsqtr'])
+    QTRK_8 = float(df[0]['elemqtr'])
+    QTR9_12 = float(dg[0]['hsqtr'])
     flask.session['elemqtr']=qtrelem
     flask.session['hsqtr']=qtrhs
     return flask.render_template('input variables.html')
@@ -169,8 +169,8 @@ def wftf(yearnum, g, Yeardef):
     qtrhs=(example3())
     df=json.loads(qtrelem)
     dg=json.loads(qtrhs)
-    qtrelem=float(df[0]['elemqtr'])
-    qtrhs = float(dg[0]['hsqtr'])
+    QTRK_8 =float(df[0]['elemqtr'])
+    QTR9_12 = float(dg[0]['hsqtr'])
     flask.session['yearnum'] = yearnum
     TeacherCompPercent = 1.25
     Percent200DayCalender = 5
@@ -208,8 +208,6 @@ def wftf(yearnum, g, Yeardef):
     IncWtSmall600AndOver9_12 = 0
     FullTimeAOI = 0.95
     HalfTimeAOI = 0.85
-    QTRK_8 = flask.session['elemqtr']
-    QTR9_12 = flask.session['hsqtr']
     QTRCTED = 0.05
     CharterReduction = 18656000
     CharSuppLvlAllK_8 = 1775.05 #1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
@@ -3018,6 +3016,8 @@ def wftf2():
         dictionary = {}
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
+        dictionary['EqualisationAssistanceoriginal']=str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
+        dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
         #dictionary['ELEMRange'] = str((Original[counter2]['ELEMRange']))
         #dictionary['HSRange'] = str((Original[counter2]['HSRange']))
         #dictionary['Final_K_8SmWgt'] = str(round(float(Original[counter2]['Final_K_8SmWgt']), 4))
@@ -3040,8 +3040,7 @@ def wftf2():
         #dictionary['GB14_MD_SSI'] = str(round(GB14_MD_SSI[counter2], 4))
         #dictionary['EqualisationBaseHS'] = str(round(float(Original[counter2]['EqualisationBaseHS']), 4))
         #dictionary['EqualisationBaseElem'] = str(round(float(Original[counter2]['EqualisationBaseElem']), 4))
-        #dictionary['EqualisationAssistanceoriginal']=str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
-        #dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
+
         dictionary['AdditionalAssistancesplit']=str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancesplit'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationBasesplit'] = str(round(EqualisationBasesplit[decoded[d4]['EntityID']], 4))

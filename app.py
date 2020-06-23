@@ -87,8 +87,8 @@ def year():
     dg = json.loads(qtrhs)
     QTRK_8 = float(df[0]['elemqtr'])
     QTR9_12 = float(dg[0]['hsqtr'])
-    flask.session['elemqtr']=qtrelem
-    flask.session['hsqtr']=qtrhs
+    flask.session['elemqtr']=QTRK_8
+    flask.session['hsqtr']=QTR9_12
     return flask.render_template('input variables.html')
 
 
@@ -1634,8 +1634,8 @@ def wftf2():
     IncWtSmall600AndOver9_12 = float(flask.request.form['IncWtSmall600AndOver9_12'])
     FullTimeAOI = float(flask.request.form['FullTimeAOI'])
     HalfTimeAOI = float(flask.request.form['HalfTimeAOI'])
-    QTRK_8 = float(flask.request.form['QTRK_8'])
-    QTR9_12 = float(flask.request.form['QTR9_12'])
+    QTRK_8 = qtrelem
+    QTR9_12 = qtrhs
     QTRCTED = float(flask.request.form['QTRCTED'])
     CharterReduction = float(flask.request.form['CharterReduction'])
     CharSuppLvlAllK_8 = float(flask.request.form['CharSuppLvlAllK_8'])
@@ -2867,7 +2867,7 @@ def wftf2():
             HSQTRYield[decoded[d4]['EntityID']] = (float(HSAssessedValuation[decoded[d4]['EntityID']]/(0.05*0.01)) * float(0.01) * float(QTRCTED))
         else:
             HSQTRYield[decoded[d4]['EntityID']] = (
-                        float(HSAssessedValuation[decoded[d4]['EntityID']]/(qtrhs*0.01)) * float(0.01) * float(QTR9_12))
+                        float(HSAssessedValuation[decoded[d4]['EntityID']]))
         HSLL[decoded[d4]['EntityID']] = (
             min(HSTotalStateFormula[decoded[d4]['EntityID']], HSQTRYield[decoded[d4]['EntityID']]))
         HSLLnew[decoded[d4]['EntityID']] = HSQTRYield[decoded[d4]['EntityID']]
@@ -2878,7 +2878,7 @@ def wftf2():
         ElemAssessedValuation[decoded[d4]['EntityID']] = (float(decoded[d4]['PSElAmt']))
 
         ElemQTRYield[decoded[d4]['EntityID']] = (
-                        float((ElemAssessedValuation[decoded[d4]['EntityID']]) /(qtrelem*0.01)) * float(QTRK_8) * float(0.01))
+                        float((ElemAssessedValuation[decoded[d4]['EntityID']])))
         ElemLL[decoded[d4]['EntityID']] = (
             min(ElemTotalStateFormula[decoded[d4]['EntityID']], ElemQTRYield[decoded[d4]['EntityID']]))
         ElemLLnew[decoded[d4]['EntityID']] = ElemQTRYield[decoded[d4]['EntityID']]
@@ -2990,7 +2990,6 @@ def wftf2():
         if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 3) == 0:
             zerocount += 1
 
-
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
             EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]
         else:
@@ -3016,56 +3015,57 @@ def wftf2():
         dictionary = {}
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
-        dictionary['EqualisationAssistanceoriginal']=str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
-        dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
-        #dictionary['ELEMRange'] = str((Original[counter2]['ELEMRange']))
-        #dictionary['HSRange'] = str((Original[counter2]['HSRange']))
-        #dictionary['Final_K_8SmWgt'] = str(round(float(Original[counter2]['Final_K_8SmWgt']), 4))
-        #dictionary['Final_9_12SmWgt'] = str(round(float(Original[counter2]['Final_9_12SmWgt']), 4))
-        #dictionary['AAHSNoreduction'] = str(round(float(Original[counter2]['AAHSNoreduction']), 4))
-        #dictionary['AAElemNoreduction'] = str(round(float(Original[counter2]['AAElemNoreduction']), 4))
-        #dictionary['GB3_K3'] = str(round(GB3_K3[counter2], 4))
-        #dictionary['GB1_EDMIDSLD'] = str(round(GB1_EDMIDSLD[counter2], 4))
-        #dictionary['GB2_K3Reading'] = str(round(GB2_K3Reading[counter2], 4))
-        #dictionary['GB4_ELL'] = str(round(GB4_ELL[counter2], 4))
-        #dictionary['GB5_OI_R'] = str(round(GB5_OI_R[counter2], 4))
-        #dictionary['GB6_PS_D'] = str(round(GB6_PS_D[counter2], 4))
-        #dictionary['GB7_MOID'] = str(round(GB7_MOID[counter2], 4))
-        #dictionary['GB8_HI'] = str(round(GB8_HI[counter2], 4))
-        #dictionary['GB9_VI'] = str(round(GB9_VI[counter2], 4))
-        #dictionary['GB10_ED_P'] = str(round(GB10_ED_P[counter2], 4))
-        #dictionary['GB11_MDSC'] = str(round(GB11_MDSC[counter2], 4))
-        #dictionary['GB12_MD_R'] = str(round(GB12_MD_R[counter2], 4))
-        #dictionary['GB13_OI_SC'] = str(round(GB13_OI_SC[counter2], 4))
-        #dictionary['GB14_MD_SSI'] = str(round(GB14_MD_SSI[counter2], 4))
-        #dictionary['EqualisationBaseHS'] = str(round(float(Original[counter2]['EqualisationBaseHS']), 4))
-        #dictionary['EqualisationBaseElem'] = str(round(float(Original[counter2]['EqualisationBaseElem']), 4))
+        dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
+        dictionary['EqualisationAssistancedefault'] = str(
+            round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
+        # dictionary['ELEMRange'] = str((Original[counter2]['ELEMRange']))
+        # dictionary['HSRange'] = str((Original[counter2]['HSRange']))
+        # dictionary['Final_K_8SmWgt'] = str(round(float(Original[counter2]['Final_K_8SmWgt']), 4))
+        # dictionary['Final_9_12SmWgt'] = str(round(float(Original[counter2]['Final_9_12SmWgt']), 4))
+        # dictionary['AAHSNoreduction'] = str(round(float(Original[counter2]['AAHSNoreduction']), 4))
+        # dictionary['AAElemNoreduction'] = str(round(float(Original[counter2]['AAElemNoreduction']), 4))
+        # dictionary['GB3_K3'] = str(round(GB3_K3[counter2], 4))
+        # dictionary['GB1_EDMIDSLD'] = str(round(GB1_EDMIDSLD[counter2], 4))
+        # dictionary['GB2_K3Reading'] = str(round(GB2_K3Reading[counter2], 4))
+        # dictionary['GB4_ELL'] = str(round(GB4_ELL[counter2], 4))
+        # dictionary['GB5_OI_R'] = str(round(GB5_OI_R[counter2], 4))
+        # dictionary['GB6_PS_D'] = str(round(GB6_PS_D[counter2], 4))
+        # dictionary['GB7_MOID'] = str(round(GB7_MOID[counter2], 4))
+        # dictionary['GB8_HI'] = str(round(GB8_HI[counter2], 4))
+        # dictionary['GB9_VI'] = str(round(GB9_VI[counter2], 4))
+        # dictionary['GB10_ED_P'] = str(round(GB10_ED_P[counter2], 4))
+        # dictionary['GB11_MDSC'] = str(round(GB11_MDSC[counter2], 4))
+        # dictionary['GB12_MD_R'] = str(round(GB12_MD_R[counter2], 4))
+        # dictionary['GB13_OI_SC'] = str(round(GB13_OI_SC[counter2], 4))
+        # dictionary['GB14_MD_SSI'] = str(round(GB14_MD_SSI[counter2], 4))
+        # dictionary['EqualisationBaseHS'] = str(round(float(Original[counter2]['EqualisationBaseHS']), 4))
+        # dictionary['EqualisationBaseElem'] = str(round(float(Original[counter2]['EqualisationBaseElem']), 4))
 
-        dictionary['AdditionalAssistancesplit']=str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
+        dictionary['AdditionalAssistancesplit'] = str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancesplit'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationBasesplit'] = str(round(EqualisationBasesplit[decoded[d4]['EntityID']], 4))
-        #dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
-        #dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
+        # dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
+        # dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
         dictionary['EqAssisbyEHType'] = str(round(EqAssisbyEHType[decoded[d4]['EHType']], 4))
-        #dictionary['ElemAssessedValuation']=str(round(float(Original[counter2]['ElemAssessedValuation']), 4))
-        #dictionary['HSAssessedValuation'] = str(round(float(Original[counter2]['HSAssessedValuation']), 4))
-        #dictionary['ElemQTRYield'] =str(round(float(Original[counter2]['ElemQTRYield']), 4))
-        #dictionary['HSQTRYield'] = str(round(float(Original[counter2]['HSQTRYield']), 4))
-        #dictionary['ElemTotalStateFormula']=str(round(float(Original[counter2]['ElemTotalStateFormula']), 4))
-        #dictionary['HSTotalStateFormula']=str(round(float(Original[counter2]['HSTotalStateFormula']), 4))
-        #dictionary['TotalStateEqualisationFunding'] = str(round(float(Original[counter2]['TotalStateEqualisationFunding']), 4))
+        # dictionary['ElemAssessedValuation']=str(round(float(Original[counter2]['ElemAssessedValuation']), 4))
+        # dictionary['HSAssessedValuation'] = str(round(float(Original[counter2]['HSAssessedValuation']), 4))
+        # dictionary['ElemQTRYield'] =str(round(float(Original[counter2]['ElemQTRYield']), 4))
+        # dictionary['HSQTRYield'] = str(round(float(Original[counter2]['HSQTRYield']), 4))
+        # dictionary['ElemTotalStateFormula']=str(round(float(Original[counter2]['ElemTotalStateFormula']), 4))
+        # dictionary['HSTotalStateFormula']=str(round(float(Original[counter2]['HSTotalStateFormula']), 4))
+        # dictionary['TotalStateEqualisationFunding'] = str(round(float(Original[counter2]['TotalStateEqualisationFunding']), 4))
         # dictionary['DistrictPreKElemReduction']=str(round(DistrictPreKElemReduction[counter2], 4))
         # dictionary['DistrictHSReduction'] = str(round(DistrictHSReduction[counter2], 4))
-        #dictionary['TotalDistrictAAReduction'] = str(round(TotalDistrictAAReduction[counter2], 4))
-        #dictionary['NetworkForFundingPurposes']=str(decoded[d4]['NetworkForFundingPurposes'])
+        # dictionary['TotalDistrictAAReduction'] = str(round(TotalDistrictAAReduction[counter2], 4))
+        # dictionary['NetworkForFundingPurposes']=str(decoded[d4]['NetworkForFundingPurposes'])
         dictionary['EntityID'] = EID[counter2]
-        #dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
+        # dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
         # dictionary['NoStateAidDistrict'] = str(round(NoStateAidDistrict[counter2], 4))
         dictionary['EntityName'] = Ename[counter2]
         # dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
         dictionary['County'] = decoded[d4]['County']
         # dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
-        #dictionary['TEI'] = str(round(TEI[counter2], 5))
+        # dictionary['TEI'] = str(round(TEI[counter2], 5))
         dictionary['Type'] = str(decoded[d4]['Type'])
 
         # dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))
@@ -3101,12 +3101,12 @@ def wftf2():
         dictionary['perpupilbyEHTypecalc'] = str(round(perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
         dictionary['perpupilbyEHTypedifference'] = str(round(
             perpupilbyEHType[schoolEHType[decoded[d4]['EntityID']]] - float(Original[counter2]['perpupilbyEHType']), 2))
-        #dictionary['hsadm'] = str(round(HSADM[counter2], 4))
-        #dictionary['elemadm'] = str(round(ELEMADM[counter2], 4))
-        #dictionary['sumofadm'] = str(round(sumofadm[decoded[d4]['EntityID']], 2))
-        #dictionary['prekbsl'] = str(round(PrekBSL[counter2], 4))
-        #dictionary['elembsl'] = str(round(ELEMBSL[counter2], 4))
-        #dictionary['hsbsl'] = str(round(HSBSL[counter2], 4))
+        # dictionary['hsadm'] = str(round(HSADM[counter2], 4))
+        # dictionary['elemadm'] = str(round(ELEMADM[counter2], 4))
+        # dictionary['sumofadm'] = str(round(sumofadm[decoded[d4]['EntityID']], 2))
+        # dictionary['prekbsl'] = str(round(PrekBSL[counter2], 4))
+        # dictionary['elembsl'] = str(round(ELEMBSL[counter2], 4))
+        # dictionary['hsbsl'] = str(round(HSBSL[counter2], 4))
         dictionary['BSLcalc'] = str(round(BSL[counter2], 2))
         # dictionary['TotalBSLcalc']=str(round(sum(SumofBSL.values()),2))
         # dictionary['TotalBSLoriginal']=str(round(float(Original[counter2]['TotalBSL']),2))
@@ -3128,9 +3128,9 @@ def wftf2():
                 round(round(SumofBSL[decoded[d4]['EntityID']], 2) / (sumofadm[decoded[d4]['EntityID']]), 2) - round(
                     float(Original[counter2]['sumofBSLcalcperpupil']), 4), 2))
         dictionary['sumofBSLcalcperpupildefault'] = str(round(float(Original[counter2]['sumofBSLcalcperpupil']), 4))
-        #dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
-        #dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
-        #dictionary['WeightedHSCounts'] = str(round(WeightedHSCounts[counter2], 3))
+        # dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
+        # dictionary['WeightedElemCounts'] = str(round(WeightedElemCounts[counter2], 3))
+        # dictionary['WeightedHSCounts'] = str(round(WeightedHSCounts[counter2], 3))
 
         # dictionary['TotalLocalLevycalc'] = str(round(TotalLocalLevy[counter2], 3))
         # dictionary['TotalLocalLevyoriginal'] = str(round(float(Original[counter2]['TotalLocalLevy']), 3))
@@ -3140,41 +3140,41 @@ def wftf2():
         # dictionary['TotalStateAidoriginal'] = str(round(float(Original[counter2]['TotalStateAid']), 3))
         # dictionary['TotalStateAiddifference'] = str(round(TotalStateAid[counter2]-float(Original[counter2]['TotalStateAid']), 3))
 
-        #dictionary['RCLcalc'] = str(round(RCL[decoded[d4]['EntityID']], 4))
-        #dictionary['RCLoriginal'] = str(round(float(Original[counter2]['RCL']), 4))
-        #dictionary['RCLdifference'] = str(
-         #   round(RCL[decoded[d4]['EntityID']], 4) - round(float(Original[counter2]['RCL']), 4))
-        #dictionary['TRCL'] = str(round(TRCL[decoded[d4]['EntityID']], 4))
-        #dictionary['DSLcalc'] = str(round(DSL[decoded[d4]['EntityID']], 4))
-        #dictionary['DSLoriginal'] = str(round(float(Original[counter2]['DSL']), 4))
-        #dictionary['DSLdifference'] = str(
-         #   round(DSL[decoded[d4]['EntityID']], 4) - round(float(Original[counter2]['DSL']), 4))
-        #dictionary['TSL'] = str(round(TSL[decoded[d4]['EntityID']], 4))
-        #dictionary['TutionoutCount'] = str(decoded[d4]['TuitionOutCnt'])
-        #dictionary['HSTuitionOutAmt'] = decoded[d4]['HSTuitionOutAmt1']
-        #dictionary['LEABaseLevel'] = str(round(LEABaseLevel1[counter2], 4))
-        #dictionary['BSLWithoutAdjustment'] = str(round(BSLWithoutAdjustment[counter2], 4))
+        # dictionary['RCLcalc'] = str(round(RCL[decoded[d4]['EntityID']], 4))
+        # dictionary['RCLoriginal'] = str(round(float(Original[counter2]['RCL']), 4))
+        # dictionary['RCLdifference'] = str(
+        #   round(RCL[decoded[d4]['EntityID']], 4) - round(float(Original[counter2]['RCL']), 4))
+        # dictionary['TRCL'] = str(round(TRCL[decoded[d4]['EntityID']], 4))
+        # dictionary['DSLcalc'] = str(round(DSL[decoded[d4]['EntityID']], 4))
+        # dictionary['DSLoriginal'] = str(round(float(Original[counter2]['DSL']), 4))
+        # dictionary['DSLdifference'] = str(
+        #   round(DSL[decoded[d4]['EntityID']], 4) - round(float(Original[counter2]['DSL']), 4))
+        # dictionary['TSL'] = str(round(TSL[decoded[d4]['EntityID']], 4))
+        # dictionary['TutionoutCount'] = str(decoded[d4]['TuitionOutCnt'])
+        # dictionary['HSTuitionOutAmt'] = decoded[d4]['HSTuitionOutAmt1']
+        # dictionary['LEABaseLevel'] = str(round(LEABaseLevel1[counter2], 4))
+        # dictionary['BSLWithoutAdjustment'] = str(round(BSLWithoutAdjustment[counter2], 4))
         # dictionary['PreKWeightedPupilsuser_specifiedSWWreduction'] = str(round(PreKWeightedPupilsuser_specifiedSWWreduction[counter2], 4))
         # dictionary['K_8WeightedPupilsuser_specifiedSWWreduction'] = str(round(K_8WeightedPupilsuser_specifiedSWWreduction[counter2], 4))
         # dictionary['nine_12WeightedPupilsuser_specifiedSWWreduction'] = str(round(nine_12WeightedPupilsuser_specifiedSWWreduction[counter2], 4))
-        #dictionary['TotalStateFundingEqualised'] = str(round(TotalStateFundingEqualised[decoded[d4]['EntityID']], 4))
+        # dictionary['TotalStateFundingEqualised'] = str(round(TotalStateFundingEqualised[decoded[d4]['EntityID']], 4))
         # dictionary['NetworkElemADM'] = str(round(NetworkElemADM[counter2], 4))
         # dictionary['NetworkHSADM'] = str(round(NetworkHSADM[counter2], 4))
         # dictionary['PREKADM'] = str(round(PREKADM[counter2], 4))
         # dictionary['ELEMADM'] = str(round(ELEMADM[counter2], 4))
         # dictionary['HSADM'] = str(round(HSADM[counter2], 4))
-        #dictionary['GroupBWeightedAddonCounts'] = str(round(GroupBWeightedAddonCounts[counter2], 3))
+        # dictionary['GroupBWeightedAddonCounts'] = str(round(GroupBWeightedAddonCounts[counter2], 3))
         # dictionary['SSWELEMINCREMENTALWEIGHTPP'] = str(round(SSWELEMINCREMENTALWEIGHTPP[counter2], 3))
-        #dictionary['ElemBaseWeight'] = str(round(ElemBaseWeight[counter2], 3))
-        #dictionary['GroupBBSL'] = str(round(GroupBBSL[counter2], 2))
+        # dictionary['ElemBaseWeight'] = str(round(ElemBaseWeight[counter2], 3))
+        # dictionary['GroupBBSL'] = str(round(GroupBBSL[counter2], 2))
         # dictionary['HSBSL'] = str(round(HSBSL[counter2], 2))
-        #dictionary['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[counter2], 3))
+        # dictionary['AuditBaseLevelAdjustment'] = str(round(AuditBaseLevelAdjustment[counter2], 3))
 
         # dictionary['HSSmallIsolated'] = str(round(decoded[d4]['HSSmallIsolated'], 3))
         dictionary['AdditionalAssistance'] = str(round(AdditionalAssistance[decoded[d4]['EntityID']], 3))
-        #dictionary['AdditionalAssistancenew'] = str(round(AdditionalAssistancenew[decoded[d4]['EntityID']], 3))
-        #dictionary['AdditionalAssistancenew1'] = str(round(AdditionalAssistancenew1[decoded[d4]['EntityID']], 3))
-        #dictionary['TotalFormulaDistrictAA'] = str(round(TotalFormulaDistrictAA[counter2], 3))
+        # dictionary['AdditionalAssistancenew'] = str(round(AdditionalAssistancenew[decoded[d4]['EntityID']], 3))
+        # dictionary['AdditionalAssistancenew1'] = str(round(AdditionalAssistancenew1[decoded[d4]['EntityID']], 3))
+        # dictionary['TotalFormulaDistrictAA'] = str(round(TotalFormulaDistrictAA[counter2], 3))
         # dictionary['ElemBSL'] = str(round(ELEMBSL[counter2], 3))
         dictionary['EHType'] = decoded[d4]['EHType']
         # print(type(d4['ESSmallIsolated']))
@@ -3184,25 +3184,25 @@ def wftf2():
         # dictionary['FinalFormulaAAwithReduction'] = str(round(FinalFormulaAAwithReduction[counter2], 4))
         # dictionary['FinalFormulaAdditionalAssistance'] = str(round(FinalFormulaAdditionalAssistance[counter2], 4))
 
-        #dictionary['HSBaseWeight'] = str(round(HSBaseWeight[decoded[d4]['EntityID']], 4))
-        #dictionary['ElemLL'] = str(round(ElemLL[decoded[d4]['EntityID']], 4))
-        #dictionary['HSLL'] = str(round(HSLL[decoded[d4]['EntityID']], 4))
-        #dictionary['ElemLLnew'] = str(round(ElemLLnew[decoded[d4]['EntityID']], 4))
-        #dictionary['HSLLnew'] = str(round(HSLLnew[decoded[d4]['EntityID']], 4))
+        # dictionary['HSBaseWeight'] = str(round(HSBaseWeight[decoded[d4]['EntityID']], 4))
+        # dictionary['ElemLL'] = str(round(ElemLL[decoded[d4]['EntityID']], 4))
+        # dictionary['HSLL'] = str(round(HSLL[decoded[d4]['EntityID']], 4))
+        # dictionary['ElemLLnew'] = str(round(ElemLLnew[decoded[d4]['EntityID']], 4))
+        # dictionary['HSLLnew'] = str(round(HSLLnew[decoded[d4]['EntityID']], 4))
         # dictionary['SSWHSINCREMENTALWEIGHTPP'] = str(round(SSWHSINCREMENTALWEIGHTPP[counter2], 4))
         # dictionary['color']="red"
         # dictionary['LEABaseLevel1']=str(round(LEABaseLevel1[counter2]))
         D.append(dictionary)
         counter2 += 1
         ti = time.time()
-    #print(eqcount/3)
-    print("Total districts:",counter1/3)
-    print("Total districts with zeros:",zerocount/3)
-    print("Values matching with original",checkflag/3)
-    #df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
-                    # columns=['IDCY', 'NameCY','TypeCY','equasscalcCY','eqassasoriginalCY'])
-    #df.to_csv('NotmatchsplitCY2018.csv',header=True)
-    F['AAdelta']=str(round(sum(AAdelta.values()),3))
+        # print(eqcount/3)
+    print("Total districts:", counter1 / 3)
+    print("Total districts with zeros:", zerocount / 3)
+    print("Values matching with original", checkflag / 3)
+    # df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
+    # columns=['IDCY', 'NameCY','TypeCY','equasscalcCY','eqassasoriginalCY'])
+    # df.to_csv('NotmatchsplitCY2018.csv',header=True)
+    F['AAdelta'] = str(round(sum(AAdelta.values()), 3))
     F['savingsflag1'] = str((savingsflag1))
     F['savingsflag'] = str((savingsflag))
     F['sumbsl'] = str(round(sum(SumofBSL.values()), 3))
@@ -3223,14 +3223,14 @@ def wftf2():
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
     E['sumEqualisationAssistancedef'] = str(round(sum(EqualisationAssistancedef.values()), 3))
-    F['AAstatedelta']=str(round(sum(AAstatedelta.values()),3))
+    F['AAstatedelta'] = str(round(sum(AAstatedelta.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
-    #print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
-    #print("AAdelta:",F['AAdelta'])
-    #print("AAstatedelta:",F['AAstatedelta'])
-    #print(wholevalues())
-    #print(ti - gi)
+    # print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
+    # print("AAdelta:",F['AAdelta'])
+    # print("AAstatedelta:",F['AAstatedelta'])
+    # print(wholevalues())
+    # print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')
 
 

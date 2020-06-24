@@ -1396,17 +1396,17 @@ def wftf(yearnum, g, Yeardef):
 
         EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + \
                                                                        EqualisationAssisHS[decoded[d4]['EntityID']]
-        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
-            checkflag+=1
-        else:
-            if iterator%3==0:
+        #if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+         #   checkflag+=1
+        #else:
+         #   if iterator%3==0:
                 #print(decoded[d4]['EntityID'], int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)), int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))  )
-                schoolname.append(decoded[d4]['EntityName'])
-                schoolID.append(decoded[d4]['EntityID'])
-                equasscalc.append(int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)))
-                equassoriginal.append(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
-                Type.append((decoded[d4]['EHType']))
-            iterator+=1
+         #       schoolname.append(decoded[d4]['EntityName'])
+         #       schoolID.append(decoded[d4]['EntityID'])
+         #       equasscalc.append(int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)))
+          #      equassoriginal.append(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
+          #      Type.append((decoded[d4]['EHType']))
+          #  iterator+=1
 
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
@@ -2994,19 +2994,19 @@ def wftf2():
             EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]
         else:
             EqAssisbyEHType[decoded[d4]['EHType']] += EqualisationAssistancesplit[decoded[d4]['EntityID']]
-        if decoded[d4]['EqualisationAssistanceoriginal']==None:
-            passcount+=1
-        else:
+       # if decoded[d4]['EqualisationAssistanceoriginal']==None:
+        #    passcount+=1
+        #else:
             #print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2), round(decoded[d4]['EqualisationAssistanceoriginal'], 2), decoded[d4]['EntityID'])
-            if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(5/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(5/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
-                checkflag+=1
-            else:
-                if iterator4%3==0:
-                    schoolname.append(decoded[d4]['EntityName'])
-                    schoolID.append(decoded[d4]['EntityID'])
-                    equasscalc.append(int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)))
-                    equassoriginal.append(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
-                    Type.append((decoded[d4]['EHType']))
+            #if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(5/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(5/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
+             #   checkflag+=1
+            #else:
+             #   if iterator4%3==0:
+              #      schoolname.append(decoded[d4]['EntityName'])
+               #     schoolID.append(decoded[d4]['EntityID'])
+                #    equasscalc.append(int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)))
+                 #   equassoriginal.append(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
+                  #  Type.append((decoded[d4]['EHType']))
         iterator4+=1
         counter2 += 1
     counter2 = 0
@@ -3015,7 +3015,7 @@ def wftf2():
         dictionary = {}
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
-        dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
+        #dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
         dictionary['EqualisationAssistancedefault'] = str(
             round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
         # dictionary['ELEMRange'] = str((Original[counter2]['ELEMRange']))
@@ -3214,7 +3214,7 @@ def wftf2():
     F['sumtotaladditionalassistancenew'] = str(round(sum(AdditionalAssistancenew.values()), 3))
     F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevynew.values()), 3))
     F['sumTotalStateAid'] = str(round(sum(TotalStateAid.values()), 3))
-    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values())))
+    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values()) / 3))
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
@@ -3226,7 +3226,7 @@ def wftf2():
     F['AAstatedelta'] = str(round(sum(AAstatedelta.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
-    # print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values()) / 3))
+    print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
     # print(wholevalues())

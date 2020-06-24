@@ -3214,7 +3214,7 @@ def wftf2():
     F['sumtotaladditionalassistancenew'] = str(round(sum(AdditionalAssistancenew.values()), 3))
     F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevynew.values()), 3))
     F['sumTotalStateAid'] = str(round(sum(TotalStateAid.values()), 3))
-    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values()) / 3))
+    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values())))
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))

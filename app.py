@@ -210,8 +210,20 @@ def wftf(yearnum, g, Yeardef):
     HalfTimeAOI = 0.85
     QTRCTED = 0.05
     CharterReduction = 18656000
-    CharSuppLvlAllK_8 = 1775.05 #1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
-    CharSuppLvlAll9_12 = 2068.79#2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    if str(yearnum)=="2017":
+        CharSuppLvlAllK_8 = 1752.1
+        CharSuppLvlAll9_12 = 2042.04 #for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    elif str(yearnum)=="2018":
+        CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
+        CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    elif str(yearnum)=="2019":
+        CharSuppLvlAllK_8 = 1807.00 #for 2019 1,843.14 for 2020
+        CharSuppLvlAll9_12 = 2106.03 #for 2019 2,148.15 for 2020
+    elif str(yearnum)=="2020":
+        CharSuppLvlAllK_8 =1843.14 #for 2020
+        CharSuppLvlAll9_12 = 2148.15 #for 2020
+    else:
+        pass
     GroupAFinalGroupAWeightsPSD = 1.45
     GroupAFinalGroupAWeightsK_8 = 1.158
     GroupAFinalGroupAWeights9_12 = 1.268
@@ -1638,8 +1650,20 @@ def wftf2():
     QTR9_12 = qtrhs
     QTRCTED = float(flask.request.form['QTRCTED'])
     CharterReduction = float(flask.request.form['CharterReduction'])
-    CharSuppLvlAllK_8 = float(flask.request.form['CharSuppLvlAllK_8'])
-    CharSuppLvlAll9_12 = float(flask.request.form['CharSuppLvlAll9_12'])
+    if str(yearnum) == "2017":
+        CharSuppLvlAllK_8 = 1752.1
+        CharSuppLvlAll9_12 = 2042.04  # for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    elif str(yearnum) == "2018":
+        CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
+        CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    elif str(yearnum) == "2019":
+        CharSuppLvlAllK_8 = 1807.00  # for 2019 1,843.14 for 2020
+        CharSuppLvlAll9_12 = 2106.03  # for 2019 2,148.15 for 2020
+    elif str(yearnum) == "2020":
+        CharSuppLvlAllK_8 = 1843.14  # for 2020
+        CharSuppLvlAll9_12 = 2148.15  # for 2020
+    else:
+        pass
     GroupAFinalGroupAWeightsPSD = float(flask.request.form['GroupAFinalGroupAWeightsPSD'])
     GroupAFinalGroupAWeightsK_8 = float(flask.request.form['GroupAFinalGroupAWeightsK_8'])
     GroupAFinalGroupAWeights9_12 = float(flask.request.form['GroupAFinalGroupAWeights9_12'])
@@ -3043,6 +3067,7 @@ def wftf2():
 
         dictionary['AdditionalAssistancesplit'] = str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancesplit'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
+        dictionary['EqualisationAssistancedifference'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4)-(float(Original[counter2]['EqualisationAssistancedefault'])))
         dictionary['EqualisationBasesplit'] = str(round(EqualisationBasesplit[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
@@ -3229,7 +3254,7 @@ def wftf2():
     print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
-    # print(wholevalues())
+    print(wholevalues())
     # print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')
 
@@ -3244,8 +3269,10 @@ def wholevalues():
             return float(obj)
 
     E.update(F)
+
     E['sumEqualisationAssistancedifference'] = str(
         round(abs((float(E['sumEqualisationAssistancedefault']) - float(E['sumEqualisationAssistance']))), 3))
+
     return json.dumps(E, default=alchemyencoder)
 
 

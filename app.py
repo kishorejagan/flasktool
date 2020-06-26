@@ -2751,9 +2751,9 @@ def wftf2():
         if AdditonalAssistantReduction == 1:
             if d['Type'] == "Charter":
                 #CAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
-                AAHS[d['EntityID']]-= float(CharterHSAAReduction[counter1])
-                AAElem[d['EntityID']]-= float(CharterElemAAReduction[counter1])
-
+                #AAHS[d['EntityID']]-= float(CharterHSAAReduction[counter1])
+                #AAElem[d['EntityID']]-= float(CharterElemAAReduction[counter1])
+                pass
             else:
                 #DAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
                 AAHS[d['EntityID']] += float( DistrictHSReduction[counter1])

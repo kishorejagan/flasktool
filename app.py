@@ -3254,7 +3254,7 @@ def wftf2():
     print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
-    print(wholevalues())
+    #print(wholevalues())
     # print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')
 

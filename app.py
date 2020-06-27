@@ -102,38 +102,8 @@ def logout():
 # Defining input variables with input values from nigel file
 # start of input variables to be posted  in front end
 
-GroupB1 = 0.003
-GroupB2 = 0.040
-GroupB3 = 0.060
-GroupB4 = 0.115
-GroupB5 = 3.158
-GroupB6 = 3.595
-GroupB7 = 4.421
-GroupB8 = 4.771
-GroupB9 = 4.806
-GroupB10 = 4.822
-GroupB11 = 5.833
-GroupB12 = 6.024
-GroupB13 = 6.773
-GroupB14 = 7.947
-PolicyOption1 = 0
-Transportation123TSL = 1
-TransportationPerPupilOptionTRCL = 0
-DistHSTxtBkAllPSD = 0
-DistHSTxtBk1to99K_8 = 0
-DistHSTxtBk100to599K_8 = 0
-DistHSTxtBk600AndOverK_8 = 0
-DistHSTxtBk1to999_12 = 69.68
-DistHSTxtBk100to5999_12 = 69.68
-DistHSTxtBk600AndOver9_12 = 69.68
-CharHSTxtBkAllK_8 = 0
-CharHSTxtBkAll9_12 = 0
-Reduction10 = 1
-DistrictReduction = 352442700
-ActualDistrictReduction = -381355874.7
-AvgDistrictPPReduction = 382.77165
-AvgActualDistReduction = -414.1729064
-AvgCharterPPReduction = 109.6679608
+
+
 E = {}
 F = {}
 
@@ -169,9 +139,51 @@ def wftf(yearnum, g, Yeardef):
     qtrhs=(example3())
     df=json.loads(qtrelem)
     dg=json.loads(qtrhs)
+    DistSuppLvlAllPSD = 450.76
+    DistSuppLvl1to99K_8 = 544.58
+    DistSuppLvl100to599K_8 = 389.25
+    DistSuppLvl600AndOverK_8 = 450.76
+    DistSuppLvl1to999_12 = 601.24
+    DistSuppLvl100to5999_12 = 405.59
+    DistSuppLvl600AndOver9_12 = 492.94
+    PolicyOption1 = 0
+    Transportation123TSL = 1
+    TransportationPerPupilOptionTRCL = 0
+    DistHSTxtBkAllPSD = 0
+    DistHSTxtBk1to99K_8 = 0
+    DistHSTxtBk100to599K_8 = 0
+    DistHSTxtBk600AndOverK_8 = 0
+    DistHSTxtBk1to999_12 = 69.68
+    DistHSTxtBk100to5999_12 = 69.68
+    DistHSTxtBk600AndOver9_12 = 69.68
+    CharHSTxtBkAllK_8 = 0
+    CharHSTxtBkAll9_12 = 0
+    Reduction10 = 1
+    DistrictReduction = 352442700
+    ActualDistrictReduction = -381355874.7
+    AvgDistrictPPReduction = 382.77165
+    AvgActualDistReduction = -414.1729064
+    AvgCharterPPReduction = 109.6679608
+    FullTimeAOI = 0.95
+    HalfTimeAOI = 0.85
+    CharterReduction = 18656000
     QTRK_8 =float(df[0]['elemqtr'])
     QTR9_12 = float(dg[0]['hsqtr'])
     flask.session['yearnum'] = yearnum
+    GroupB1 = 0.003
+    GroupB2 = 0.040
+    GroupB3 = 0.060
+    GroupB4 = 0.115
+    GroupB5 = 3.158
+    GroupB6 = 3.595
+    GroupB7 = 4.421
+    GroupB8 = 4.771
+    GroupB9 = 4.806
+    GroupB10 = 4.822
+    GroupB11 = 5.833
+    GroupB12 = 6.024
+    GroupB13 = 6.773
+    GroupB14 = 7.947
     TeacherCompPercent = 1.25
     Percent200DayCalender = 5
     WtSmallIso1to99K_8 = 1.559
@@ -206,10 +218,9 @@ def wftf(yearnum, g, Yeardef):
     IncWtSmall100to4999_12 = 0.0004
     IncWtSmall500to5999_12 = 0.0013
     IncWtSmall600AndOver9_12 = 0
-    FullTimeAOI = 0.95
-    HalfTimeAOI = 0.85
+
     QTRCTED = 0.05
-    CharterReduction = 18656000
+
     if str(yearnum)=="2017":
         CharSuppLvlAllK_8 = 1752.1
         CharSuppLvlAll9_12 = 2042.04 #for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
@@ -228,13 +239,7 @@ def wftf(yearnum, g, Yeardef):
     GroupAFinalGroupAWeightsK_8 = 1.158
     GroupAFinalGroupAWeights9_12 = 1.268
     GroupAFinalGroupAWeightsCTED = 1.339
-    DistSuppLvlAllPSD = 450.76
-    DistSuppLvl1to99K_8 = 544.58
-    DistSuppLvl100to599K_8 = 389.25
-    DistSuppLvl600AndOverK_8 = 450.76
-    DistSuppLvl1to999_12 = 601.24
-    DistSuppLvl100to5999_12 = 405.59
-    DistSuppLvl600AndOver9_12 = 492.94
+
     TEI10 = 1
     schoolname=[]
     schoolID=[]
@@ -1610,7 +1615,8 @@ def wftf2():
     g = example()
     Original = wftf(yearnum, g, Yeardef)
     decoded = json.loads(g)
-    TeacherCompPercent = float(flask.request.form['TeacherCompPercent'])
+    TeacherCompPercent = 1.25
+
     Percent200DayCalender = float(flask.request.form['Percent200DayCalender'])
     WtSmallIso1to99K_8 = float(flask.request.form['WtSmallIso1to99K_8'])
     WtSmallIso100to499K_8 = float(flask.request.form['WtSmallIso100to499K_8'])
@@ -1644,12 +1650,31 @@ def wftf2():
     IncWtSmall100to4999_12 = float(flask.request.form['IncWtSmall100to4999_12'])
     IncWtSmall500to5999_12 = float(flask.request.form['IncWtSmall500to5999_12'])
     IncWtSmall600AndOver9_12 = float(flask.request.form['IncWtSmall600AndOver9_12'])
-    FullTimeAOI = float(flask.request.form['FullTimeAOI'])
-    HalfTimeAOI = float(flask.request.form['HalfTimeAOI'])
+    PolicyOption1 = 0
+    Transportation123TSL = 1
+    TransportationPerPupilOptionTRCL = 0
+    DistHSTxtBkAllPSD = 0
+    DistHSTxtBk1to99K_8 = 0
+    DistHSTxtBk100to599K_8 = 0
+    DistHSTxtBk600AndOverK_8 = 0
+    DistHSTxtBk1to999_12 = 69.68
+    DistHSTxtBk100to5999_12 = 69.68
+    DistHSTxtBk600AndOver9_12 = 69.68
+    CharHSTxtBkAllK_8 = 0
+    CharHSTxtBkAll9_12 = 0
+    Reduction10 = 1
+    DistrictReduction = 352442700
+    ActualDistrictReduction = -381355874.7
+    AvgDistrictPPReduction = 382.77165
+    AvgActualDistReduction = -414.1729064
+    AvgCharterPPReduction = 109.6679608
+    FullTimeAOI = 0.95
+    HalfTimeAOI = 0.85
+    CharterReduction = 18656000
     QTRK_8 = qtrelem
     QTR9_12 = qtrhs
-    QTRCTED = float(flask.request.form['QTRCTED'])
-    CharterReduction = float(flask.request.form['CharterReduction'])
+    QTRCTED = 0.05
+
     if str(yearnum) == "2017":
         CharSuppLvlAllK_8 = 1752.1
         CharSuppLvlAll9_12 = 2042.04  # for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
@@ -1668,13 +1693,20 @@ def wftf2():
     GroupAFinalGroupAWeightsK_8 = float(flask.request.form['GroupAFinalGroupAWeightsK_8'])
     GroupAFinalGroupAWeights9_12 = float(flask.request.form['GroupAFinalGroupAWeights9_12'])
     GroupAFinalGroupAWeightsCTED = float(flask.request.form['GroupAFinalGroupAWeightsCTED'])
-    DistSuppLvlAllPSD = float(flask.request.form['DistSuppLvlAllPSD'])
-    DistSuppLvl1to99K_8 = float(flask.request.form['DistSuppLvl1to99K_8'])
-    DistSuppLvl100to599K_8 = float(flask.request.form['DistSuppLvl100to599K_8'])
-    DistSuppLvl600AndOverK_8 = float(flask.request.form['DistSuppLvl600AndOverK_8'])
-    DistSuppLvl1to999_12 = float(flask.request.form['DistSuppLvl1to999_12'])
-    DistSuppLvl100to5999_12 = float(flask.request.form['DistSuppLvl100to5999_12'])
-    DistSuppLvl600AndOver9_12 = float(flask.request.form['GroupB1'])
+    DistSuppLvlAllPSD= 450.76
+    DistSuppLvl1to99K_8= 544.58
+    DistSuppLvl100to599K_8= 389.25
+    DistSuppLvl600AndOverK_8= 450.76
+    DistSuppLvl1to999_12= 601.24
+    DistSuppLvl100to5999_12= 405.59
+    DistSuppLvl600AndOver9_12= 492.94
+    #DistSuppLvlAllPSD = float(flask.request.form['DistSuppLvlAllPSD'])
+    #DistSuppLvl1to99K_8 = float(flask.request.form['DistSuppLvl1to99K_8'])
+    #DistSuppLvl100to599K_8 = float(flask.request.form['DistSuppLvl100to599K_8'])
+    #DistSuppLvl600AndOverK_8 = float(flask.request.form['DistSuppLvl600AndOverK_8'])
+    #DistSuppLvl1to999_12 = float(flask.request.form['DistSuppLvl1to999_12'])
+    #DistSuppLvl100to5999_12 = float(flask.request.form['DistSuppLvl100to5999_12'])
+    #DistSuppLvl600AndOver9_12 = float(flask.request.form['GroupB1'])
     GroupB1 = float(flask.request.form['GroupB1'])
     GroupB2 = float(flask.request.form['GroupB2'])
     GroupB3 = float(flask.request.form['GroupB3'])
@@ -1692,6 +1724,8 @@ def wftf2():
     TEI10 = float(flask.request.form['TEI10'])
     AdditionalAssistant_eqformula = float(flask.request.form['AdditionalAssistant_eqformula'])
     AdditonalAssistantReduction = float(flask.request.form['AdditonalAssistantReduction'])
+    #CAAReductionpercent = float(flask.request.form['CAAReductionpercent'])
+    #DAAReductionpercent = float(flask.request.form['DAAReductionpercent'])
     Reductionpercent = float(flask.request.form['Reductionpercent'])
     # End of input variables to be posted  in front end
     QTRUnified = QTRK_8 + QTR9_12
@@ -2888,7 +2922,7 @@ def wftf2():
             decoded[d4]['HSAmt'] = 0
         HSAssessedValuation[decoded[d4]['EntityID']] = (float(decoded[d4]['HSAmt']))
         if decoded[d4]['Type'] == "CTED":
-            HSQTRYield[decoded[d4]['EntityID']] = (float(HSAssessedValuation[decoded[d4]['EntityID']]/(0.05*0.01)) * float(0.01) * float(QTRCTED))
+            HSQTRYield[decoded[d4]['EntityID']] = (float(HSAssessedValuation[decoded[d4]['EntityID']]))
         else:
             HSQTRYield[decoded[d4]['EntityID']] = (
                         float(HSAssessedValuation[decoded[d4]['EntityID']]))
@@ -3254,7 +3288,7 @@ def wftf2():
     print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
-    #print(wholevalues())
+    print(wholevalues())
     # print(ti - gi)
     return flask.render_template('table2.html', string1=D, g='green', r='red')
 

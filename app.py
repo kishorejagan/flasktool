@@ -1724,8 +1724,8 @@ def wftf2():
     TEI10 = float(flask.request.form['TEI10'])
     AdditionalAssistant_eqformula = float(flask.request.form['AdditionalAssistant_eqformula'])
     AdditonalAssistantReduction = float(flask.request.form['AdditonalAssistantReduction'])
-    CAAReductionpercent = float(flask.request.form['CAAReductionpercent'])
-    DAAReductionpercent = float(flask.request.form['DAAReductionpercent'])
+    #CAAReductionpercent = float(flask.request.form['CAAReductionpercent'])
+    #DAAReductionpercent = float(flask.request.form['DAAReductionpercent'])
     Reductionpercent = float(flask.request.form['Reductionpercent'])
     # End of input variables to be posted  in front end
     QTRUnified = QTRK_8 + QTR9_12
@@ -2667,10 +2667,10 @@ def wftf2():
         TotalNetCharterAA.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (
             float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1])))
 
-        #TotalNetCharterAAnew.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (
-         #           float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) * (Reductionpercent / 100)))
-        #TotalNetCharterAAnew1.append(
-          #  TotalNetCharterAA[counter1] - (TotalNetCharterAA[counter1] * (Reductionpercent / 100)))
+        TotalNetCharterAAnew.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (
+                    float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) * (Reductionpercent / 100)))
+        TotalNetCharterAAnew1.append(
+            TotalNetCharterAA[counter1] - (TotalNetCharterAA[counter1] * (Reductionpercent / 100)))
         # TotalNetCharterAAnew.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]) - (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1])))
         Reductionsum[d['EntityID']] = (float(CharterElemAAReduction[counter1] + CharterHSAAReduction[counter1]))
         # CALCULATION OF FINAL FORUMULAADDITIONALASSISTANCE
@@ -2691,8 +2691,8 @@ def wftf2():
             TotalNetDistrictAAnew.append(float(0))
             TotalNetDistrictAAnew1.append(float(0))
             FinalFormulaAAwithReduction.append(float(TotalNetCharterAA[counter1]))
-            #FinalFormulaAAwithReductionnew.append(float(TotalNetCharterAAnew[counter1]))
-            #FinalFormulaAAwithReductionnew1.append(float(TotalNetCharterAAnew1[counter1]))
+            FinalFormulaAAwithReductionnew.append(float(TotalNetCharterAAnew[counter1]))
+            FinalFormulaAAwithReductionnew1.append(float(TotalNetCharterAAnew1[counter1]))
             AAElem[d['EntityID']]=(float(CharterElemAA[d['EntityID']]))
             AAHS[d['EntityID']]=(float(CharterHSAA[d['EntityID']]))
             FinalFormulaAdditionalAssistance.append(float(CharterElemAA[d['EntityID']] + CharterHSAA[d['EntityID']]))
@@ -2765,53 +2765,50 @@ def wftf2():
             TotalFormulaDistrictAA.append(float(
                 DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[
                     counter1]))
-            #TotalFormulaDistrictAAnew.append(float(
-             #   DistrictHSTextbooksAA[counter1] + DistrictHSAAnew[counter1] + DistrictElemAAnew[counter1] +
-              #  DistrictPreKAAnew[counter1]))
+            TotalFormulaDistrictAAnew.append(float(
+                DistrictHSTextbooksAA[counter1] + DistrictHSAAnew[counter1] + DistrictElemAAnew[counter1] +
+                DistrictPreKAAnew[counter1]))
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[counter1] + TotalDistrictAAReduction[counter1]))
-            #TotalNetDistrictAAnew.append(float(
-             #   TotalFormulaDistrictAAnew[counter1] - (TotalFormulaDistrictAAnew[counter1] * (Reductionpercent / 100))))
-            #TotalNetDistrictAAnew1.append(
-             #   float(TotalNetDistrictAA[counter1] - (TotalNetDistrictAA[counter1] * (Reductionpercent / 100))))
+            TotalNetDistrictAAnew.append(float(
+                TotalFormulaDistrictAAnew[counter1] - (TotalFormulaDistrictAAnew[counter1] * (Reductionpercent / 100))))
+            TotalNetDistrictAAnew1.append(
+                float(TotalNetDistrictAA[counter1] - (TotalNetDistrictAA[counter1] * (Reductionpercent / 100))))
             # TotalNetDistrictAAnew.append(float(TotalFormulaDistrictAAnew[counter1] + (TotalDistrictAAReduction[counter1])))
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[counter1])
-            #FinalFormulaAAwithReductionnew.append(TotalNetDistrictAAnew[counter1])
-            #FinalFormulaAAwithReductionnew1.append(TotalNetDistrictAAnew1[counter1])
+            FinalFormulaAAwithReductionnew.append(TotalNetDistrictAAnew[counter1])
+            FinalFormulaAAwithReductionnew1.append(TotalNetDistrictAAnew1[counter1])
             FinalFormulaAdditionalAssistance.append(TotalFormulaDistrictAA[counter1])
-            #FinalFormulaAdditionalAssistancenew.append(TotalFormulaDistrictAAnew[counter1])
+            FinalFormulaAdditionalAssistancenew.append(TotalFormulaDistrictAAnew[counter1])
             Reductionsum[d['EntityID']] = (TotalDistrictAAReduction[counter1] * (-1))
         # CALCULATION OF FINALAAALLOCATION
-        AAHSNoreduction[d['EntityID']] = AAHS[d['EntityID']]
-        AAElemNoreduction[d['EntityID']] = AAElem[d['EntityID']]
+
         if AdditonalAssistantReduction == 1:
             if d['Type'] == "Charter":
                 #CAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
                 #AAHS[d['EntityID']]-= float(CharterHSAAReduction[counter1])
                 #AAElem[d['EntityID']]-= float(CharterElemAAReduction[counter1])
-                #AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (CAAReductionpercent / 100))
-                #AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (CAAReductionpercent / 100))
                 pass
             else:
                 #DAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
                 AAHS[d['EntityID']] += float( DistrictHSReduction[counter1])
                 AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
-                #AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReductionpercent / 100))
-                #AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReductionpercent / 100))
+
             FinalAAAllocation.append(FinalFormulaAAwithReduction[counter1])
-            #FinalAAAllocationnew.append(FinalFormulaAAwithReductionnew[counter1])
-            #FinalAAAllocationnew1.append(FinalFormulaAAwithReductionnew1[counter1])
+            FinalAAAllocationnew.append(FinalFormulaAAwithReductionnew[counter1])
+            FinalAAAllocationnew1.append(FinalFormulaAAwithReductionnew1[counter1])
         else:
 
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
-            #FinalAAAllocationnew.append(FinalFormulaAdditionalAssistancenew[counter1])
-            #FinalAAAllocationnew1.append(FinalFormulaAdditionalAssistancenew[counter1])
-
-
-
+            FinalAAAllocationnew.append(FinalFormulaAdditionalAssistancenew[counter1])
+            FinalAAAllocationnew1.append(FinalFormulaAdditionalAssistancenew[counter1])
+        AAHSNoreduction[d['EntityID']]=AAHS[d['EntityID']]
+        AAElemNoreduction[d['EntityID']] = AAElem[d['EntityID']]
+        AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (Reductionpercent / 100))
+        AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (Reductionpercent / 100))
         AAdelta[d['EntityID']]=(AAHSNoreduction[d['EntityID']]+AAElemNoreduction[d['EntityID']])-(AAHS[d['EntityID']]+AAElem[d['EntityID']])
         AdditionalAssistance[d['EntityID']] = (FinalAAAllocation[counter1])
-        #AdditionalAssistancenew[d['EntityID']] = (FinalAAAllocationnew[counter1])
-        #AdditionalAssistancenew1[d['EntityID']] = (FinalAAAllocationnew1[counter1])
+        AdditionalAssistancenew[d['EntityID']] = (FinalAAAllocationnew[counter1])
+        AdditionalAssistancenew1[d['EntityID']] = (FinalAAAllocationnew1[counter1])
         AdditionalAssistancesplit[d['EntityID']] = (AAHS[d['EntityID']] + AAElem[d['EntityID']])
         if d['Type'] == "Charter":
             CAA[d['EntityID']] = AdditionalAssistancesplit[d['EntityID']]
@@ -2997,9 +2994,9 @@ def wftf2():
         EqualisationBase[decoded[d4]['EntityID']] = (
                     TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
         EqualisationBasesplit[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']] +EqualisationBaseHS[decoded[d4]['EntityID']]
-        #EqualisationBasenew[decoded[d4]['EntityID']] = (
-         #           TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistancenew[
-          #      decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
+        EqualisationBasenew[decoded[d4]['EntityID']] = (
+                    TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistancenew[
+                decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
 
         if EqualisationBaseElem[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisElem[decoded[d4]['EntityID']]=0
@@ -3025,21 +3022,31 @@ def wftf2():
         EqualisationAssistancedef[decoded[d4]['EntityID']] = EqualisationAssisElemdef[decoded[d4]['EntityID']] + \
                                                                EqualisationAssisHSdef[decoded[d4]['EntityID']]
         EqualisationAssistancesplit[decoded[d4]['EntityID']]=EqualisationAssisElem[decoded[d4]['EntityID']]+EqualisationAssisHS[decoded[d4]['EntityID']]
+        if EqualisationBase[decoded[d4]['EntityID']] >= TotalLocalLevy[decoded[d4]['EntityID']]:
+            savingsflag += 1
+            EqualisationAssistance[decoded[d4]['EntityID']] = (EqualisationBase[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
+        elif EqualisationBase[decoded[d4]['EntityID']] < TotalLocalLevy[decoded[d4]['EntityID']]:
+            savingsflag1 += 1
+            EqualisationAssistance[decoded[d4]['EntityID']] = 0
+        if TotalLocalLevynew[decoded[d4]['EntityID']] > EqualisationBase[decoded[d4]['EntityID']]:
+            EqualisationAssistancenew1[decoded[d4]['EntityID']] = 0
+        else:
+            EqualisationAssistancenew1[decoded[d4]['EntityID']] = (
+                        EqualisationBase[decoded[d4]['EntityID']] - TotalLocalLevynew[decoded[d4]['EntityID']])
+        EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
+        if round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3)==round(EqualisationAssistance[decoded[d4]['EntityID']],3):
+            eqcount+=1
 
-        #EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
-        # if round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3)==round(EqualisationAssistance[decoded[d4]['EntityID']],3):
-        #     eqcount+=1
-        #
-        # else:
-        #
-        #     if iterator % 3 == 0:
-        #         pass
-        #         #print(decoded[d4]['EntityID'], int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)),
-        #          #     int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
-        #
-        #     iterator += 1
-        # if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 3) == 0:
-        #     zerocount += 1
+        else:
+
+            if iterator % 3 == 0:
+                pass
+                #print(decoded[d4]['EntityID'], int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)),
+                 #     int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
+
+            iterator += 1
+        if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 3) == 0:
+            zerocount += 1
 
         if decoded[d4]['EHType'] not in EqAssisbyEHType:
             EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]

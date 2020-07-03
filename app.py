@@ -1724,8 +1724,8 @@ def wftf2():
     TEI10 = float(flask.request.form['TEI10'])
     AdditionalAssistant_eqformula = float(flask.request.form['AdditionalAssistant_eqformula'])
     AdditonalAssistantReduction = float(flask.request.form['AdditonalAssistantReduction'])
-    CAAReductionpercent = float(flask.request.form['CAAReductionpercent'])
-    DAAReductionpercent = float(flask.request.form['DAAReductionpercent'])
+    #CAAReductionpercent = float(flask.request.form['CAAReductionpercent'])
+    #DAAReductionpercent = float(flask.request.form['DAAReductionpercent'])
     Reductionpercent = float(flask.request.form['Reductionpercent'])
     # End of input variables to be posted  in front end
     QTRUnified = QTRK_8 + QTR9_12

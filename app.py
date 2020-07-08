@@ -80,7 +80,21 @@ def year():
     def example3():
         QtrHSrate = engine.execute('Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrHSrate], default=alchemyencoder)
+    def example4():
+        Elemcharter = engine.execute('Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',(yearnum))
+        return json.dumps([dict(r) for r in Elemcharter], default=alchemyencoder)
 
+    def example5():
+        HScharter = engine.execute(
+            'Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)', (yearnum))
+        return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
+
+    elemchar=(example4())
+    hschar=(example5())
+    dh=json.loads(elemchar)
+    dj=json.loads(hschar)
+    CharSuppLvlAllK_8=float(dh[0]['elemcaa'])
+    CharSuppLvlAll9_12 = float(dj[0]['hscaa'])
     qtrelem = (example2())
     qtrhs = (example3())
     df = json.loads(qtrelem)
@@ -131,6 +145,26 @@ def wftf(yearnum, g, Yeardef):
     def example3():
         QtrHSrate = engine.execute('Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrHSrate], default=alchemyencoder)
+
+    def example4():
+        Elemcharter = engine.execute(
+            'Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
+            (yearnum))
+        return json.dumps([dict(r) for r in Elemcharter], default=alchemyencoder)
+
+    def example5():
+        HScharter = engine.execute(
+            'Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
+            (yearnum))
+        return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
+
+    elemchar=(example4())
+    hschar=(example5())
+    dh=json.loads(elemchar)
+    dj=json.loads(hschar)
+    CharSuppLvlAllK_8=float(dh[0]['elemcaa'])
+    CharSuppLvlAll9_12 = float(dj[0]['hscaa'])
+
     BaseSupport = (example1())
     de = json.loads(BaseSupport)
     BaseSupport = float(de[0]['minbase'])
@@ -221,20 +255,20 @@ def wftf(yearnum, g, Yeardef):
 
     QTRCTED = 0.05
 
-    if str(yearnum)=="2017":
-        CharSuppLvlAllK_8 = 1752.1
-        CharSuppLvlAll9_12 = 2042.04 #for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
-    elif str(yearnum)=="2018":
-        CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
-        CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
-    elif str(yearnum)=="2019":
-        CharSuppLvlAllK_8 = 1807.00 #for 2019 1,843.14 for 2020
-        CharSuppLvlAll9_12 = 2106.03 #for 2019 2,148.15 for 2020
-    elif str(yearnum)=="2020":
-        CharSuppLvlAllK_8 =1843.14 #for 2020
-        CharSuppLvlAll9_12 = 2148.15 #for 2020
-    else:
-        pass
+    # if str(yearnum)=="2017":
+    #     CharSuppLvlAllK_8 = 1752.1
+    #     CharSuppLvlAll9_12 = 2042.04 #for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    # elif str(yearnum)=="2018":
+    #     CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
+    #     CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    # elif str(yearnum)=="2019":
+    #     CharSuppLvlAllK_8 = 1807.00 #for 2019 1,843.14 for 2020
+    #     CharSuppLvlAll9_12 = 2106.03 #for 2019 2,148.15 for 2020
+    # elif str(yearnum)=="2020":
+    #     CharSuppLvlAllK_8 =1843.14 #for 2020
+    #     CharSuppLvlAll9_12 = 2148.15 #for 2020
+    # else:
+    #     pass
     GroupAFinalGroupAWeightsPSD = 1.45
     GroupAFinalGroupAWeightsK_8 = 1.158
     GroupAFinalGroupAWeights9_12 = 1.268
@@ -1593,8 +1627,27 @@ def wftf2():
         QtrHSrate = engine.execute('Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrHSrate], default=alchemyencoder)
 
+    def example4():
+        Elemcharter = engine.execute(
+            'Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
+            (yearnum))
+        return json.dumps([dict(r) for r in Elemcharter], default=alchemyencoder)
+
+    def example5():
+        HScharter = engine.execute(
+            'Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
+            (yearnum))
+        return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
+
+    elemchar=(example4())
+    hschar=(example5())
+    dh=json.loads(elemchar)
+    dj=json.loads(hschar)
+    CharSuppLvlAllK_8=float(dh[0]['elemcaa'])
+    CharSuppLvlAll9_12 = float(dj[0]['hscaa'])
     qtrelem = (example2())
     qtrhs = (example3())
+
     df = json.loads(qtrelem)
     dg = json.loads(qtrhs)
     qtrelem = float(df[0]['elemqtr'])
@@ -1675,20 +1728,20 @@ def wftf2():
     QTR9_12 = qtrhs
     QTRCTED = 0.05
 
-    if str(yearnum) == "2017":
-        CharSuppLvlAllK_8 = 1752.1
-        CharSuppLvlAll9_12 = 2042.04  # for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
-    elif str(yearnum) == "2018":
-        CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
-        CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
-    elif str(yearnum) == "2019":
-        CharSuppLvlAllK_8 = 1807.00  # for 2019 1,843.14 for 2020
-        CharSuppLvlAll9_12 = 2106.03  # for 2019 2,148.15 for 2020
-    elif str(yearnum) == "2020":
-        CharSuppLvlAllK_8 = 1843.14  # for 2020
-        CharSuppLvlAll9_12 = 2148.15  # for 2020
-    else:
-        pass
+    # if str(yearnum) == "2017":
+    #     CharSuppLvlAllK_8 = 1752.1
+    #     CharSuppLvlAll9_12 = 2042.04  # for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    # elif str(yearnum) == "2018":
+    #     CharSuppLvlAllK_8 = 1775.05  # 1752.1 for 2017 1775.05 for 2018 1,807.00 for 2019 1,843.14 for 2020
+    #     CharSuppLvlAll9_12 = 2068.79  # 2042.04 for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
+    # elif str(yearnum) == "2019":
+    #     CharSuppLvlAllK_8 = 1807.00  # for 2019 1,843.14 for 2020
+    #     CharSuppLvlAll9_12 = 2106.03  # for 2019 2,148.15 for 2020
+    # elif str(yearnum) == "2020":
+    #     CharSuppLvlAllK_8 = 1843.14  # for 2020
+    #     CharSuppLvlAll9_12 = 2148.15  # for 2020
+    # else:
+    #     pass
     GroupAFinalGroupAWeightsPSD = float(flask.request.form['GroupAFinalGroupAWeightsPSD'])
     GroupAFinalGroupAWeightsK_8 = float(flask.request.form['GroupAFinalGroupAWeightsK_8'])
     GroupAFinalGroupAWeights9_12 = float(flask.request.form['GroupAFinalGroupAWeights9_12'])
@@ -2793,7 +2846,7 @@ def wftf2():
                 pass
             else:
                 #DAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
-                AAHS[d['EntityID']] += float( DistrictHSReduction[counter1])
+                AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
                 AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
                 #AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReductionpercent / 100))
                 #AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReductionpercent / 100))
@@ -3049,8 +3102,8 @@ def wftf2():
         #    passcount+=1
         #else:
             #print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2), round(decoded[d4]['EqualisationAssistanceoriginal'], 2), decoded[d4]['EntityID'])
-            #if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(5/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(5/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
-             #   checkflag+=1
+        #if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(2/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(2/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
+         #   checkflag+=1
             #else:
              #   if iterator4%3==0:
               #      schoolname.append(decoded[d4]['EntityName'])
@@ -3066,7 +3119,7 @@ def wftf2():
         dictionary = {}
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
-        #dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
+        # dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
         dictionary['EqualisationAssistancedefault'] = str(
             round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
         # dictionary['ELEMRange'] = str((Original[counter2]['ELEMRange']))
@@ -3094,7 +3147,7 @@ def wftf2():
 
         dictionary['AdditionalAssistancesplit'] = str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancesplit'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
-        dictionary['EqualisationAssistancedifference'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4)-(float(Original[counter2]['EqualisationAssistancedefault'])))
+        dictionary['EqualisationAssistancedifference'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4) - (float(Original[counter2]['EqualisationAssistancedefault'])))
         dictionary['EqualisationBasesplit'] = str(round(EqualisationBasesplit[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
@@ -3278,7 +3331,7 @@ def wftf2():
     F['AAstatedelta'] = str(round(sum(AAstatedelta.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
-    print("NoStateAidDistricts: ",(sum(NoStateAidDistrict.values())))
+    print("NoStateAidDistricts: ", (sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
     print(wholevalues())

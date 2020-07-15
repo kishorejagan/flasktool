@@ -1117,9 +1117,11 @@ def wftf(yearnum, g, Yeardef):
             admbyCounty[d['County']] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
 
         if d['County'] not in weightedadmbyCounty:
-            weightedadmbyCounty[d['County']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyCounty[d['County']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyCounty[d['County']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyCounty[d['County']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
 
         if d['EHType'] not in bslbyEHType:
             bslbyEHType[d['EHType']] = BSL[counter1]
@@ -1130,9 +1132,11 @@ def wftf(yearnum, g, Yeardef):
         else:
             admbyEHType[d['EHType']] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
         if d['EHType'] not in weightedadmbyEHType:
-            weightedadmbyEHType[d['EHType']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyEHType[d['EHType']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyEHType[d['EHType']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyEHType[d['EHType']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         # if schooltype[d['EntityID']] not in bslbyschooltype:
         #     bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         # else:
@@ -1308,7 +1312,8 @@ def wftf(yearnum, g, Yeardef):
             counter1]
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += \
             nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
-        sumofweightedadm[d['EntityID']] += WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + WeightedPreKCounts[counter1] + GroupBWeightedAddonCounts[counter1]
+        sumofweightedadm[d['EntityID']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         counter1 += 1
     counter2 = 0
     for i in bslbyCounty:
@@ -2701,9 +2706,11 @@ def wftf2():
         else:
             admbyCounty[d['County']] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
         if d['County'] not in weightedadmbyCounty:
-            weightedadmbyCounty[d['County']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1])
+            weightedadmbyCounty[d['County']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyCounty[d['County']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1])
+            weightedadmbyCounty[d['County']] +=(WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         if d['EHType'] not in bslbyEHType:
             bslbyEHType[d['EHType']] = BSL[counter1]
         else:
@@ -2713,9 +2720,11 @@ def wftf2():
         else:
             admbyEHType[d['EHType']] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
         if d['EHType'] not in weightedadmbyEHType:
-            weightedadmbyEHType[d['EHType']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyEHType[d['EHType']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyEHType[d['EHType']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1] )
+            weightedadmbyEHType[d['EHType']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         # if schooltype[d['EntityID']] not in bslbyschooltype:
         #     bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         # else:
@@ -2900,7 +2909,7 @@ def wftf2():
                 if Reductionflag=="percent":
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (CAAReduction / 100))
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (CAAReduction / 100))
-                else:
+                elif Reductionflag=="value":
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] - (CAAReduction)
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] - (CAAReduction)
             else:
@@ -2910,7 +2919,7 @@ def wftf2():
                 if Reductionflag=="percent":
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReduction / 100))
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReduction / 100))
-                else:
+                elif Reductionflag == "value":
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] - (DAAReduction)
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] - (DAAReduction)
 
@@ -2964,7 +2973,8 @@ def wftf2():
             counter1]
         Sumof9_12WeightedPupilsuser_specifiedSWWreduction[d['EntityID']] += \
         nine_12WeightedPupilsuser_specifiedSWWreduction[counter1]
-        sumofweightedadm[d['EntityID']] += WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + WeightedPreKCounts[counter1] + GroupBWeightedAddonCounts[counter1]
+        sumofweightedadm[d['EntityID']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1]+ GroupBWeightedAddonCounts[counter1]- (round(Weighted_GB2_K3Reading[counter1], 3) + round(
+                Weighted_GB3_K3[counter1])))
         counter1 += 1
 
     counter2 = 0

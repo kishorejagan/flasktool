@@ -415,7 +415,7 @@ def wftf(yearnum, g, Yeardef):
     bslbytype = {}
     admbytype = {}
     bslbyEHType = {}
-    EqAssisbyEHType = {}
+    EqBasebyEHType = {}
     aabyCounty = {}
     admbyEHType = {}
     weightedadmbyEHType={}
@@ -1482,6 +1482,12 @@ def wftf(yearnum, g, Yeardef):
 
         EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + \
                                                                        EqualisationAssisHS[decoded[d4]['EntityID']]
+
+
+        if decoded[d4]['EHType'] not in EqBasebyEHType:
+            EqBasebyEHType[decoded[d4]['EHType']] = EqualisationBase[decoded[d4]['EntityID']]
+        else:
+            EqBasebyEHType[decoded[d4]['EHType']] += EqualisationBase[decoded[d4]['EntityID']]
         #if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
          #   checkflag+=1
         #else:
@@ -1496,6 +1502,7 @@ def wftf(yearnum, g, Yeardef):
 
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
+        dictionary['EqBasebyEHType'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
         dictionary['AAHSNoreduction']=str(round(AAHSNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['AAElemNoreduction'] = str(round(AAElemNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['EqualisationBaseHS'] = str(round(EqualisationBaseHS[decoded[d4]['EntityID']], 2))
@@ -2048,7 +2055,7 @@ def wftf2():
     # admbyschooltype={}
     # bslbyschooltype={}
     bslbyEHType = {}
-    EqAssisbyEHType = {}
+    EqBasebyEHType = {}
     admbyEHType = {}
     weightedadmbyEHType={}
     bslbyCounty = {}
@@ -3135,9 +3142,8 @@ def wftf2():
                 'HSTuitionOutAmt1'])
         EqualisationBaseElemdef[decoded[d4]['EntityID']] = (
                     ElemTotalStateFormula[decoded[d4]['EntityID']] + AAElemNoreduction[decoded[d4]['EntityID']])
-        EqualisationBase[decoded[d4]['EntityID']] = (
-                    TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistance[decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
-        EqualisationBasesplit[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']] +EqualisationBaseHS[decoded[d4]['EntityID']]
+
+        EqualisationBase[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']] +EqualisationBaseHS[decoded[d4]['EntityID']]
         #EqualisationBasenew[decoded[d4]['EntityID']] = (
          #           TotalStateEqualisationFunding[decoded[d4]['EntityID']] + AdditionalAssistancenew[
           #      decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1'])
@@ -3182,10 +3188,11 @@ def wftf2():
         # if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 3) == 0:
         #     zerocount += 1
 
-        if decoded[d4]['EHType'] not in EqAssisbyEHType:
-            EqAssisbyEHType[decoded[d4]['EHType']] = EqualisationAssistancesplit[decoded[d4]['EntityID']]
+        if decoded[d4]['EHType'] not in EqBasebyEHType:
+            EqBasebyEHType[decoded[d4]['EHType']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
-            EqAssisbyEHType[decoded[d4]['EHType']] += EqualisationAssistancesplit[decoded[d4]['EntityID']]
+            EqBasebyEHType[decoded[d4]['EHType']] += EqualisationBase[decoded[d4]['EntityID']]
+
        # if decoded[d4]['EqualisationAssistanceoriginal']==None:
         #    passcount+=1
         #else:
@@ -3230,7 +3237,6 @@ def wftf2():
         # dictionary['GB14_MD_SSI'] = str(round(GB14_MD_SSI[counter2], 4))
         # dictionary['EqualisationBaseHS'] = str(round(float(Original[counter2]['EqualisationBaseHS']), 4))
         # dictionary['EqualisationBaseElem'] = str(round(float(Original[counter2]['EqualisationBaseElem']), 4))
-        #
         # dictionary['prekadm'] = str(round(PREKADM[counter2], 4))
         # dictionary['hsadm'] = str(round(HSADM[counter2], 4))
         # dictionary['elemadm'] = str(round(ELEMADM[counter2], 4))
@@ -3255,10 +3261,12 @@ def wftf2():
         dictionary['AdditionalAssistancesplit'] = str(round(AdditionalAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancesplit'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancedifference'] = str(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4) - (float(Original[counter2]['EqualisationAssistancedefault'])))
-        dictionary['EqualisationBasesplit'] = str(round(EqualisationBasesplit[decoded[d4]['EntityID']], 4))
+        dictionary['EqualisationBase'] = str(round(EqualisationBase[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
-        dictionary['EqAssisbyEHType'] = str(round(EqAssisbyEHType[decoded[d4]['EHType']], 4))
+        dictionary['EqBasebyEHTypecalc'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
+        dictionary['EqBasebyEHTypedefault'] = str(round(float(Original[counter2]['EqBasebyEHType']), 4))
+        dictionary['EqBasebyEHTypedifference'] =str(round((EqBasebyEHType[decoded[d4]['EHType']]-float(Original[counter2]['EqBasebyEHType'])), 4))
         # dictionary['ElemAssessedValuation']=str(round(float(Original[counter2]['ElemAssessedValuation']), 4))
         # dictionary['HSAssessedValuation'] = str(round(float(Original[counter2]['HSAssessedValuation']), 4))
         # dictionary['ElemQTRYield'] =str(round(float(Original[counter2]['ElemQTRYield']), 4))
@@ -3445,7 +3453,7 @@ def wftf2():
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
-    F['sumEqualisationbase'] = str(round(sum(EqualisationBasesplit.values()), 3))
+    F['sumEqualisationbase'] = str(round(sum(EqualisationBase.values()), 3))
     F['Reductionsum'] = str(round(sum(Reductionsum.values()), 3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
@@ -3472,9 +3480,8 @@ def wholevalues():
 
     E.update(F)
 
-    E['sumEqualisationAssistancedifference'] = str(
-        round(abs((float(E['sumEqualisationAssistancedefault']) - float(E['sumEqualisationAssistance']))), 3))
-
+    E['sumEqualisationAssistancedifference'] = str(round(abs(float(E['sumEqualisationAssistance'])-(float(E['sumEqualisationAssistancedefault']) )), 3))
+    E['sumEqualisationbasedifference']=str(round(abs((float(E['sumEqualisationbase'])-float(E['sumEqualisationbasedefault']) ))))
     return json.dumps(E, default=alchemyencoder)
 
 

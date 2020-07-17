@@ -1647,6 +1647,7 @@ def wftf(yearnum, g, Yeardef):
      #                 columns=['IDPY', 'NamePY','TypePY','equasscalcPY','eqassasoriginalPY'])
     #df.to_csv('NotmatchPY2018new.csv',header=True)
     print("checkflag default:", checkflag/3)
+
     E['sumbsldefault'] = str(round(sum(SumofBSL.values()), 3))
     E['sumtrcldefault'] = str(round(sum(TRCL.values()), 3))
     E['sumtsldefault'] = str(round(sum(TSL.values()), 3))
@@ -1658,15 +1659,24 @@ def wftf(yearnum, g, Yeardef):
     E['sumtotalqtryeilddefault'] = str(round(sum(TotalQTRYield.values()), 3))
     E['sumtotaluncapturedqtrdefault'] = str(round(sum(UncapturedQTR.values(), 3)))
     E['sumEqualisationAssistancedefault'] = str(round(sum(EqualisationAssistance.values()), 3))
-    E['sumEqualisationBasedefault'] = str(round(sum(EqualisationBase.values()), 3))
+
+
     E['Reductionsumdefault'] = str(round(sum(Reductionsum.values()), 3))
     E['sumHSTutiondefault'] = str(round(sum(sumHSTution.values()), 3))
     E['SumTotalStateFundingEqualiseddefault'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
     E['NoStateAidDistrictsdefault'] = str((sum(NoStateAidDistrict) / 3))
     E['CAAdefault'] = str(round(sum(CAAdefault.values()), 3))
     E['DAAdefault'] = str(round(sum(DAAdefault.values()), 3))
+
+    E['sumEqualisationBasedefault'] = str(round(sum(EqualisationBase.values()), 3))
+    E['sumEqualisationBaseperpupildefault'] = str(round((sum(EqualisationBase.values()) / (sum(sumofadm.values()))), 3))
+    E['sumEqualisationBaseweightedperpupildefault'] = str(round((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))
     E['Statecontributiondefault'] = str(round(sum(Statecontribution.values() ),3))
+    E['Statecontributionperpupildefault'] = str(round((sum(Statecontribution.values())/(sum(sumofadm.values()))), 3))
+    E['Statecontributionweightedperpupildefault'] = str(round((sum(Statecontribution.values()) / (sum(sumofweightedadm.values()))), 3))
     E['Localcontributiondefault'] = str(round(sum(Localcontribution.values() ),3))
+    E['Localcontributionperpupildefault'] = str(round((sum(Localcontribution.values())/(sum(sumofadm.values()))), 3))
+    E['Localcontributionweightedperpupildefault'] = str(round((sum(Localcontribution.values()) / (sum(sumofweightedadm.values()))), 3))
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -3393,8 +3403,7 @@ def wftf2():
         dictionary['weightedadmbyEHType'] = str(round(weightedadmbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
         dictionary['perpupilbyweightedEHTypedefault'] = str(round(float(Original[counter2]['perpupilbyweightedEHType']), 4))
         dictionary['perpupilbyweightedEHTypecalc'] = str(round(perpupilbyweightedEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
-        dictionary['perpupilbyweightedEHTypedifference'] = str(round(
-            perpupilbyweightedEHType[schoolEHType[decoded[d4]['EntityID']]] - float(Original[counter2]['perpupilbyweightedEHType']), 2))
+        dictionary['perpupilbyweightedEHTypedifference'] = str(round(perpupilbyweightedEHType[schoolEHType[decoded[d4]['EntityID']]] - float(Original[counter2]['perpupilbyweightedEHType']), 2))
 
         # dictionary['sumofadm'] = str(round(sumofadm[decoded[d4]['EntityID']], 2))
         # dictionary['prekbsl'] = str(round(PrekBSL[counter2], 4))
@@ -3510,7 +3519,6 @@ def wftf2():
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
-    F['sumEqualisationBase'] = str(round(sum(EqualisationBase.values()), 3))
     F['Reductionsum'] = str(round(sum(Reductionsum.values()), 3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
@@ -3518,8 +3526,15 @@ def wftf2():
     F['AAstatedelta'] = str(round(sum(AAstatedelta.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
+    F['sumEqualisationBase'] = str(round(sum(EqualisationBase.values()), 3))
+    F['sumEqualisationBaseperpupil'] = str(round((sum(EqualisationBase.values()) / (sum(sumofadm.values()))), 3))
+    F['sumEqualisationBaseweightedperpupil'] = str(round((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))
     F['Statecontribution'] = str(round(sum(Statecontribution.values()), 3))
-    F['Localcontribution'] = str(round(sum(Localcontribution.values() ),3))
+    F['Statecontributionperpupil'] = str(round((sum(Statecontribution.values()) / (sum(sumofadm.values()))), 3))
+    F['Statecontributionweightedperpupil'] = str(round((sum(Statecontribution.values()) / (sum(sumofweightedadm.values()))), 3))
+    F['Localcontribution'] = str(round(sum(Localcontribution.values()), 3))
+    F['Localcontributionperpupil'] = str(round((sum(Localcontribution.values()) / (sum(sumofadm.values()))), 3))
+    F['Localcontributionweightedperpupil'] = str(round((sum(Localcontribution.values()) / (sum(sumofweightedadm.values()))), 3))
     print("NoStateAidDistricts: ", (sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
@@ -3540,10 +3555,17 @@ def wholevalues():
     E.update(F)
 
     E['sumEqualisationAssistancedifference'] = str(round(abs(float(E['sumEqualisationAssistance'])-(float(E['sumEqualisationAssistancedefault']) )), 3))
-    E['sumEqualisationBasedifference'] = str(
-        round(abs(float(E['sumEqualisationBase']) - (float(E['sumEqualisationBasedefault']))), 3))
+    E['sumEqualisationBasedifference'] = str(round(abs(float(E['sumEqualisationBase']) - (float(E['sumEqualisationBasedefault']))), 3))
     E['Statecontributiondifference']=str(round(abs((float(E['Statecontribution'])-float(E['Statecontributiondefault']) )),3))
     E['Localcontributiondifference'] = str(round(abs((float(E['Localcontribution']) - float(E['Localcontributiondefault']))),3))
+
+    E['sumEqualisationBaseperpupildifference'] = str(round(abs(float(E['sumEqualisationBaseperpupil']) - (float(E['sumEqualisationBaseperpupildefault']))), 3))
+    E['Statecontributionperpupildifference'] = str(round(abs((float(E['Statecontributionperpupil']) - float(E['Statecontributionperpupildefault']))), 3))
+    E['Localcontributiondifference'] = str(round(abs((float(E['Localcontributionperpupil']) - float(E['Localcontributionperpupildefault']))), 3))
+
+    E['sumEqualisationBaseweightedperpupildifference'] = str(round(abs(float(E['sumEqualisationBaseweightedperpupil']) - (float(E['sumEqualisationBaseweightedperpupildefault']))), 3))
+    E['Statecontributionweightedperpupildifference'] = str(round(abs((float(E['Statecontributionweightedperpupil']) - float(E['Statecontributionweightedperpupildefault']))), 3))
+    E['Localcontributionweightedperpupildifference'] = str(round(abs((float(E['Localcontributionweightedperpupil']) - float(E['Localcontributionweightedperpupildefault']))), 3))
     return json.dumps(E, default=alchemyencoder)
 
 

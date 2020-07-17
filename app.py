@@ -416,7 +416,8 @@ def wftf(yearnum, g, Yeardef):
     admbytype = {}
     bslbyEHType = {}
     EqBasebyEHType = {}
-    EqBasebyEHType = {}
+    EqBasebyType = {}
+    EqBasebyCounty = {}
     
     aabyCounty = {}
     admbyEHType = {}
@@ -1500,6 +1501,14 @@ def wftf(yearnum, g, Yeardef):
             EqBasebyEHType[decoded[d4]['EHType']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyEHType[decoded[d4]['EHType']] += EqualisationBase[decoded[d4]['EntityID']]
+        if decoded[d4]['Type'] not in EqBasebyType:
+            EqBasebyType[decoded[d4]['Type']] = EqualisationBase[decoded[d4]['EntityID']]
+        else:
+            EqBasebyType[decoded[d4]['Type']] += EqualisationBase[decoded[d4]['EntityID']]
+        if decoded[d4]['County'] not in EqBasebyCounty:
+            EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
+        else:
+            EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
         #if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
          #   checkflag+=1
         #else:
@@ -1515,6 +1524,8 @@ def wftf(yearnum, g, Yeardef):
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
         dictionary['EqBasebyEHType'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
+        dictionary['EqBasebyType'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))
+        dictionary['EqBasebyCounty'] = str(round(EqBasebyCounty[decoded[d4]['County']], 4))
         dictionary['AAHSNoreduction']=str(round(AAHSNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['AAElemNoreduction'] = str(round(AAElemNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['EqualisationBaseHS'] = str(round(EqualisationBaseHS[decoded[d4]['EntityID']], 2))
@@ -2075,6 +2086,8 @@ def wftf2():
     # bslbyschooltype={}
     bslbyEHType = {}
     EqBasebyEHType = {}
+    EqBasebyType = {}
+    EqBasebyCounty = {}
     admbyEHType = {}
     weightedadmbyEHType={}
     bslbyCounty = {}
@@ -3223,7 +3236,14 @@ def wftf2():
             EqBasebyEHType[decoded[d4]['EHType']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyEHType[decoded[d4]['EHType']] += EqualisationBase[decoded[d4]['EntityID']]
-
+        if decoded[d4]['Type'] not in EqBasebyType:
+            EqBasebyType[decoded[d4]['Type']] = EqualisationBase[decoded[d4]['EntityID']]
+        else:
+            EqBasebyType[decoded[d4]['Type']] += EqualisationBase[decoded[d4]['EntityID']]
+        if decoded[d4]['Type'] not in EqBasebyCounty:
+            EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
+        else:
+            EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
        # if decoded[d4]['EqualisationAssistanceoriginal']==None:
         #    passcount+=1
         #else:
@@ -3247,9 +3267,7 @@ def wftf2():
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
 
         dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
-        dictionary['EqualisationAssistancedefault'] = str(
-            round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
-
+        dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
         # dictionary['AAHSNoreduction'] = str(round(float(Original[counter2]['AAHSNoreduction']), 4))
         # dictionary['AAElemNoreduction'] = str(round(float(Original[counter2]['AAElemNoreduction']), 4))
         # dictionary['GB3_K3'] = str(round(GB3_K3[counter2], 4))
@@ -3298,6 +3316,13 @@ def wftf2():
         dictionary['EqBasebyEHTypecalc'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
         dictionary['EqBasebyEHTypedefault'] = str(round(float(Original[counter2]['EqBasebyEHType']), 4))
         dictionary['EqBasebyEHTypedifference'] =str(round((EqBasebyEHType[decoded[d4]['EHType']]-float(Original[counter2]['EqBasebyEHType'])), 4))
+        dictionary['EqBasebyTypecalc'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))
+        dictionary['EqBasebyTypedefault'] = str(round(float(Original[counter2]['EqBasebyType']), 4))
+        dictionary['EqBasebyTypedifference'] = str(round((EqBasebyType[decoded[d4]['Type']] - float(Original[counter2]['EqBasebyType'])), 4))
+        dictionary['EqBasebyCountycalc'] = str(round(EqBasebyCounty[decoded[d4]['County']], 4))
+        dictionary['EqBasebyCountydefault'] = str(round(float(Original[counter2]['EqBasebyCounty']), 4))
+        dictionary['EqBasebyCountydifference'] = str(round((EqBasebyCounty[decoded[d4]['County']] - float(Original[counter2]['EqBasebyCounty'])), 4))
+
         # dictionary['ElemAssessedValuation']=str(round(float(Original[counter2]['ElemAssessedValuation']), 4))
         # dictionary['HSAssessedValuation'] = str(round(float(Original[counter2]['HSAssessedValuation']), 4))
         # dictionary['ElemQTRYield'] =str(round(float(Original[counter2]['ElemQTRYield']), 4))
@@ -3313,9 +3338,7 @@ def wftf2():
         dictionary['EntityName'] = Ename[counter2]
         # dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
         dictionary['County'] = decoded[d4]['County']
-
         # dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
-
         dictionary['Type'] = str(decoded[d4]['Type'])
 
         # dictionary['bslbyschooltype'] = str(round(bslbyschooltype[schooltype[decoded[d4]['EntityID']]],2))

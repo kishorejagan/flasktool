@@ -416,6 +416,8 @@ def wftf(yearnum, g, Yeardef):
     admbytype = {}
     bslbyEHType = {}
     EqBasebyEHType = {}
+    EqBasebyEHType = {}
+    
     aabyCounty = {}
     admbyEHType = {}
     weightedadmbyEHType={}
@@ -437,6 +439,12 @@ def wftf(yearnum, g, Yeardef):
     EqualisationBase = {}
     EqualisationBaseElem = {}
     EqualisationBaseHS = {}
+    StatecontributionElem ={} 
+    LocalcontributionElem= {}
+    StatecontributionHS = {}
+    LocalcontributionHS = {}
+    Statecontribution = {}
+    Localcontribution = {}
     EqualisationAssisElem={}
     EqualisationAssisHS={}
     EqualisationAssistance = {}
@@ -1470,20 +1478,24 @@ def wftf(yearnum, g, Yeardef):
         EqualisationBase[decoded[d4]['EntityID']] = EqualisationBaseElem[decoded[d4]['EntityID']] + EqualisationBaseHS[decoded[d4]['EntityID']]
         if EqualisationBaseElem[decoded[d4]['EntityID']] < ElemLL[decoded[d4]['EntityID']]:
             EqualisationAssisElem[decoded[d4]['EntityID']] = 0
+            StatecontributionElem[decoded[d4]['EntityID']]=0
+            LocalcontributionElem[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']]
         else:
             EqualisationAssisElem[decoded[d4]['EntityID']] = EqualisationBaseElem[decoded[d4]['EntityID']] - ElemLL[
                 decoded[d4]['EntityID']]
+            StatecontributionElem[decoded[d4]['EntityID']]= EqualisationAssisElem[decoded[d4]['EntityID']]
+            LocalcontributionElem[decoded[d4]['EntityID']]= ElemLL[decoded[d4]['EntityID']]
         if EqualisationBaseHS[decoded[d4]['EntityID']] < HSLL[decoded[d4]['EntityID']]:
             EqualisationAssisHS[decoded[d4]['EntityID']] = 0
-
+            StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
+            LocalcontributionHS[decoded[d4]['EntityID']]= EqualisationBaseHS[decoded[d4]['EntityID']]
         else:
-            EqualisationAssisHS[decoded[d4]['EntityID']] = EqualisationBaseHS[decoded[d4]['EntityID']] - HSLL[
-                decoded[d4]['EntityID']]
-
-        EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + \
-                                                                       EqualisationAssisHS[decoded[d4]['EntityID']]
-
-
+            EqualisationAssisHS[decoded[d4]['EntityID']] = EqualisationBaseHS[decoded[d4]['EntityID']] - HSLL[decoded[d4]['EntityID']]
+            StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
+            LocalcontributionHS[decoded[d4]['EntityID']]= HSLL[decoded[d4]['EntityID']]
+        EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + EqualisationAssisHS[decoded[d4]['EntityID']]
+        Localcontribution[decoded[d4]['EntityID']]=LocalcontributionHS[decoded[d4]['EntityID']]+LocalcontributionElem[decoded[d4]['EntityID']]
+        Statecontribution[decoded[d4]['EntityID']] = StatecontributionHS[decoded[d4]['EntityID']] + StatecontributionElem[decoded[d4]['EntityID']]
         if decoded[d4]['EHType'] not in EqBasebyEHType:
             EqBasebyEHType[decoded[d4]['EHType']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
@@ -1635,13 +1647,15 @@ def wftf(yearnum, g, Yeardef):
     E['sumtotalqtryeilddefault'] = str(round(sum(TotalQTRYield.values()), 3))
     E['sumtotaluncapturedqtrdefault'] = str(round(sum(UncapturedQTR.values(), 3)))
     E['sumEqualisationAssistancedefault'] = str(round(sum(EqualisationAssistance.values()), 3))
-    E['sumEqualisationbasedefault'] = str(round(sum(EqualisationBase.values()), 3))
+    E['sumEqualisationBasedefault'] = str(round(sum(EqualisationBase.values()), 3))
     E['Reductionsumdefault'] = str(round(sum(Reductionsum.values()), 3))
     E['sumHSTutiondefault'] = str(round(sum(sumHSTution.values()), 3))
     E['SumTotalStateFundingEqualiseddefault'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
     E['NoStateAidDistrictsdefault'] = str((sum(NoStateAidDistrict) / 3))
     E['CAAdefault'] = str(round(sum(CAAdefault.values()), 3))
     E['DAAdefault'] = str(round(sum(DAAdefault.values()), 3))
+    E['Statecontributiondefault'] = str(round(sum(Statecontribution.values() ),3))
+    E['Localcontributiondefault'] = str(round(sum(Localcontribution.values() ),3))
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -1780,7 +1794,12 @@ def wftf2():
     QTRK_8 = qtrelem
     QTR9_12 = qtrhs
     QTRCTED = 0.05
-
+    Statecontribution={}
+    Localcontribution={}
+    StatecontributionElem = {}
+    LocalcontributionElem = {}
+    StatecontributionHS={}
+    LocalcontributionHS={}
     # if str(yearnum) == "2017":
     #     CharSuppLvlAllK_8 = 1752.1
     #     CharSuppLvlAll9_12 = 2042.04  # for 2017 2068.79 for 2018 2,106.03 for 2019 2,148.15 for 2020
@@ -3126,8 +3145,7 @@ def wftf2():
             NoStateAidDistrict[decoded[d4]['EntityID']] = (float(0))
         TotalQTRYield[decoded[d4]['EntityID']] = (
             float(ElemQTRYield[decoded[d4]['EntityID']] + HSQTRYield[decoded[d4]['EntityID']]))
-        UncapturedQTR[decoded[d4]['EntityID']] = (
-            float(TotalQTRYield[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']]))
+        UncapturedQTR[decoded[d4]['EntityID']] = (float(TotalQTRYield[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']]))
         TotalStateFundingEqualised[decoded[d4]['EntityID']] = (
             float(ElemTotalStateFormula[decoded[d4]['EntityID']] + HSTotalStateFormula[decoded[d4]['EntityID']]))
         if decoded[d4]['ESSmallIsolated'] == None:
@@ -3150,14 +3168,24 @@ def wftf2():
 
         if EqualisationBaseElem[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisElem[decoded[d4]['EntityID']]=0
+            StatecontributionElem[decoded[d4]['EntityID']]= EqualisationAssisElem[decoded[d4]['EntityID']]
+            LocalcontributionElem[decoded[d4]['EntityID']]= EqualisationBaseElem[decoded[d4]['EntityID']]
+
         else:
             EqualisationAssisElem[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']]-ElemLLnew[decoded[d4]['EntityID']]
+            StatecontributionElem[decoded[d4]['EntityID']]= EqualisationAssisElem[decoded[d4]['EntityID']]
+            LocalcontributionElem[decoded[d4]['EntityID']]= ElemLL[decoded[d4]['EntityID']]
         if EqualisationBaseHS[decoded[d4]['EntityID']]<HSLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisHS[decoded[d4]['EntityID']]=0
             AAstateHSdelta[decoded[d4]['EntityID']] = AAHSNoreduction[decoded[d4]['EntityID']] - AAHS[decoded[d4]['EntityID']]
+            StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
+            LocalcontributionHS[decoded[d4]['EntityID']]= EqualisationBaseHS[decoded[d4]['EntityID']]
         else:
             EqualisationAssisHS[decoded[d4]['EntityID']]=EqualisationBaseHS[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
             AAstateHSdelta[decoded[d4]['EntityID']] =0
+            StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
+            LocalcontributionHS[decoded[d4]['EntityID']]= HSLL[decoded[d4]['EntityID']]
+
         if EqualisationBaseElemdef[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisElemdef[decoded[d4]['EntityID']]=0
             AAstateElemdelta[decoded[d4]['EntityID']] = AAElemNoreduction[decoded[d4]['EntityID']] - AAElem[decoded[d4]['EntityID']]
@@ -3172,7 +3200,10 @@ def wftf2():
         EqualisationAssistancedef[decoded[d4]['EntityID']] = EqualisationAssisElemdef[decoded[d4]['EntityID']] + \
                                                                EqualisationAssisHSdef[decoded[d4]['EntityID']]
         EqualisationAssistancesplit[decoded[d4]['EntityID']]=EqualisationAssisElem[decoded[d4]['EntityID']]+EqualisationAssisHS[decoded[d4]['EntityID']]
-
+        Localcontribution[decoded[d4]['EntityID']] = LocalcontributionHS[decoded[d4]['EntityID']] + \
+                                                     LocalcontributionElem[decoded[d4]['EntityID']]
+        Statecontribution[decoded[d4]['EntityID']] = StatecontributionHS[decoded[d4]['EntityID']] + \
+                                                     StatecontributionElem[decoded[d4]['EntityID']]
         #EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
         # if round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3)==round(EqualisationAssistance[decoded[d4]['EntityID']],3):
         #     eqcount+=1
@@ -3453,14 +3484,16 @@ def wftf2():
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
-    F['sumEqualisationbase'] = str(round(sum(EqualisationBase.values()), 3))
+    F['sumEqualisationBase'] = str(round(sum(EqualisationBase.values()), 3))
     F['Reductionsum'] = str(round(sum(Reductionsum.values()), 3))
     F['sumHSTution'] = str(round(sum(sumHSTution.values()), 3))
     F['SumTotalStateFundingEqualised'] = str(round(sum(TotalStateFundingEqualised.values()), 3))
-    E['sumEqualisationAssistancedef'] = str(round(sum(EqualisationAssistancedef.values()), 3))
+    F['sumEqualisationAssistancedef'] = str(round(sum(EqualisationAssistancedef.values()), 3))
     F['AAstatedelta'] = str(round(sum(AAstatedelta.values()), 3))
     F['CAA'] = str(round(sum(CAA.values()), 3))
     F['DAA'] = str(round(sum(DAA.values()), 3))
+    F['Statecontribution'] = str(round(sum(Statecontribution.values()), 3))
+    F['Localcontribution'] = str(round(sum(Localcontribution.values() ),3))
     print("NoStateAidDistricts: ", (sum(NoStateAidDistrict.values())))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
@@ -3481,7 +3514,10 @@ def wholevalues():
     E.update(F)
 
     E['sumEqualisationAssistancedifference'] = str(round(abs(float(E['sumEqualisationAssistance'])-(float(E['sumEqualisationAssistancedefault']) )), 3))
-    E['sumEqualisationbasedifference']=str(round(abs((float(E['sumEqualisationbase'])-float(E['sumEqualisationbasedefault']) ))))
+    E['sumEqualisationBasedifference'] = str(
+        round(abs(float(E['sumEqualisationBase']) - (float(E['sumEqualisationBasedefault']))), 3))
+    E['Statecontributiondifference']=str(round(abs((float(E['Statecontribution'])-float(E['Statecontributiondefault']) )),3))
+    E['Localcontributiondifference'] = str(round(abs((float(E['Localcontribution']) - float(E['Localcontributiondefault']))),3))
     return json.dumps(E, default=alchemyencoder)
 
 

@@ -1969,7 +1969,9 @@ def wftf2():
     HSNoStateAidDistrict = {}
     NoStateAidDistrict = {}
     TotalQTRYield = {}
-    UncapturedQTR = {}
+    UncapturedQTRElem = {}
+    UncapturedQTRHS={}
+    UncapturedQTR={}
     TotalStateFundingEqualised = {}
     SSWELEMINCREMENTALWEIGHTPP = []
     SSWHSINCREMENTALWEIGHTPP = []
@@ -3158,7 +3160,7 @@ def wftf2():
             NoStateAidDistrict[decoded[d4]['EntityID']] = (float(0))
         TotalQTRYield[decoded[d4]['EntityID']] = (
             float(ElemQTRYield[decoded[d4]['EntityID']] + HSQTRYield[decoded[d4]['EntityID']]))
-        UncapturedQTR[decoded[d4]['EntityID']] = (float(TotalQTRYield[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']]))
+
         TotalStateFundingEqualised[decoded[d4]['EntityID']] = (
             float(ElemTotalStateFormula[decoded[d4]['EntityID']] + HSTotalStateFormula[decoded[d4]['EntityID']]))
         if decoded[d4]['ESSmallIsolated'] == None:
@@ -3183,22 +3185,24 @@ def wftf2():
             EqualisationAssisElem[decoded[d4]['EntityID']]=0
             StatecontributionElem[decoded[d4]['EntityID']]= EqualisationAssisElem[decoded[d4]['EntityID']]
             LocalcontributionElem[decoded[d4]['EntityID']]= EqualisationBaseElem[decoded[d4]['EntityID']]
-
+            UncapturedQTRElem[decoded[d4]['EntityID']] = ElemLLnew[decoded[d4]['EntityID']] - EqualisationBaseElem[decoded[d4]['EntityID']]
         else:
             EqualisationAssisElem[decoded[d4]['EntityID']]=EqualisationBaseElem[decoded[d4]['EntityID']]-ElemLLnew[decoded[d4]['EntityID']]
             StatecontributionElem[decoded[d4]['EntityID']]= EqualisationAssisElem[decoded[d4]['EntityID']]
-            LocalcontributionElem[decoded[d4]['EntityID']]= ElemLL[decoded[d4]['EntityID']]
+            LocalcontributionElem[decoded[d4]['EntityID']]= ElemLLnew[decoded[d4]['EntityID']]
+            UncapturedQTRElem[decoded[d4]['EntityID']] =0
         if EqualisationBaseHS[decoded[d4]['EntityID']]<HSLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisHS[decoded[d4]['EntityID']]=0
             AAstateHSdelta[decoded[d4]['EntityID']] = AAHSNoreduction[decoded[d4]['EntityID']] - AAHS[decoded[d4]['EntityID']]
             StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
             LocalcontributionHS[decoded[d4]['EntityID']]= EqualisationBaseHS[decoded[d4]['EntityID']]
+            UncapturedQTRHS[decoded[d4]['EntityID']]=HSLLnew[decoded[d4]['EntityID']]-EqualisationBaseHS[decoded[d4]['EntityID']]
         else:
             EqualisationAssisHS[decoded[d4]['EntityID']]=EqualisationBaseHS[decoded[d4]['EntityID']]-HSLLnew[decoded[d4]['EntityID']]
             AAstateHSdelta[decoded[d4]['EntityID']] =0
             StatecontributionHS[decoded[d4]['EntityID']]= EqualisationAssisHS[decoded[d4]['EntityID']]
-            LocalcontributionHS[decoded[d4]['EntityID']]= HSLL[decoded[d4]['EntityID']]
-
+            LocalcontributionHS[decoded[d4]['EntityID']]= HSLLnew[decoded[d4]['EntityID']]
+            UncapturedQTRHS[decoded[d4]['EntityID']] =0
         if EqualisationBaseElemdef[decoded[d4]['EntityID']]<ElemLLnew[decoded[d4]['EntityID']]:
             EqualisationAssisElemdef[decoded[d4]['EntityID']]=0
             AAstateElemdelta[decoded[d4]['EntityID']] = AAElemNoreduction[decoded[d4]['EntityID']] - AAElem[decoded[d4]['EntityID']]
@@ -3213,10 +3217,9 @@ def wftf2():
         EqualisationAssistancedef[decoded[d4]['EntityID']] = EqualisationAssisElemdef[decoded[d4]['EntityID']] + \
                                                                EqualisationAssisHSdef[decoded[d4]['EntityID']]
         EqualisationAssistancesplit[decoded[d4]['EntityID']]=EqualisationAssisElem[decoded[d4]['EntityID']]+EqualisationAssisHS[decoded[d4]['EntityID']]
-        Localcontribution[decoded[d4]['EntityID']] = LocalcontributionHS[decoded[d4]['EntityID']] + \
-                                                     LocalcontributionElem[decoded[d4]['EntityID']]
-        Statecontribution[decoded[d4]['EntityID']] = StatecontributionHS[decoded[d4]['EntityID']] + \
-                                                     StatecontributionElem[decoded[d4]['EntityID']]
+        Localcontribution[decoded[d4]['EntityID']] = LocalcontributionHS[decoded[d4]['EntityID']] + LocalcontributionElem[decoded[d4]['EntityID']]
+        Statecontribution[decoded[d4]['EntityID']] = StatecontributionHS[decoded[d4]['EntityID']] + StatecontributionElem[decoded[d4]['EntityID']]
+        UncapturedQTR[decoded[d4]['EntityID']]=UncapturedQTRElem[decoded[d4]['EntityID']]+ UncapturedQTRHS[decoded[d4]['EntityID']]
         #EqualisationAssistancenew[decoded[d4]['EntityID']] = (EqualisationBasenew[decoded[d4]['EntityID']] - TotalLocalLevy[decoded[d4]['EntityID']])
         # if round(EqualisationAssistancesplit[decoded[d4]['EntityID']],3)==round(EqualisationAssistance[decoded[d4]['EntityID']],3):
         #     eqcount+=1

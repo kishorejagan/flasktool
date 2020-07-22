@@ -420,6 +420,8 @@ def wftf(yearnum, g, Yeardef):
     EqBasebyCounty = {}
     
     aabyCounty = {}
+    MObyCounty = {}
+    TSbyCounty = {}
     admbyEHType = {}
     weightedadmbyEHType={}
     bslbyCounty = {}
@@ -428,8 +430,14 @@ def wftf(yearnum, g, Yeardef):
 
     perpupilbyCounty = {}
     perpupilbyweightedCounty={}
+
     perpupilaabyCounty = {}
     perpupilaabyweightedCounty={}
+    perpupilTSbyCounty = {}
+    perpupilTSbyweightedCounty = {}
+    perpupilMObyCounty = {}
+    perpupilMObyweightedCounty = {}
+
     FinalFormulaAAwithReduction = []
     AdditionalAssistance = {}
     AAHS = {}
@@ -450,6 +458,9 @@ def wftf(yearnum, g, Yeardef):
     EqualisationAssisHS={}
     EqualisationAssistance = {}
     Reductionsum = {}
+    MaintainanceandOperations={}
+    TransportationSupport={}
+
     sumHSTution = {}
     CAAdefault = {}
     DAAdefault = {}
@@ -1297,10 +1308,13 @@ def wftf(yearnum, g, Yeardef):
                 DAAdefault[d['EntityID']] = FinalFormulaAdditionalAssistance[counter1]
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
         AdditionalAssistance[d['EntityID']] = (FinalAAAllocation[counter1])
+
+
         if d['County'] not in aabyCounty:
             aabyCounty[d['County']] = AdditionalAssistance[d['EntityID']]
         else:
             aabyCounty[d['County']] += AdditionalAssistance[d['EntityID']]
+
         OppurtunityWeight.append(float(0))
         if d['TRCL'] == None:
             d['TRCL'] = 0
@@ -1333,7 +1347,7 @@ def wftf(yearnum, g, Yeardef):
         if weightedadmbyCounty[i] == 0:
             perpupilbyweightedCounty[i] = 0
         else:
-            perpupilbyweightedCounty[i] = (bslbyCounty[i] / weightedadmbyCounty[i])
+            perpupilbyweightedCounty[i] = ((bslbyCounty[i]/3) / (weightedadmbyCounty[i])/3)
     # for i in bslbytype:
     #   if admbytype[i] == 0:
     #      perpupilpertype[i] = 0
@@ -1343,20 +1357,20 @@ def wftf(yearnum, g, Yeardef):
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = (bslbyEHType[i] / admbyEHType[i])
+            perpupilbyEHType[i] = ((bslbyEHType[i]/3)/ (admbyEHType[i]/3))
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
-            perpupilbyweightedEHType[i] = (bslbyEHType[i] / weightedadmbyEHType[i])
+            perpupilbyweightedEHType[i] = ((bslbyEHType[i]/3)/ weightedadmbyEHType[i])
     for i in aabyCounty:
         if admbyCounty[i] == 0:
             perpupilaabyCounty[i] = 0
         else:
-            perpupilaabyCounty[i] = ((aabyCounty[i] / 3) / admbyCounty[i])
+            perpupilaabyCounty[i] = ((aabyCounty[i] / 3) / (admbyCounty[i])/3)
         if weightedadmbyCounty[i] == 0:
             perpupilaabyweightedCounty[i] = 0
         else:
-            perpupilaabyweightedCounty[i] = ((aabyCounty[i] / 3) / weightedadmbyCounty[i])
+            perpupilaabyweightedCounty[i] = ((aabyCounty[i]/3) / (weightedadmbyCounty[i])/3)
 
     # for i in bslbyschooltype:
     #     if admbyschooltype[i] == 0:
@@ -1400,6 +1414,22 @@ def wftf(yearnum, g, Yeardef):
 
         TotalStateEqualisationFunding[decoded[d4]['EntityID']] = (
             min(RCL[decoded[d4]['EntityID']], DSL[decoded[d4]['EntityID']]))
+
+        if RCL[decoded[d4]['EntityID']]< DSL[decoded[d4]['EntityID']]:
+            TransportationSupport[decoded[d4]['EntityID']]=TRCL[decoded[d4]['EntityID']]
+            MaintainanceandOperations[decoded[d4]['EntityID']]=RCL[decoded[d4]['EntityID']]+ TRCL[decoded[d4]['EntityID']]-decoded[d4]['HSTuitionOutAmt1']
+        else:
+            TransportationSupport[decoded[d4]['EntityID']] = TSL[decoded[d4]['EntityID']]
+            MaintainanceandOperations[decoded[d4]['EntityID']] = DSL[decoded[d4]['EntityID']] + TSL[decoded[d4]['EntityID']] - decoded[d4]['HSTuitionOutAmt1']
+        if decoded[d4]['County'] not in MObyCounty:
+            MObyCounty[decoded[d4]['County']] = MaintainanceandOperations[decoded[d4]['EntityID']]
+        else:
+            MObyCounty[decoded[d4]['County']] += MaintainanceandOperations[decoded[d4]['EntityID']]
+
+        if decoded[d4]['County'] not in TSbyCounty:
+            TSbyCounty[decoded[d4]['County']] = TransportationSupport[decoded[d4]['EntityID']]
+        else:
+            TSbyCounty[decoded[d4]['County']] += TransportationSupport[decoded[d4]['EntityID']]
 
         # CALCULATION OF ELEMENTARY AND HSTOTALSTATE FORMULA
         if decoded[d4]['HSTuitionOutAmt1']==0:
@@ -1523,6 +1553,25 @@ def wftf(yearnum, g, Yeardef):
 
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
+
+        counter2 += 1
+    counter2=0
+    for i in MObyCounty:
+        if admbyCounty[i] == 0:
+            perpupilMObyCounty[i]=0
+            perpupilTSbyCounty[i]=0
+        else:
+            perpupilMObyCounty[i] = ((MObyCounty[i] / 3) / (admbyCounty[i])/3)
+            perpupilTSbyCounty[i] = ((TSbyCounty[i] / 3) / (admbyCounty[i])/3)
+        if weightedadmbyCounty[i] == 0:
+            perpupilMObyweightedCounty[i] = 0
+            perpupilTSbyweightedCounty[i] = 0
+        else:
+            perpupilMObyweightedCounty[i] = ((MObyCounty[i]/3) / (weightedadmbyCounty[i])/3)
+            perpupilTSbyweightedCounty[i] = ((TSbyCounty[i]/3) / (weightedadmbyCounty[i])/3)
+
+    for d4 in range(len(decoded)):
+        dictionary = {}
         dictionary['EqBasebyEHType'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
         dictionary['EqBasebyType'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))
         dictionary['EqBasebyCounty'] = str(round(EqBasebyCounty[decoded[d4]['County']], 4))
@@ -3034,11 +3083,11 @@ def wftf2():
         if admbyCounty[i] == 0:
             perpupilbyCounty[i] = 0
         else:
-            perpupilbyCounty[i] = (bslbyCounty[i] / admbyCounty[i])
+            perpupilbyCounty[i] = ((bslbyCounty[i]/3) / admbyCounty[i])
         if weightedadmbyCounty[i] == 0:
             perpupilbyweightedCounty[i] = 0
         else:
-            perpupilbyweightedCounty[i] = (bslbyCounty[i] / weightedadmbyCounty[i])
+            perpupilbyweightedCounty[i] = ((bslbyCounty[i]/3) / weightedadmbyCounty[i])
     # for i in bslbytype:
     #   if admbytype[i]==0:
     #      perpupilpertype[i] =0
@@ -3048,20 +3097,20 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = (bslbyEHType[i] / admbyEHType[i])
+            perpupilbyEHType[i] = ((bslbyEHType[i]/3) / (admbyEHType[i])/3)
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
-            perpupilbyweightedEHType[i] = (bslbyEHType[i] / weightedadmbyEHType[i])
+            perpupilbyweightedEHType[i] = ((bslbyEHType[i]/3) / (weightedadmbyEHType[i])/3)
     for i in AabyCounty:
         if admbyCounty[i] == 0:
             perpupilaabyCounty[i] = 0
         else:
-            perpupilaabyCounty[i] = ((AabyCounty[i] / 3) / admbyCounty[i])
+            perpupilaabyCounty[i] = ((AabyCounty[i] / 3) / (admbyCounty[i])/3)
         if weightedadmbyCounty[i] == 0:
             perpupilaabyweightedCounty[i] = 0
         else:
-            perpupilaabyweightedCounty[i] = ((AabyCounty[i] / 3) / weightedadmbyCounty[i])
+            perpupilaabyweightedCounty[i] = ((AabyCounty[i] / 3) / (weightedadmbyCounty[i])/3)
 
     # for i in bslbyschooltype:
     #     if admbyschooltype[i]==0:

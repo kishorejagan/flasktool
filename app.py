@@ -1593,7 +1593,7 @@ def wftf(yearnum, g, Yeardef):
         dictionary = {}
         dictionary['EqBasebyEHType'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
         dictionary['EqBasebyType'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))
-        dictionary['EqBasebyCounty'] = str(round((EqBasebyCounty[decoded[d4]['County']]/3), 4))
+
         dictionary['AAHSNoreduction']=str(round(AAHSNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['AAElemNoreduction'] = str(round(AAElemNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['EqualisationBaseHS'] = str(round(EqualisationBaseHS[decoded[d4]['EntityID']], 2))
@@ -1744,9 +1744,10 @@ def wftf(yearnum, g, Yeardef):
     E['TSbyTypedefault'] = {k: v / 3 for k, v in TSbyType.items()}
     E['perpupilTSbyTypedefault'] = (perpupilTSbyType)
     E['perpupilTSbyweightedTypedefault'] = (perpupilTSbyweightedType)
-    E['AAbyTypedefault'] = {k: v / 3 for k, v in AAbyType.items()}
+    E['AAbyTypedefault'] ={k: v / 3 for k, v in AAbyType.items()}
     E['perpupilAAbyTypedefault'] = (perpupilAAbyType)
     E['perpupilAAbyweightedTypedefault'] = (perpupilAAbyweightedType)
+    E['EqBasebyCountydefault'] = {k: v / 3 for k, v in EqBasebyCounty.items()}
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -3449,9 +3450,8 @@ def wftf2():
         dictionary['EqBasebyTypecalc'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))
         dictionary['EqBasebyTypedefault'] = str(round(float(Original[counter2]['EqBasebyType']), 4))
         dictionary['EqBasebyTypedifference'] = str(round((EqBasebyType[decoded[d4]['Type']] - float(Original[counter2]['EqBasebyType'])), 4))
-        dictionary['EqBasebyCountycalc'] = str(round((EqBasebyCounty[decoded[d4]['County']]/3), 4))
-        dictionary['EqBasebyCountydefault'] = str(round(float(Original[counter2]['EqBasebyCounty']), 4))
-        dictionary['EqBasebyCountydifference'] = str(round(((EqBasebyCounty[decoded[d4]['County']]/3) - float(Original[counter2]['EqBasebyCounty'])), 4))
+        #dictionary['EqBasebyCountycalc'] = str(round((EqBasebyCounty[decoded[d4]['County']]/3), 4))
+
 
         # dictionary['ElemAssessedValuation']=str(round(float(Original[counter2]['ElemAssessedValuation']), 4))
         # dictionary['HSAssessedValuation'] = str(round(float(Original[counter2]['HSAssessedValuation']), 4))
@@ -3658,6 +3658,7 @@ def wftf2():
     F['AAbyType'] = {k: v / 3 for k, v in AAbyType.items()}
     F['perpupilAAbyType'] = (perpupilAAbyType)
     F['perpupilAAbyweightedType'] = (perpupilAAbyweightedType)
+    F['EqBasebyCountycalc'] = {k: v / 3 for k, v in EqBasebyCounty.items()}
     # dictionary['perpupilMObyType'] = str(round(perpupilMObyType[decoded[d4]['Type']], 4))
     # dictionary['perpupilMObyweightedType'] = str(round(perpupilMObyweightedType[decoded[d4]['Type']], 4))
     #

@@ -3499,7 +3499,6 @@ def wftf2():
         dictionary['perpupilbyCountydifference'] = str(
             round(perpupilbyCounty[decoded[d4]['County']] - float(Original[counter2]['perpupilbyCounty']), 2))
         dictionary['bslbyEHType'] = str(round(bslbyEHType[schoolEHType[decoded[d4]['EntityID']]], 2))
-
         dictionary['weightedadmbyCounty'] = str(round(weightedadmbyCounty[decoded[d4]['County']], 2))
         dictionary['perpupilaabyweightedCountycalc'] = str(round(perpupilaabyweightedCounty[decoded[d4]['County']], 2))
         dictionary['perpupilaabyweightedCountydefault'] = str(round(float(Original[counter2]['perpupilaabyweightedCounty']), 4))

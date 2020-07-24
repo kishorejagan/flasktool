@@ -1012,6 +1012,7 @@ def wftf(yearnum, g, Yeardef):
             if d['sumOfDSCSMDSSICnt'] == None:
                 d['sumOfDSCSMDSSICnt'] = 0
             GB14_MD_SSI.append(float(d['sumOfMDSSICYCnt']) + float(d['sumOfDSCSMDSSICnt']))
+
         if d["TEI"] == None:
             d["TEI"] = 0
         # CALCULATION OF TEI
@@ -2007,6 +2008,8 @@ def wftf2():
     GB1_EDMIDSLD = []
     GB2_K3Reading = []
     GB3_K3 = []
+    percentofELL={}
+    percentofdisability={}
     GB4_ELL = []
     GB5_OI_R = []
     GB6_PS_D = []
@@ -2720,6 +2723,14 @@ def wftf2():
             if d['sumOfDSCSMDSSICnt'] == None:
                 d['sumOfDSCSMDSSICnt'] = 0
             GB14_MD_SSI.append(float(d['sumOfMDSSICYCnt']) + float(d['sumOfDSCSMDSSICnt']))
+
+        if (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])==0:
+            percentofELL[d['EntityID']] =0
+            percentofdisability[d['EntityID']]=0
+        else:
+            percentofELL[d['EntityID']] = (((GB4_ELL[counter1]) / (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]))*100)
+            percentofdisability[d['EntityID']]=(((GB1_EDMIDSLD[counter1]  + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]) / (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]))*100)
+
         if d["TEI"] == None:
             d["TEI"] = 0
         # CALCULATION OF TEI
@@ -2727,7 +2738,7 @@ def wftf2():
 
         # calculation of BASEAMOUNT
         if float(d["MaxOfBaseAmount"]) == actualTeachercomp:
-            LEABaseLevel1.append(round(BaseSupport * (1 + (TeacherCompPercent / 100)), 2))
+            LEABaseLevel1.append(round(BaseSupport * (1 + (TeacherCompPercent/ 100)), 2))
         elif float(d["MaxOfBaseAmount"]) == actual200daycalender:
             LEABaseLevel1.append(round(BaseSupport + (BaseSupport * (Percent200DayCalender) / 100), 2))
         elif float(d["MaxOfBaseAmount"]) == actualTeacherCompAnd200DayCalender:
@@ -3463,6 +3474,8 @@ def wftf2():
         # dictionary['EqualisationAssistance'] = str(round(EqualisationAssistance[decoded[d4]['EntityID']], 4))
         # dictionary['EqualisationAssistancenew1'] = str(round(EqualisationAssistancenew1[decoded[d4]['EntityID']], 4))
         dictionary['EqBasebyEHTypecalc'] = str(round(EqBasebyEHType[decoded[d4]['EHType']], 4))
+        dictionary['percentofELL'] = str(round(percentofELL[decoded[d4]['EntityID']], 4))
+        dictionary['percentofdisability'] = str(round(percentofdisability[decoded[d4]['EntityID']], 4))
         dictionary['EqBasebyEHTypedefault'] = str(round(float(Original[counter2]['EqBasebyEHType']), 4))
         dictionary['EqBasebyEHTypedifference'] =str(round((EqBasebyEHType[decoded[d4]['EHType']]-float(Original[counter2]['EqBasebyEHType'])), 4))
         # dictionary['EqBasebyTypecalc'] = str(round(EqBasebyType[decoded[d4]['Type']], 4))

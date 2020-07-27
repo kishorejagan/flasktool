@@ -2009,6 +2009,9 @@ def wftf2():
     GB2_K3Reading = []
     GB3_K3 = []
     percentofELL={}
+    sumofELL={}
+    sumofdisability={}
+    sumofaddon={}
     percentofdisability={}
     GB4_ELL = []
     GB5_OI_R = []
@@ -2724,12 +2727,14 @@ def wftf2():
                 d['sumOfDSCSMDSSICnt'] = 0
             GB14_MD_SSI.append(float(d['sumOfMDSSICYCnt']) + float(d['sumOfDSCSMDSSICnt']))
 
-        if (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])==0:
-            percentofELL[d['EntityID']] =0
-            percentofdisability[d['EntityID']]=0
+        if d['EntityID'] not in sumofELL:
+            sumofELL[d['EntityID']]=(GB4_ELL[counter1])
         else:
-            percentofELL[d['EntityID']] = (((GB4_ELL[counter1]) / (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]))*100)
-            percentofdisability[d['EntityID']]=(((GB1_EDMIDSLD[counter1]  + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]) / (GB1_EDMIDSLD[counter1] + GB2_K3Reading[counter1] + GB3_K3[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1]))*100)
+            sumofELL[d['EntityID']]+=(GB4_ELL[counter1])
+        if d['EntityID'] not in sumofdisability:
+            sumofdisability[d['EntityID']]=(GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
+        else:
+            sumofdisability[d['EntityID']]+=(GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
 
         if d["TEI"] == None:
             d["TEI"] = 0
@@ -3186,6 +3191,14 @@ def wftf2():
     for d4 in range(len(decoded)):
         # Creating a dictionary of the values retrieved from the query
         # d4 = dict(row1.items())
+
+        if sumofaddon[decoded[d4]['EntityID']]==0:
+            percentofELL[decoded[d4]['EntityID']] =0
+            percentofdisability[decoded[d4]['EntityID']]=0
+        else:
+            percentofELL[decoded[d4]['EntityID']] = (sumofELL[decoded[d4]['EntityID']]/sumofadm[decoded[d4]['EntityID']])*100
+            percentofdisability[decoded[d4]['EntityID']]=(sumofdisability[decoded[d4]['EntityID']]/sumofadm[decoded[d4]['EntityID']])*100
+
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
 
         # CALCULATION OF PERCENTAGE OF PREK_8 OF TOTAL AND HS OF TOTAL

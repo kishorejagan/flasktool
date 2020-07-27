@@ -542,7 +542,6 @@ def wftf(yearnum, g, Yeardef):
         # MAKING THE TYPE OF SCHOOL COMPACT FOR CALCULATIONS
         if (pred['EHType'] == 'Charter Holder - University' or pred['EHType'] == 'Charter Holder-Charter Board'):
             pred['EHType'] = "Charter"
-
         elif (pred['EHType'] == 'School District - Vocational/Technical'):
             pred['EHType'] = "CTED"
         elif (pred['EHType'] == None):
@@ -553,6 +552,8 @@ def wftf(yearnum, g, Yeardef):
             pred['EHType'] = "Elementary with HS Students"
         elif (pred['EHType'] == "School District - Elementary Not In High School"):
             pred['EHType'] = "Elementary district"
+        elif (pred['EHType'] == "School District - High School"):
+            pred['EHType'] = "Union High School district"
         elif (pred['EHType'] == "School District - Unified"):
             pred['EHType'] = "Unified district"
         schoolEHType[pred['EntityID']] = pred['EHType']
@@ -2360,6 +2361,8 @@ def wftf2():
             pred['EHType'] = "Elementary with HS Students"
         elif (pred['EHType'] == "School District - Elementary Not In High School"):
             pred['EHType'] = "Elementary district"
+        elif (pred['EHType'] == "School District - High School"):
+            pred['EHType'] = "Union High School district"
         elif (pred['EHType'] == "School District - Unified"):
             pred['EHType'] = "Unified district"
         schoolEHType[pred['EntityID']] = pred['EHType']
@@ -3540,7 +3543,7 @@ def wftf2():
         else:
             EqBasebyType[decoded[d4]['Type']] += EqualisationBase[decoded[d4]['EntityID']]
 
-        if decoded[d4]['Type'] not in EqBasebyCounty:
+        if decoded[d4]['County'] not in EqBasebyCounty:
             EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]

@@ -377,6 +377,7 @@ def wftf(yearnum, g, Yeardef):
     SSWELEMINCREMENTALWEIGHTPP = []
     SSWHSINCREMENTALWEIGHTPP = []
     fDK = 0
+    checkflag=0
     PREKADM = []
     PrekBSL = []
     HSADM = []
@@ -480,7 +481,8 @@ def wftf(yearnum, g, Yeardef):
     Reductionsum = {}
     MaintainanceandOperations={}
     TransportationSupport={}
-
+    sumelemc={}
+    sumhsc={}
     sumHSTution = {}
     CAAdefault = {}
     DAAdefault = {}
@@ -492,7 +494,8 @@ def wftf(yearnum, g, Yeardef):
     sumtrcl = 0
     TSL = {}
     sumtsl = 0
-    checkflag=0
+    DAAperstudentcountK_8={}
+    DAAperstudentcount9_12={}
     iterator=0
     RCL = {}
     sumrcl = 0
@@ -717,47 +720,67 @@ def wftf(yearnum, g, Yeardef):
             NetworkHSADM.append(sumofnetworkhsadm[d['ParentOrganization']])
             if NetworkHSADM[counter1] >= float(1) and NetworkHSADM[counter1] < float(100):
                 HSRange[d['EntityID']] = ("1to99")
+                sumhsc[d['EntityID']]=NetworkHSADM[counter1]
             elif NetworkHSADM[counter1] >= float(100) and NetworkHSADM[counter1] < float(500):
                 HSRange[d['EntityID']] = ("100to499")
+                sumhsc[d['EntityID']] = NetworkHSADM[counter1]
             elif NetworkHSADM[counter1] >= (float(500)) and NetworkHSADM[counter1] < (float(600)):
                 HSRange[d['EntityID']] = ("500to599")
+                sumhsc[d['EntityID']] = NetworkHSADM[counter1]
             elif (NetworkHSADM[counter1] >= float(600)):
                 HSRange[d['EntityID']] = (">600")
+                sumhsc[d['EntityID']] = NetworkHSADM[counter1]
             else:
                 HSRange[d['EntityID']] = (None)
+                sumhsc[d['EntityID']] = 0
             if NetworkElemADM[counter1] >= float(1) and NetworkElemADM[counter1] < float(100):
                 ELEMRange[d['EntityID']] = ("1to99")
+                sumelemc[d['EntityID']]=NetworkElemADM[counter1]
             elif NetworkElemADM[counter1] >= float(100) and NetworkElemADM[counter1] < float(500):
                 ELEMRange[d['EntityID']] = ("100to499")
+                sumelemc[d['EntityID']] = NetworkElemADM[counter1]
             elif NetworkElemADM[counter1] >= (float(500)) and NetworkElemADM[counter1] < (float(600)):
                 ELEMRange[d['EntityID']] = ("500to599")
+                sumelemc[d['EntityID']] = NetworkElemADM[counter1]
             elif (NetworkElemADM[counter1] >= float(600)):
                 ELEMRange[d['EntityID']] = (">600")
+                sumelemc[d['EntityID']] = NetworkElemADM[counter1]
             else:
                 ELEMRange[d['EntityID']] = (None)
+                sumelemc[d['EntityID']] = 0
         else:
             NetworkElemADM.append(0)
             NetworkHSADM.append(0)
             if sumhsadm[d['EntityID']] >= float(1) and sumhsadm[d['EntityID']] < float(100):
                 HSRange[d['EntityID']] = ("1to99")
+                sumhsc[d['EntityID']]=sumhsadm[d['EntityID']]
             elif sumhsadm[d['EntityID']] >= float(100) and sumhsadm[d['EntityID']] < float(500):
                 HSRange[d['EntityID']] = ("100to499")
+                sumhsc[d['EntityID']] = sumhsadm[d['EntityID']]
             elif sumhsadm[d['EntityID']] >= (float(500)) and sumhsadm[d['EntityID']] < (float(600)):
                 HSRange[d['EntityID']] = ("500to599")
+                sumhsc[d['EntityID']] = sumhsadm[d['EntityID']]
             elif (sumhsadm[d['EntityID']] >= float(600)):
                 HSRange[d['EntityID']] = (">600")
+                sumhsc[d['EntityID']] = sumhsadm[d['EntityID']]
             else:
                 HSRange[d['EntityID']] = (None)
+                sumhsc[d['EntityID']] = 0
             if sumelemadm[d['EntityID']] >= float(1) and sumelemadm[d['EntityID']] < float(100):
                 ELEMRange[d['EntityID']] = ("1to99")
+                sumelemc[d['EntityID']]=sumelemadm[d['EntityID']]
             elif sumelemadm[d['EntityID']] >= float(100) and sumelemadm[d['EntityID']] < float(500):
                 ELEMRange[d['EntityID']] = ("100to499")
+                sumelemc[d['EntityID']] = sumelemadm[d['EntityID']]
             elif sumelemadm[d['EntityID']] >= (float(500)) and sumelemadm[d['EntityID']] < (float(600)):
                 ELEMRange[d['EntityID']] = ("500to599")
+                sumelemc[d['EntityID']] = sumelemadm[d['EntityID']]
             elif (sumelemadm[d['EntityID']] >= float(600)):
                 ELEMRange[d['EntityID']] = (">600")
+                sumelemc[d['EntityID']] = sumelemadm[d['EntityID']]
             else:
                 ELEMRange[d['EntityID']] = (None)
+                sumelemc[d['EntityID']] = 0
         # CALCULATION OF SSWHSINCREMENTALWEIGHTPP
         if (d['Type'] == "CTED"):
             SSWHSINCREMENTALWEIGHTPP.append(0)
@@ -1316,10 +1339,67 @@ def wftf(yearnum, g, Yeardef):
                     d['ElemCapOutlayRevLimitAmt'] = 0
                 if d['PsdCapOutlayRevLimitAmt'] == None:
                     d['PsdCapOutlayRevLimitAmt'] = 0
-                DistrictHSTextbooksAA.append(float(d['HsBooksCapOutlayRevLimitAmt']))
-                DistrictHSAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
-                DistrictElemAA.append(float(d['ElemCapOutlayRevLimitAmt']))
-                DistrictPreKAA.append(float(d['PsdCapOutlayRevLimitAmt']))
+                # if d['ESSmallIsolated']==1:
+                #     if sumelemc[d['EntityID']]>0 and sumelemc[d['EntityID']]<100:
+                #         DAAperstudentcountK_8[d['EntityID']]=DistSuppLvl1to99K_8
+                #     elif sumelemc[d['EntityID']]>=100 and sumelemc[d['EntityID']]<500:
+                #         DAAperstudentcountK_8[d['EntityID']]=((((500-sumelemc[d['EntityID']])*IncWtSmallIso100to499K_8)+WtSmallIso100to499K_8)*DistSuppLvl100to599K_8)
+                #     elif sumelemc[d['EntityID']]>=500 and sumelemc[d['EntityID']]<600:
+                #         DAAperstudentcountK_8[d['EntityID']]=((((600-sumelemc[d['EntityID']])*IncWtSmallIso500to599K_8)+WtSmallIso500to599K_8)*DistSuppLvl100to599K_8)
+                #     else:
+                #         DAAperstudentcountK_8[d['EntityID']]=DistSuppLvl600AndOverK_8
+                # else:
+                #     if sumelemc[d['EntityID']] > 0 and sumelemc[d['EntityID']] < 100:
+                #         DAAperstudentcountK_8[d['EntityID']] = DistSuppLvl1to99K_8
+                #     elif sumelemc[d['EntityID']]>= 100 and sumelemc[d['EntityID']] < 500:
+                #         DAAperstudentcountK_8[d['EntityID']] = ((((500 - sumelemc[d['EntityID']])*IncWtSmall100to499K_8)+WtSmall100to499K_8)*DistSuppLvl100to599K_8)
+                #     elif sumelemc[d['EntityID']]>= 500 and sumelemc[d['EntityID']] < 600:
+                #         DAAperstudentcountK_8[d['EntityID']] = ((((600 - sumelemc[d['EntityID']])*IncWtSmall500to599K_8)+WtSmall500to599K_8)*DistSuppLvl100to599K_8)
+                #     else:
+                #         DAAperstudentcountK_8[d['EntityID']] = DistSuppLvl600AndOverK_8
+                # if d['HSSmallIsolated']==1:
+                #     if sumhsc[d['EntityID']]>0 and sumhsc[d['EntityID']]<100:
+                #         DAAperstudentcount9_12[d['EntityID']]=DistSuppLvl1to999_12
+                #     elif sumhsc[d['EntityID']]>=100 and sumhsc[d['EntityID']]<500:
+                #         DAAperstudentcount9_12[d['EntityID']]=((((500-sumhsc[d['EntityID']])*IncWtSmallIso100to4999_12)+WtSmallIso100to4999_12)*DistSuppLvl100to5999_12)
+                #     elif sumhsc[d['EntityID']]>=500 and sumhsc[d['EntityID']]<600:
+                #         DAAperstudentcount9_12[d['EntityID']]=((((600-sumhsc[d['EntityID']])*IncWtSmallIso500to5999_12)+WtSmallIso500to5999_12)*DistSuppLvl100to5999_12)
+                #     else:
+                #         DAAperstudentcount9_12[d['EntityID']] =DistSuppLvl600AndOver9_12
+                # else:
+                #     if sumhsc[d['EntityID']]>0 and sumhsc[d['EntityID']]<100:
+                #         DAAperstudentcount9_12[d['EntityID']]=DistSuppLvl1to999_12
+                #     elif sumhsc[d['EntityID']]>=100 and sumhsc[d['EntityID']]<500:
+                #         DAAperstudentcount9_12[d['EntityID']]=((((500-sumhsc[d['EntityID']])*IncWtSmall100to4999_12)+WtSmall100to4999_12)*DistSuppLvl100to5999_12)
+                #     elif sumhsc[d['EntityID']]>=500 and sumhsc[d['EntityID']]<600:
+                #         DAAperstudentcount9_12[d['EntityID']]=((((600-sumhsc[d['EntityID']])*IncWtSmall500to5999_12)+WtSmall500to5999_12)*DistSuppLvl100to5999_12)
+                #     else:
+                #         DAAperstudentcount9_12[d['EntityID']]=DistSuppLvl600AndOver9_12
+                if sumelemadm[d['EntityID']] > 0 and sumelemadm[d['EntityID']] < 100:
+                    DAAperstudentcountK_8[d['EntityID']] = DistSuppLvl1to99K_8
+                elif sumelemadm[d['EntityID']]>= 100 and sumelemadm[d['EntityID']] < 500:
+                    DAAperstudentcountK_8[d['EntityID']] = ((((500 - sumelemadm[d['EntityID']])*IncWtSmall100to499K_8)+WtSmall100to499K_8)*DistSuppLvl100to599K_8)
+                elif sumelemadm[d['EntityID']]>= 500 and sumelemc[d['EntityID']] < 600:
+                    DAAperstudentcountK_8[d['EntityID']] = ((((600 - sumelemadm[d['EntityID']])*IncWtSmall500to599K_8)+WtSmall500to599K_8)*DistSuppLvl100to599K_8)
+                else:
+                    DAAperstudentcountK_8[d['EntityID']] = DistSuppLvl600AndOverK_8
+
+                if sumhsadm[d['EntityID']]>0 and sumhsadm[d['EntityID']]<100:
+                    DAAperstudentcount9_12[d['EntityID']]=DistSuppLvl1to999_12
+                elif sumhsadm[d['EntityID']]>=100 and sumhsadm[d['EntityID']]<500:
+                    DAAperstudentcount9_12[d['EntityID']]=((((500-sumhsadm[d['EntityID']])*IncWtSmall100to4999_12)+WtSmall100to4999_12)*DistSuppLvl100to5999_12)
+                elif sumhsadm[d['EntityID']]>=500 and sumhsadm[d['EntityID']]<600:
+                    DAAperstudentcount9_12[d['EntityID']]=((((600-sumhsadm[d['EntityID']])*IncWtSmall500to5999_12)+WtSmall500to5999_12)*DistSuppLvl100to5999_12)
+                else:
+                    DAAperstudentcount9_12[d['EntityID']] =DistSuppLvl600AndOver9_12
+                DistrictHSTextbooksAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
+                DistrictHSAA.append((sumhsc[d['EntityID']]*DAAperstudentcount9_12[d['EntityID']]))
+                DistrictElemAA.append((sumelemc[d['EntityID']]*DAAperstudentcountK_8[d['EntityID']]))
+                DistrictPreKAA.append((sumprekadm[d['EntityID']]*DistSuppLvlAllPSD))
+
+                # DistrictHSAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
+                # DistrictElemAA.append(float(d['ElemCapOutlayRevLimitAmt']))
+                # DistrictPreKAA.append(float(d['PsdCapOutlayRevLimitAmt']))
             if d['PSElTransAdj'] == None:
                 d['PSElTransAdj'] = 0
             if d['HSTransAdj'] == None:
@@ -1606,8 +1686,8 @@ def wftf(yearnum, g, Yeardef):
             EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
-        #if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
-         #   checkflag+=1
+        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (2/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (2 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+            checkflag+=1
         #else:
          #   if iterator%3==0:
                 #print(decoded[d4]['EntityID'], int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)), int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))  )
@@ -1623,7 +1703,7 @@ def wftf(yearnum, g, Yeardef):
 
         counter2 += 1
     counter2=0
-
+    print("Checkflag: ",(checkflag/3))
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0
@@ -1815,7 +1895,6 @@ def wftf(yearnum, g, Yeardef):
     #df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
      #                 columns=['IDPY', 'NamePY','TypePY','equasscalcPY','eqassasoriginalPY'])
     #df.to_csv('NotmatchPY2018new.csv',header=True)
-    print("checkflag default:", checkflag/3)
     E['sumbsldefault'] = str(round(sum(SumofBSL.values()), 3))
     E['sumtrcldefault'] = str(round(sum(TRCL.values()), 3))
     E['sumtsldefault'] = str(round(sum(TSL.values()), 3))

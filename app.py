@@ -497,6 +497,7 @@ def wftf(yearnum, g, Yeardef):
     TotalStateEqualisationFunding = {}
     OppurtunityWeight = []
     TRCL = {}
+    County={}
     sumtrcl = 0
     TSL = {}
     sumtsl = 0
@@ -535,7 +536,10 @@ def wftf(yearnum, g, Yeardef):
     schooltype = {}
     Elementary={}
     Elementaryperpupil={}
-    Elementaryweightedperpupil = {}
+    Elementaryweightedperpupil={}
+    Elementarybycounty={}
+    Elementarybycountyperpupil={}
+    Elementarybycountyweightedperpupil={}
     schoolEHType = {}
     schooltypeanddistricttype = {}
     admbyschooltype = {}
@@ -1282,7 +1286,7 @@ def wftf(yearnum, g, Yeardef):
 
 
         # STORING ENTITY NAME
-
+        County[d['EntityID']]=d['County']
         # CALCULATION OF TOTOAL NET CHARTER AA
         if d['EntityID'] not in sumCharterElemADM.keys():
             LEApercentofCharterElemADM.append(0)
@@ -1774,14 +1778,26 @@ def wftf(yearnum, g, Yeardef):
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
     for i in Elementary:
         Elementary[i]=EqualisationBase[i]
+        if County[i] not in Elementarybycounty:
+            Elementarybycounty[County[i]]=EqualisationBase[i]
+        else:
+            Elementarybycounty[County[i]]+=EqualisationBase[i]
         if sumofadm[i]==0:
             Elementaryperpupil[i]=0
         else:
             Elementaryperpupil[i]=EqualisationBase[i]/sumofadm[i]
+        if County[i] not in Elementarybycountyperpupil:
+            Elementarybycountyperpupil[County[i]]=Elementaryperpupil[i]
+        else:
+            Elementarybycountyperpupil[County[i]]+=Elementaryperpupil[i]
         if sumofweightedadm[i]==0:
             Elementaryweightedperpupil[i]=0
         else:
             Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
+        if County[i] not in Elementarybycountyweightedperpupil:
+            Elementarybycountyweightedperpupil[County[i]]=Elementaryweightedperpupil[i]
+        else:
+            Elementarybycountyweightedperpupil[County[i]]+=Elementaryweightedperpupil[i]
     for d4 in range(len(decoded)):
         dictionary = {}
         dictionary['EntityName'] = str((decoded[d4]['EntityName']))
@@ -1968,6 +1984,9 @@ def wftf(yearnum, g, Yeardef):
     E['ElemntaryEqualisationBasedefault']=round(sum(Elementary.values()),2)
     E['ElemntaryEqualisationBaseperpupildefault'] = round(sum(Elementaryperpupil.values()), 2)
     E['ElemntaryEqualisationBaseweightedperpupildefault'] = round(sum(Elementaryweightedperpupil.values()), 2)
+    E['ElemntaryEqualisationBasebycountydefault'] = {k: round(v, 2) for k, v in Elementarybycounty.items()}
+    E['ElemntaryEqualisationBaseperpupilbycountydefault'] = {k: round(v, 2) for k, v in Elementarybycountyperpupil.items()}
+    E['ElemntaryEqualisationBaseweightedperpupilbycountydefault'] = {k: round(v, 2) for k, v in Elementarybycountyweightedperpupil.items()}
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -2201,6 +2220,7 @@ def wftf2():
     FinalAAAllocationnew1 = []
     EID = []
     Ename = []
+    County={}
     D = []
     BSL = []
     TEI = []
@@ -2392,6 +2412,9 @@ def wftf2():
     Elementary={}
     Elementaryperpupil={}
     Elementaryweightedperpupil = {}
+    Elementarybycounty = {}
+    Elementarybycountyperpupil = {}
+    Elementarybycountyweightedperpupil = {}
     schoolEHType = {}
     # schooltypeanddistricttype={}
     # admbyschooltype={}
@@ -3169,6 +3192,7 @@ def wftf2():
 
         # STORING ENTITY ID
         EID.append(d['EntityID'])
+        County[d['EntityID']]=d['County']
         # STORING ENTITY NAME
         Ename.append(d['EntityName'])
         # CALCULATION OF TOTAL NET CHARTER AA
@@ -3714,15 +3738,27 @@ def wftf2():
             perpupilTSbyweightedType[i]=((TSbyType[i]/3) / (weightedadmbyType[i])/3)
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
     for i in Elementary:
-        Elementary[i]=EqualisationBase[i]
+        Elementary[i] = EqualisationBase[i]
+        if County[i] not in Elementarybycounty:
+            Elementarybycounty[County[i]] = EqualisationBase[i]
+        else:
+            Elementarybycounty[County[i]] += EqualisationBase[i]
         if sumofadm[i] == 0:
             Elementaryperpupil[i] = 0
         else:
             Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
+        if County[i] not in Elementarybycountyperpupil:
+            Elementarybycountyperpupil[County[i]] = Elementaryperpupil[i]
+        else:
+            Elementarybycountyperpupil[County[i]] += Elementaryperpupil[i]
         if sumofweightedadm[i] == 0:
             Elementaryweightedperpupil[i] = 0
         else:
             Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
+        if County[i] not in Elementarybycountyweightedperpupil:
+            Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
+        else:
+            Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
 
     for d4 in range(len(decoded)):
         dictionary = {}
@@ -4023,6 +4059,10 @@ def wftf2():
     E['ElemntaryEqualisationBase'] = round(sum(Elementary.values()), 2)
     E['ElemntaryEqualisationBaseperpupil'] = round(sum(Elementaryperpupil.values()), 2)
     E['ElemntaryEqualisationBaseweightedperpupil'] = round(sum(Elementaryweightedperpupil.values()), 2)
+
+    E['ElemntaryEqualisationBasebycounty'] = {k: round(v,2) for k, v in Elementarybycounty.items()}
+    E['ElemntaryEqualisationBaseperpupilbycounty'] = {k: round(v,2) for k, v in Elementarybycountyperpupil.items()}
+    E['ElemntaryEqualisationBaseweightedperpupilbycounty'] = {k: round(v,2) for k, v in Elementarybycountyweightedperpupil.items()}
     # dictionary['perpupilMObyType'] = str(round(perpupilMObyType[decoded[d4]['Type']], 4))
     # dictionary['perpupilMObyweightedType'] = str(round(perpupilMObyweightedType[decoded[d4]['Type']], 4))
     #

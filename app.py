@@ -533,7 +533,9 @@ def wftf(yearnum, g, Yeardef):
             sumofnetworkhsadm[d2] = 0
     count = 0
     schooltype = {}
-
+    Elementary={}
+    Elementaryperpupil={}
+    Elementaryweightedperpupil = {}
     schoolEHType = {}
     schooltypeanddistricttype = {}
     admbyschooltype = {}
@@ -559,8 +561,10 @@ def wftf(yearnum, g, Yeardef):
         elif (pred['EHType'] == 'School District - Accommodation'):
             pred['EHType'] = "Accomodation"
         elif (pred['EHType'] == 'School District - Elementary In High School'):
+            Elementary[pred['EntityID']]=0
             pred['EHType'] = "Elementary with HS Students"
         elif (pred['EHType'] == "School District - Elementary Not In High School"):
+            Elementary[pred['EntityID']] = 0
             pred['EHType'] = "Elementary district"
         elif (pred['EHType'] == "School District - High School"):
             pred['EHType'] = "Union High School district"
@@ -1189,7 +1193,6 @@ def wftf(yearnum, g, Yeardef):
         SumofBSL[d['EntityID']] += BSL[counter1]
         sumofadm[d['EntityID']] += ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
         sumofadmpy[d['EntityID']] += ELEMADMPY[counter1] + PREKADMPY[counter1] + HSADMPY[counter1]
-
         if d['County'] not in bslbyCounty:
             bslbyCounty[d['County']] = BSL[counter1]
         else:
@@ -1684,8 +1687,8 @@ def wftf(yearnum, g, Yeardef):
             EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
-        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
-            checkflag+=1
+        # if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+        #     checkflag+=1
         # else:
         #     print(decoded[d4]['EntityID'])
          #       schoolname.append(decoded[d4]['EntityName'])
@@ -1700,7 +1703,7 @@ def wftf(yearnum, g, Yeardef):
 
         counter2 += 1
     counter2=0
-    print("Checkflag: ",(checkflag/3))
+    # print("Checkflag: ",(checkflag/3))
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0
@@ -1769,7 +1772,16 @@ def wftf(yearnum, g, Yeardef):
             perpupilMObyweightedType[i] = ((MObyType[i] / 3) / (weightedadmbyType[i]) / 3)
             perpupilTSbyweightedType[i] = ((TSbyType[i] / 3) / (weightedadmbyType[i]) / 3)
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
-
+    for i in Elementary:
+        Elementary[i]=EqualisationBase[i]
+        if sumofadm[i]==0:
+            Elementaryperpupil[i]=0
+        else:
+            Elementaryperpupil[i]=EqualisationBase[i]/sumofadm[i]
+        if sumofweightedadm[i]==0:
+            Elementaryweightedperpupil[i]=0
+        else:
+            Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
     for d4 in range(len(decoded)):
         dictionary = {}
         dictionary['EntityName'] = str((decoded[d4]['EntityName']))
@@ -1953,6 +1965,9 @@ def wftf(yearnum, g, Yeardef):
     E['EqBasebyEHTypedefault'] = {k: v / 3 for k, v in EqBasebyEHType.items()}
     E['perpupilEBbyEHTypeandcountydefault'] = (perpupilEBbyEHType)
     E['perpupilEBbyweightedEHTypeandcountydefault'] = (perpupilEBbyweightedEHType)
+    E['ElemntaryEqualisationBasedefault']=round(sum(Elementary.values()),2)
+    E['ElemntaryEqualisationBaseperpupildefault'] = round(sum(Elementaryperpupil.values()), 2)
+    E['ElemntaryEqualisationBaseweightedperpupildefault'] = round(sum(Elementaryweightedperpupil.values()), 2)
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -2198,6 +2213,9 @@ def wftf2():
     GroupBBSL = []
     WeightedPreKCounts = []
     GB1_EDMIDSLD = []
+    IncLEA={}
+    DecLEA={}
+    EqualLEA={}
     GB2_K3Reading = []
     GB3_K3 = []
     percentofELL={}
@@ -2371,6 +2389,9 @@ def wftf2():
             sumofnetworkhsadm[d2] = 0
     count = 0
     # schooltype = {}
+    Elementary={}
+    Elementaryperpupil={}
+    Elementaryweightedperpupil = {}
     schoolEHType = {}
     # schooltypeanddistricttype={}
     # admbyschooltype={}
@@ -2444,8 +2465,10 @@ def wftf2():
         elif (pred['EHType'] == 'School District - Accommodation'):
             pred['EHType'] = "Accomodation"
         elif (pred['EHType'] == 'School District - Elementary In High School'):
+            Elementary[pred['EntityID']] = 0
             pred['EHType'] = "Elementary with HS Students"
         elif (pred['EHType'] == "School District - Elementary Not In High School"):
+            Elementary[pred['EntityID']] = 0
             pred['EHType'] = "Elementary district"
         elif (pred['EHType'] == "School District - High School"):
             pred['EHType'] = "Union High School district"
@@ -3503,9 +3526,7 @@ def wftf2():
         if ((float(ElemNoStateAidDistrict[decoded[d4]['EntityID']]) + float(
                 HSNoStateAidDistrict[decoded[d4]['EntityID']])) > 0) and (
                 float(TotalStateAid[decoded[d4]['EntityID']]) == 0):
-            NoStateAidDistrict[decoded[d4]['EntityID']] = (float(1))
-        else:
-            NoStateAidDistrict[decoded[d4]['EntityID']] = (float(0))
+            NoStateAidDistrict[decoded[d4]['EntityID']] = sumofadm[decoded[d4]['EntityID']]
         TotalQTRYield[decoded[d4]['EntityID']] = (
             float(ElemQTRYield[decoded[d4]['EntityID']] + HSQTRYield[decoded[d4]['EntityID']]))
 
@@ -3606,8 +3627,8 @@ def wftf2():
         #    passcount+=1
         #else:
             #print(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2), round(decoded[d4]['EqualisationAssistanceoriginal'], 2), decoded[d4]['EntityID'])
-        if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(0.5/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(0.5/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
-            checkflag+=1
+        # if int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1-(0.5/100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)*(1+(0.5/100)))) or (int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0) :
+        #     checkflag+=1
         # else:
         #         if iterator4%3==0:
         #             schoolname.append(decoded[d4]['EntityName'])
@@ -3615,9 +3636,17 @@ def wftf2():
         #             equasscalc.append(int(round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)))
         #             equassoriginal.append(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
         #             Type.append((decoded[d4]['EHType']))
+        if round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2) > round(float(Original[counter2]['EqualisationAssistancedefault']), 2):
+            IncLEA[decoded[d4]['EntityID']]=sumofadm[decoded[d4]['EntityID']]
+        elif round(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2) < round(float(Original[counter2]['EqualisationAssistancedefault']), 2):
+            DecLEA[decoded[d4]['EntityID']]=sumofadm[decoded[d4]['EntityID']]
+        else:
+            EqualLEA[decoded[d4]['EntityID']]=sumofadm[decoded[d4]['EntityID']]
         iterator4+=1
         counter2 += 1
     counter2 = 0
+
+
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0
@@ -3684,13 +3713,24 @@ def wftf2():
             perpupilMObyweightedType[i]=((MObyType[i]/3) / (weightedadmbyType[i])/3)
             perpupilTSbyweightedType[i]=((TSbyType[i]/3) / (weightedadmbyType[i])/3)
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
+    for i in Elementary:
+        Elementary[i]=EqualisationBase[i]
+        if sumofadm[i] == 0:
+            Elementaryperpupil[i] = 0
+        else:
+            Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
+        if sumofweightedadm[i] == 0:
+            Elementaryweightedperpupil[i] = 0
+        else:
+            Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
+
     for d4 in range(len(decoded)):
         dictionary = {}
         # df=pandas.DataFrame(entitynull)
         # df.to_csv('C:/Users/jjoth/Desktop/asu/EA/entityfile.csv')
 
-        dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
-        dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 4))
+        #dictionary['EqualisationAssistanceoriginal'] = str(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))
+        dictionary['EqualisationAssistancedefault'] = str(round(float(Original[counter2]['EqualisationAssistancedefault']), 2))
         # dictionary['AAHSNoreduction'] = str(round(float(Original[counter2]['AAHSNoreduction']), 4))
         # dictionary['AAElemNoreduction'] = str(round(float(Original[counter2]['AAElemNoreduction']), 4))
         # dictionary['GB3_K3'] = str(round(GB3_K3[counter2], 4))
@@ -3911,7 +3951,7 @@ def wftf2():
         counter2 += 1
         ti = time.time()
         # print(eqcount/3)
-    print("checkflag:",(checkflag/3))
+    # print("checkflag:",(checkflag/3))
     print("Total districts:", (counter1/3))
     print("Total districts with zeros:", zerocount / 3)
     #df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
@@ -3929,7 +3969,8 @@ def wftf2():
     F['sumtotaladditionalassistancenew'] = str(round(sum(AdditionalAssistancenew.values()), 3))
     F['sumTotalLocalLevy'] = str(round(sum(TotalLocalLevynew.values()), 3))
     F['sumTotalStateAid'] = str(round(sum(TotalStateAid.values()), 3))
-    F['NoStateAidDistricts'] = str((sum(NoStateAidDistrict.values())))
+    F['NoStateAidDistricts'] = str((len(NoStateAidDistrict)))
+    F['NoStateAidDistrictsstudents'] = str(round(sum(NoStateAidDistrict.values()),2))
     F['sumtotalqtryeild'] = str(round(sum(TotalQTRYield.values()), 3))
     F['sumtotaluncapturedqtr'] = str(round(sum(UncapturedQTR.values()), 3))
     F['sumEqualisationAssistance'] = str(round(sum(EqualisationAssistancesplit.values()), 3))
@@ -3973,6 +4014,15 @@ def wftf2():
     F['EqBasebyEHTypecalc'] = {k: v / 3 for k, v in EqBasebyEHType.items()}
     F['perpupilEBbyEHTypecalc'] = (perpupilEBbyEHType)
     F['perpupilEBbyweightedEHTypecalc'] = (perpupilEBbyweightedEHType)
+    F["IncreasedLEAnumber"]= len(IncLEA)
+    F["DecreasedLEAnumber"]= len(DecLEA)
+    F["IncreasedLEAstudents"] = round(sum(IncLEA.values()),2)
+    F["DecreasedLEAstudents"] = round(sum(DecLEA.values()),2)
+    F["EqualLEAnumber"] = len(EqualLEA)
+    F["EqualLEAstudents"] = round(sum(EqualLEA.values()),2)
+    E['ElemntaryEqualisationBase'] = round(sum(Elementary.values()), 2)
+    E['ElemntaryEqualisationBaseperpupil'] = round(sum(Elementaryperpupil.values()), 2)
+    E['ElemntaryEqualisationBaseweightedperpupil'] = round(sum(Elementaryweightedperpupil.values()), 2)
     # dictionary['perpupilMObyType'] = str(round(perpupilMObyType[decoded[d4]['Type']], 4))
     # dictionary['perpupilMObyweightedType'] = str(round(perpupilMObyweightedType[decoded[d4]['Type']], 4))
     #
@@ -3985,7 +4035,7 @@ def wftf2():
     # dictionary['perpupilAAbyweightedType'] = str(round(perpupilAAbyweightedType[decoded[d4]['Type']], 4))
 
 
-    print("NoStateAidDistricts: ", (sum(NoStateAidDistrict.values())))
+    print("NoStateAidDistricts: ", (len(NoStateAidDistrict)))
     # print("AAdelta:",F['AAdelta'])
     # print("AAstatedelta:",F['AAstatedelta'])
     print(wholevalues())

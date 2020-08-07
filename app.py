@@ -3290,14 +3290,14 @@ def wftf2():
                 #     AAElem[d['EntityID']] = AAElem[d['EntityID']] - (CAAReduction)
                 pass
             else:
-                AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
-                AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
-                # if Reductionflag=="percent":
-                #     AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReduction / 100))
-                #     AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReduction / 100))
-                # elif Reductionflag == "value":
-                #     AAHS[d['EntityID']] = AAHS[d['EntityID']] - (DAAReduction)
-                #     AAElem[d['EntityID']] = AAElem[d['EntityID']] - (DAAReduction)
+                # AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
+                # AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
+                if Reductionflag=="percent":
+                    AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReduction / 100))
+                    AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReduction / 100))
+                elif Reductionflag == "value":
+                    AAHS[d['EntityID']] = AAHS[d['EntityID']] - (DAAReduction)
+                    AAElem[d['EntityID']] = AAElem[d['EntityID']] - (DAAReduction)
 
                 #AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (DAAReductionpercent / 100))
                 #AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (DAAReductionpercent / 100))

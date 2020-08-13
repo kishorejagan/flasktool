@@ -1397,10 +1397,10 @@ def wftf(yearnum, g, Yeardef):
                 # else:
                 #     increase=sumofadm[d['EntityID']]/sumofadmpy[d['EntityID']]
                 #     mult=(increase-1)/2
-                #     #print(d['EntityID'],mult,increase,sumofadm[d['EntityID']],sumofadmpy[d['EntityID']])
-                #     DistrictHSAA.append((sumhsadmpy[d['EntityID']] * (DAAperstudentcount9_12[d['EntityID']]+d['TuitionOutCnt']))*(1+mult))
-                #     DistrictElemAA.append((sumelemadmpy[d['EntityID']] * DAAperstudentcountK_8[d['EntityID']])*(1+mult))
-                #     DistrictPreKAA.append((sumprekadmpy[d['EntityID']] * DistSuppLvlAllPSD)*(1+mult))
+                    #print(d['EntityID'],mult,increase,sumofadm[d['EntityID']],sumofadmpy[d['EntityID']])
+                    # DistrictHSAA.append((sumhsadmpy[d['EntityID']] * (DAAperstudentcount9_12[d['EntityID']]+d['TuitionOutCnt']))*(1+mult))
+                    # DistrictElemAA.append((sumelemadmpy[d['EntityID']] * DAAperstudentcountK_8[d['EntityID']])*(1+mult))
+                    # DistrictPreKAA.append((sumprekadmpy[d['EntityID']] * DistSuppLvlAllPSD)*(1+mult))
                 DistrictHSTextbooksAA.append(float(d['HsBooksCapOutlayRevLimitAmt']))
                 DistrictHSAA.append(float(d['HsPrlmCapOutlayRevLimitAmt']))
                 DistrictElemAA.append(float(d['ElemCapOutlayRevLimitAmt']))
@@ -1414,7 +1414,8 @@ def wftf(yearnum, g, Yeardef):
             DistrictPreKElemReduction.append(float(d['PSElTransAdj']))
             DistrictHSReduction.append(float(d['HSTransAdj']))
             TotalDistrictAAReduction.append(float(DistrictPreKElemReduction[counter1] + DistrictHSReduction[counter1]))
-            TotalFormulaDistrictAA.append(float(DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[
+            TotalFormulaDistrictAA.append(float(
+                DistrictHSTextbooksAA[counter1] + DistrictHSAA[counter1] + DistrictElemAA[counter1] + DistrictPreKAA[
                     counter1]))
             TotalNetDistrictAA.append(float(TotalFormulaDistrictAA[counter1] + TotalDistrictAAReduction[counter1]))
             FinalFormulaAAwithReduction.append(TotalNetDistrictAA[counter1])
@@ -1690,8 +1691,8 @@ def wftf(yearnum, g, Yeardef):
             EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
-        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
-            checkflag+=1
+        # if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+        #     checkflag+=1
         # else:
         #     print(decoded[d4]['EntityID'])
          #       schoolname.append(decoded[d4]['EntityName'])
@@ -1706,7 +1707,7 @@ def wftf(yearnum, g, Yeardef):
 
         counter2 += 1
     counter2=0
-    print("Checkflag default: ",(checkflag/3))
+    # print("Checkflag: ",(checkflag/3))
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0

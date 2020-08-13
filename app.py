@@ -4093,7 +4093,12 @@ def wholevalues():
             return float(obj)
 
     E.update(F)
-
+    E['CAAdifference']= str(round(abs(float(E['CAA'])-(float(E['CAAdefault']) )), 3))
+    E['DAAdifference'] = str(round(abs(float(E['DAA']) - (float(E['DAAdefault']))), 3))
+    E['sumtotalqtryeilddifference'] = str(round(abs(float(E['sumtotalqtryeild']) - (float(E['sumtotalqtryeilddefault']))), 3))
+    E['sumtotaluncapturedqtrdifference'] = str(round(abs(float(E['sumtotaluncapturedqtr']) - (float(E['sumtotaluncapturedqtrdefault']))), 3))
+    E['sumrcldifference'] = str(round(abs(float(E['sumrcl']) - (float(E['sumrcldefault']))), 3))
+    E['sumtsldifference'] = str(round(abs(float(E['sumtsl']) - (float(E['sumtsldefault']))), 3))
     E['sumEqualisationAssistancedifference'] = str(round(abs(float(E['sumEqualisationAssistance'])-(float(E['sumEqualisationAssistancedefault']) )), 3))
     E['sumEqualisationBasedifference'] = str(round(abs(float(E['sumEqualisationBase']) - (float(E['sumEqualisationBasedefault']))), 3))
     E['Statecontributiondifference']=str(round(abs((float(E['Statecontribution'])-float(E['Statecontributiondefault']) )),3))

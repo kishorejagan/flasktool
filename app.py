@@ -1522,11 +1522,11 @@ def wftf(yearnum, g, Yeardef):
         if admbyCounty[i] == 0:
             perpupilbyCounty[i] = 0
         else:
-            perpupilbyCounty[i] = ((bslbyCounty[i] / 3) / (admbyCounty[i] / 3))
+            perpupilbyCounty[i] = ((bslbyCounty[i] / 3) / (admbyCounty[i]/3))
         if weightedadmbyCounty[i] == 0:
             perpupilbyweightedCounty[i] = 0
         else:
-            perpupilbyweightedCounty[i] = ((bslbyCounty[i] / 3) / (weightedadmbyCounty[i]) / 3)
+            perpupilbyweightedCounty[i] = ((bslbyCounty[i] / 3) / (weightedadmbyCounty[i]/3) )
     # for i in bslbytype:
     #   if admbytype[i] == 0:
     #      perpupilpertype[i] = 0
@@ -1545,11 +1545,11 @@ def wftf(yearnum, g, Yeardef):
         if admbyCounty[i] == 0:
             perpupilaabyCounty[i] = 0
         else:
-            perpupilaabyCounty[i] = ((aabyCounty[i] / 3) / (admbyCounty[i]) / 3)
+            perpupilaabyCounty[i] = ((aabyCounty[i] / 3) / (admbyCounty[i]/3) )
         if weightedadmbyCounty[i] == 0:
             perpupilaabyweightedCounty[i] = 0
         else:
-            perpupilaabyweightedCounty[i] = ((aabyCounty[i] / 3) / (weightedadmbyCounty[i]) / 3)
+            perpupilaabyweightedCounty[i] = ((aabyCounty[i] / 3) / (weightedadmbyCounty[i]/3) )
 
     # for i in bslbyschooltype:
     #     if admbyschooltype[i] == 0:

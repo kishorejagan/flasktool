@@ -1834,17 +1834,17 @@ def wftf(yearnum, g, Yeardef):
             perpupilTSbyType[i] = 0
             perpupilAAbyType[i] = 0
         else:
-            perpupilMObyType[i] = ((MObyType[i] / 3) / (admbyType[i]) / 3)
-            perpupilTSbyType[i] = ((TSbyType[i] / 3) / (admbyType[i]) / 3)
-            perpupilAAbyType[i] = ((AAbyType[i] / 3) / (admbyType[i]) / 3)
+            perpupilMObyType[i] = ((MObyType[i] / 3) / (admbyType[i] / 3))
+            perpupilTSbyType[i] = ((TSbyType[i] / 3) / (admbyType[i] / 3))
+            perpupilAAbyType[i] = ((AAbyType[i] / 3) / (admbyType[i] / 3))
         if weightedadmbyType[i] == 0:
             perpupilMObyweightedType[i] = 0
             perpupilTSbyweightedType[i] = 0
             perpupilAAbyweightedType[i] = 0
         else:
-            perpupilMObyweightedType[i] = ((MObyType[i] / 3) / (weightedadmbyType[i]) / 3)
-            perpupilTSbyweightedType[i] = ((TSbyType[i] / 3) / (weightedadmbyType[i]) / 3)
-            perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
+            perpupilMObyweightedType[i] = ((MObyType[i] / 3) / (weightedadmbyType[i] / 3))
+            perpupilTSbyweightedType[i] = ((TSbyType[i] / 3) / (weightedadmbyType[i] / 3))
+            perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i] / 3))
     for i in Elementary:
         Elementary[i] = EqualisationBase[i]
         if County[i] not in Elementarybycounty:
@@ -3759,8 +3759,7 @@ def wftf2():
         if weightedadmbyTypeandcounty[i] == 0:
             perpupilEBbyweightedTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedTypeandcounty[i] = (
-                        (EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] / 3))
+            perpupilEBbyweightedTypeandcounty[i] = ((EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] / 3))
 
     for i in EqBasebyEHTypeandcounty:
         if admbyEHTypeandcounty[i] == 0:
@@ -3770,8 +3769,7 @@ def wftf2():
         if weightedadmbyEHTypeandcounty[i] == 0:
             perpupilEBbyweightedEHTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedEHTypeandcounty[i] = (
-                        (EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] / 3))
+            perpupilEBbyweightedEHTypeandcounty[i] = ((EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] / 3))
 
     for i in EqBasebyType:
         if admbyType[i] == 0:
@@ -3808,17 +3806,17 @@ def wftf2():
             perpupilAAbyType[i] = 0
 
         else:
-            perpupilMObyType[i] = ((MObyType[i] / 3) / (admbyType[i]) / 3)
-            perpupilTSbyType[i] = ((TSbyType[i] / 3) / (admbyType[i]) / 3)
+            perpupilMObyType[i] = ((MObyType[i] / 3) / (admbyType[i] / 3))
+            perpupilTSbyType[i] = ((TSbyType[i] / 3) / (admbyType[i] / 3))
             perpupilAAbyType[i] = ((AAbyType[i] / 3) / (admbyType[i] / 3))
         if weightedadmbyType[i] == 0:
             perpupilMObyweightedType[i] = 0
             perpupilTSbyweightedType[i] = 0
             perpupilAAbyweightedType[i] = 0
         else:
-            perpupilMObyweightedType[i] = ((MObyType[i] / 3) / (weightedadmbyType[i]) / 3)
-            perpupilTSbyweightedType[i] = ((TSbyType[i] / 3) / (weightedadmbyType[i]) / 3)
-            perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i]) / 3)
+            perpupilMObyweightedType[i] = ((MObyType[i] / 3) / (weightedadmbyType[i] / 3))
+            perpupilTSbyweightedType[i] = ((TSbyType[i] / 3) / (weightedadmbyType[i] / 3))
+            perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i] / 3))
     for i in Elementary:
         Elementary[i] = EqualisationBase[i]
         if County[i] not in Elementarybycounty:

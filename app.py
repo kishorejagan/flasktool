@@ -1759,8 +1759,8 @@ def wftf(yearnum, g, Yeardef):
             EqBasebyCounty[decoded[d4]['County']] = EqualisationBase[decoded[d4]['EntityID']]
         else:
             EqBasebyCounty[decoded[d4]['County']] += EqualisationBase[decoded[d4]['EntityID']]
-        # if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
-        #     checkflag+=1
+        if int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2)) in range(int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 - (0.5/ 100))),int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2) * (1 + (0.5 / 100)))) or (int(round(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
+            checkflag+=1
         # else:
         #     print(decoded[d4]['EntityID'])
         #       schoolname.append(decoded[d4]['EntityName'])
@@ -1775,7 +1775,7 @@ def wftf(yearnum, g, Yeardef):
 
         counter2 += 1
     counter2 = 0
-    # print("Checkflag: ",(checkflag/3))
+    print("Checkflag: ",(checkflag/3))
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0
@@ -1933,14 +1933,12 @@ def wftf(yearnum, g, Yeardef):
         if sumofadm[decoded[d4]['EntityID']] == 0:
             dictionary['sumofBSLcalcperpupil'] = str(0)
         else:
-            dictionary['sumofBSLcalcperpupil'] = str(
-                round(round(SumofBSL[decoded[d4]['EntityID']], 2) / (sumofadm[decoded[d4]['EntityID']]), 2))
+            dictionary['sumofBSLcalcperpupil'] = str(round(round(SumofBSL[decoded[d4]['EntityID']], 2) / (sumofadm[decoded[d4]['EntityID']]), 2))
 
         if sumofweightedadm[decoded[d4]['EntityID']] == 0:
             dictionary['sumofBSLcalcweightedperpupil'] = str(0)
         else:
-            dictionary['sumofBSLcalcweightedperpupil'] = str(
-                round(round(SumofBSL[decoded[d4]['EntityID']], 2) / (sumofweightedadm[decoded[d4]['EntityID']]), 2))
+            dictionary['sumofBSLcalcweightedperpupil'] = str(round(round(SumofBSL[decoded[d4]['EntityID']], 2) / (sumofweightedadm[decoded[d4]['EntityID']]), 2))
         dictionary['SumofBSL'] = str(round(SumofBSL[decoded[d4]['EntityID']], 4))
         # dictionary['TotalBSL'] = str(round(sum(SumofBSL.values()), 2))
         # dictionary['WeightedPreKCounts'] = str(round(WeightedPreKCounts[counter2], 3))
@@ -2023,16 +2021,13 @@ def wftf(yearnum, g, Yeardef):
     E['DAAdefault'] = str(round(sum(DAAdefault.values()), 3))
     E['sumEqualisationBasedefault'] = str(round(sum(EqualisationBase.values()), 3))
     E['sumEqualisationBaseperpupildefault'] = str(round((sum(EqualisationBase.values()) / (sum(sumofadm.values()))), 3))
-    E['sumEqualisationBaseweightedperpupildefault'] = str(
-        round((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))
+    E['sumEqualisationBaseweightedperpupildefault'] = str(round((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))
     E['Statecontributiondefault'] = str(round(sum(Statecontribution.values()), 3))
     E['Statecontributionperpupildefault'] = str(round((sum(Statecontribution.values()) / (sum(sumofadm.values()))), 3))
-    E['Statecontributionweightedperpupildefault'] = str(
-        round((sum(Statecontribution.values()) / (sum(sumofweightedadm.values()))), 3))
+    E['Statecontributionweightedperpupildefault'] = str(round((sum(Statecontribution.values()) / (sum(sumofweightedadm.values()))), 3))
     E['Localcontributiondefault'] = str(round(sum(Localcontribution.values()), 3))
     E['Localcontributionperpupildefault'] = str(round((sum(Localcontribution.values()) / (sum(sumofadm.values()))), 3))
-    E['Localcontributionweightedperpupildefault'] = str(
-        round((sum(Localcontribution.values()) / (sum(sumofweightedadm.values()))), 3))
+    E['Localcontributionweightedperpupildefault'] = str(round((sum(Localcontribution.values()) / (sum(sumofweightedadm.values()))), 3))
     E['MObyTypedefault'] = {k: v / 3 for k, v in MObyType.items()}
     E['perpupilMObyTypedefault'] = (perpupilMObyType)
     E['perpupilMObyweightedTypedefault'] = (perpupilMObyweightedType)
@@ -2062,10 +2057,8 @@ def wftf(yearnum, g, Yeardef):
     E['ElemntaryEqualisationBaseperpupildefault'] = round(sum(Elementaryperpupil.values()), 2)
     E['ElemntaryEqualisationBaseweightedperpupildefault'] = round(sum(Elementaryweightedperpupil.values()), 2)
     E['ElemntaryEqualisationBasebycountydefault'] = {k: round(v, 2) for k, v in Elementarybycounty.items()}
-    E['ElemntaryEqualisationBaseperpupilbycountydefault'] = {k: round(v, 2) for k, v in
-                                                             Elementarybycountyperpupil.items()}
-    E['ElemntaryEqualisationBaseweightedperpupilbycountydefault'] = {k: round(v, 2) for k, v in
-                                                                     Elementarybycountyweightedperpupil.items()}
+    E['ElemntaryEqualisationBaseperpupilbycountydefault'] = {k: round(v, 2) for k, v in Elementarybycountyperpupil.items()}
+    E['ElemntaryEqualisationBaseweightedperpupilbycountydefault'] = {k: round(v, 2) for k, v in Elementarybycountyweightedperpupil.items()}
     # dict1 =pd.DataFrame([[sumbsl,sumtrcl,sumtsl,sumrcl,sumdsl,sumtotaladditionalassistancedefault,sumTotalLocalLevydefault,sumTotalStateAiddefualt,sumtotalqtryeild,sumtotaluncapturedqtr,sumEqualisationAssistance,sumEqualisationbase,Reductionsum,sumHSTution]],columns=["sumbsl","sumtrcl","sumtsl","sumrcl","sumdsl","sumtotaladditionalassistancedefault","sumTotalLocalLevydefault","sumTotalStateAiddefualt","sumtotalqtryeild","sumtotaluncapturedqtr","sumEqualisationAssistance","sumEqualisationbase","Reductionsum","sumHSTution"])
     # dict1.to_csv(str("whole values"+str(yearnum)+"_"+str(Yeardef)+".csv"),header=True)
     return D
@@ -2087,42 +2080,30 @@ def wftf2():
             return float(obj)
 
     def example():
-        preresult = engine.execute(
-            'Select auto.*,auto1.EqualisationAssistanceoriginal from (Select flight.*,fm.TuitionOutCnt,fm.HSTuitionOutAmt1 from (select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt,PSElAmt,HSAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type,Entityshort.EHType from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt,t.MDSCCYCnt, t.MDSCCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs3 t use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs3 use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) group by EntityID,FiscalYear having FiscalYear=(%s)) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth and tm.FiscalYear=t.FiscalYear   ) union all select yy.EntityID,yy.FiscalYear,yy.PsdCYCount,yy.PsdCount,yy.ElemCYCount, yy.ElemCount, yy.DSCSElemCnt,yy.HsCYCount,yy.HsCount,yy.DSCSHsCnt,yy.DSCSK3Cnt,yy.TEI,yy.PaymentMonth,yy.FTFStatus,yy.BaseAmount,yy.BaseAdjsAmount, yy.MDSSICnt, yy.MDSSICYCnt,yy.DSCSMDSSICnt, yy.DSCSVICnt,yy.DSCSOISCCnt,yy.DSCSPSDCnt,yy.DSCSMDSCCnt,yy.DSCSHICnt,yy.DSCSMOMRCnt,yy.DSCSEDPPrivateCnt,yy.DSCSMDResCnt,yy.DSCSOIResCnt,yy.DSCSEDMIMRCnt,yy.DSCSLEPCnt,yy.PSDCYCnt,yy.PSDCnt, yy.VICYCnt,yy.VICnt,yy.OISCCYCnt,yy.OISCCnt,yy.MDSCCYCnt, yy.MDSCCnt,yy.HICYCnt,yy.HICnt,yy.MOMRCYCnt,yy.MOMRCnt,yy.EDPPrivateCYCnt, yy.EDPPrivateCnt,yy.MDResCYCnt,yy.MDResCnt,yy.OIResCYCnt,yy.OIResCnt, yy.EDMIMRCYCnt,yy.EDMIMRCnt,yy.LEPCYCnt,yy.LEPCnt,yy.K3CYCnt,yy.K3Cnt from SaCharBaseSupportLevelCalcs3 yy use index(cbasei,cbasei2,cbasei3,cbasei4) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaCharBaseSupportLevelCalcs3 use index(cbasei,cbasei2,cbasei3,cbasei4) group by EntityID,FiscalYear having FiscalYear=(%s))ym on yy.EntityId=ym.EntityID and yy.PaymentMonth=ym.MaxPaymentMonth and ym.FiscalYear=yy.FiscalYear  )uni where FiscalYear=(%s) group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Type,Type as EHType from Entity use index(Enti))Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt,PSElAmt,HSAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit3 j  Use index(TRCLi) inner join ( select EntityID,FiscalYear,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit3 Use index(TRCLi) group by EntityID,FiscalYear having FiscalYear=(%s)) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and jm.FiscalYear=j.FiscalYear   ))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl3 k use index(TSLi)  inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl3 use index(TSLi) group by EntityID,FiscalYear having FiscalYear=(%s))km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and km.FiscalYear=k.FiscalYear   ))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt,l.PSElAmt,l.HSAmt from SaAporQualLevy3 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy3 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear  ))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork use index(chneti) left join Charters4Funding use index(charfundi) on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join (select * from SmallIsolatedList1 use index(smallisoi) where FiscalYear=(%s))s1  on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs3 g use index(acapoutlaycalci) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs3 use index(acapoutlaycalci) group by EntityID,FiscalYear having FiscalYear=(%s) ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and gm.FiscalYear=g.FiscalYear   ) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc3 d use index(aporsoftcapi) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc3 use index(aporsoftcapi) group by EntityID,FiscalYear having FiscalYear=(%s))dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and dm.FiscalYear=d.FiscalYear   ) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID)flight left join(SELECT EntityID,FiscalYear,TuitionOutCnt,HSTuitionOutAmt1 FROM Tutionoutcount use index(Tui) where FiscalYear=(%s))fm on fm.EntityID=flight.EntityID)auto left join (select a.EntityID,a.EqualisationAssistanceoriginal from SaAporEqualAssistance a use index(EqA) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporEqualAssistance use index(EqA) group by EntityID,FiscalYear having FiscalYear=(%s))am where a.EntityID=am.EntityID and a.PaymentMonth=am.MaxPaymentMonth and am.FiscalYear=a.FiscalYear   )auto1 on auto.EntityID=auto1.EntityID',
-            (yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum))
+        preresult = engine.execute('Select auto.*,auto1.EqualisationAssistanceoriginal from (Select flight.*,fm.TuitionOutCnt,fm.HSTuitionOutAmt1 from (select truck.*,lorry.PsdCapOutlayRevLimitAmt,lorry.ElemCapOutlayRevLimitAmt,lorry.HsPrlmCapOutlayRevLimitAmt,lorry.HsBooksCapOutlayRevLimitAmt,lorry.PSElTransAdj,lorry.HSTransAdj from (select kvs.*, CSH.parentOrganization, CSH.NetworkForFundingPurposes, CSH.ESSmallIsolated, CSH.HSSmallIsolated from (select ftfmaintype.*,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt,PSElAmt,HSAmt from (Select ftfmain.*,EntityName,Entityshort.County,Entityshort.Type,Entityshort.EHType from (select EntityID, sum(PsdCount) as sumOfPsdCount,sum(PsdCYCount) as sumOfPsdCYCount,sum(ElemCount) as sumOfElemCount,sum(ElemCYCount) as sumOfElemCYCount,sum(DSCSElemCnt) as sumOfDSCSElemCount,sum(HsCount) as sumOfHsCount,sum(HsCYCount) as sumOfHsCYCount, sum(DSCSHsCnt) as sumOfDSCSHsCount, FiscalYear,TEI,BaseAmount as MaxOfBaseAmount,BaseAdjsAmount as MaxofBaseAdjsAmount, sum(MDSSICnt) as sumOfMDSSICnt,sum(MDSSICYCnt) as sumOfMDSSICYCnt, sum(DSCSMDSSICnt)as sumOfDSCSMDSSICnt, sum(DSCSVICnt)as sumOfDSCSVICnt, sum(DSCSOISCCnt) as sumOfDSCSOISCCnt, sum(DSCSPSDCnt)as sumOfDSCSPSDCnt, sum(DSCSMDSCCnt)as sumOfDSCSMDSCCnt, sum(DSCSHICnt)as sumOfDSCSHICnt, sum(DSCSMOMRCnt)as sumOfDSCSMOMRCnt, sum(DSCSEDPPrivateCnt)as sumOfDSCSEDPPrivateCnt, sum(DSCSMDResCnt)as sumOfDSCSMDResCnt, sum(DSCSOIResCnt)as sumOfDSCSOIResCnt, sum(DSCSEDMIMRCnt)as sumOfDSCSEDMIMRCnt, sum(DSCSLEPCnt)as sumOfDSCSLEPCnt, sum(DSCSK3Cnt)as SumOfDSCSK3Cnt,sum(PSDCnt)as sumOfPSDCnt, sum(PSDCYCnt)as sumOfPSDCYCnt,sum(VICnt)as sumOfVICnt, sum(VICYCnt)as sumOfVICYCnt, sum(OISCCnt)as sumOfOISCCnt, sum(OISCCYCnt)as sumOfOISCCYCnt, sum(MDSCCnt)as sumOfMDSCCnt, sum(MDSCCYCnt)as sumOfMDSCCYCnt,sum(HICYCnt)as sumOfHICYCnt,sum(HICnt)as sumOfHICnt,sum(MOMRCnt)as sumOfMOMRCnt, sum(MOMRCYCnt)as sumOfMOMRCYCnt, sum(EDPPrivateCYCnt)as sumOfEDPPrivateCYCnt,sum(EDPPrivateCnt)as sumOfEDPPrivateCnt,sum(MDResCnt)as sumOfMDResCnt, sum(MDResCYCnt)as sumOfMDResCYCnt,sum(OIResCnt)as sumOfOIResCnt, sum(OIResCYCnt)as sumOfOIResCYCnt,sum(EDMIMRCYCnt)as sumOfEDMIMRCYCnt, sum(EDMIMRCnt)as sumOfEDMIMRCnt,sum(LEPCnt)as sumOfLEPCnt, sum(LEPCYCnt)as sumOfLEPCYCnt, sum(K3Cnt)as sumOfK3Cnt,sum(K3CYCnt)as sumOfK3CYCnt, FTFStatus from ((select t.EntityID,t.FiscalYear,t.PsdCYCount,t.PsdCount,t.ElemCYCount,t.ElemCount,t.DSCSElemCnt,t.HsCYCount,t.HsCount,t.DSCSHsCnt,t.DSCSK3Cnt,t.TEI,t.PaymentMonth,t.FTFStatus,t.BaseAmount,t.BaseAdjsAmount,t.MDSSICnt,t.MDSSICYCnt,t.DSCSMDSSICnt, t.DSCSVICnt,t.DSCSOISCCnt,t.DSCSPSDCnt,t.DSCSMDSCCnt,t.DSCSHICnt,t.DSCSMOMRCnt,t.DSCSEDPPrivateCnt,t.DSCSMDResCnt,t.DSCSOIResCnt,t.DSCSEDMIMRCnt,t.DSCSLEPCnt,t.PSDCYCnt,t.PSDCnt,t.VICYCnt,t.VICnt,t.OISCCYCnt,t.OISCCnt,t.MDSCCYCnt, t.MDSCCnt,t.HICYCnt,t.HICnt,t.MOMRCYCnt,t.MOMRCnt,t.EDPPrivateCYCnt,t.EDPPrivateCnt,t.MDResCYCnt,t.MDResCnt,t.OIResCYCnt,t.OIResCnt,t.EDMIMRCYCnt,t.EDMIMRCnt,t.LEPCYCnt,t.LEPCnt,t.K3CYCnt,t.K3Cnt from SaAporBaseSupportLevelCalcs3 t use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporBaseSupportLevelCalcs3 use index(aporbasei,aporbase2,aporbasei3,aporbasei4,aporbasei5) group by EntityID,FiscalYear having FiscalYear=(%s)) tm on t.EntityID=tm.EntityID and t.PaymentMonth=tm.MaxPaymentMonth and tm.FiscalYear=t.FiscalYear   ) union all select yy.EntityID,yy.FiscalYear,yy.PsdCYCount,yy.PsdCount,yy.ElemCYCount, yy.ElemCount, yy.DSCSElemCnt,yy.HsCYCount,yy.HsCount,yy.DSCSHsCnt,yy.DSCSK3Cnt,yy.TEI,yy.PaymentMonth,yy.FTFStatus,yy.BaseAmount,yy.BaseAdjsAmount, yy.MDSSICnt, yy.MDSSICYCnt,yy.DSCSMDSSICnt, yy.DSCSVICnt,yy.DSCSOISCCnt,yy.DSCSPSDCnt,yy.DSCSMDSCCnt,yy.DSCSHICnt,yy.DSCSMOMRCnt,yy.DSCSEDPPrivateCnt,yy.DSCSMDResCnt,yy.DSCSOIResCnt,yy.DSCSEDMIMRCnt,yy.DSCSLEPCnt,yy.PSDCYCnt,yy.PSDCnt, yy.VICYCnt,yy.VICnt,yy.OISCCYCnt,yy.OISCCnt,yy.MDSCCYCnt, yy.MDSCCnt,yy.HICYCnt,yy.HICnt,yy.MOMRCYCnt,yy.MOMRCnt,yy.EDPPrivateCYCnt, yy.EDPPrivateCnt,yy.MDResCYCnt,yy.MDResCnt,yy.OIResCYCnt,yy.OIResCnt, yy.EDMIMRCYCnt,yy.EDMIMRCnt,yy.LEPCYCnt,yy.LEPCnt,yy.K3CYCnt,yy.K3Cnt from SaCharBaseSupportLevelCalcs3 yy use index(cbasei,cbasei2,cbasei3,cbasei4) inner join (select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaCharBaseSupportLevelCalcs3 use index(cbasei,cbasei2,cbasei3,cbasei4) group by EntityID,FiscalYear having FiscalYear=(%s))ym on yy.EntityId=ym.EntityID and yy.PaymentMonth=ym.MaxPaymentMonth and ym.FiscalYear=yy.FiscalYear  )uni where FiscalYear=(%s) group by EntityID,FTFStatus )ftfmain left join (select EntityID,EntityName,County,Type,Type as EHType from Entity use index(Enti))Entityshort on ftfmain.EntityID=Entityshort.EntityID )ftfmaintype left join (select TRCLTSL.EntityID,TRCL,TSL,TotalPSElAssessValAmt,TotalHSAssessValAmt,PSElAmt,HSAmt from (select TRCL.EntityID,TRCL,TSL from ((select j.EntityID,j.TRCL from SaAporTransRevCtlLimit3 j  Use index(TRCLi) inner join ( select EntityID,FiscalYear,max(PaymentMonth)as MaxPaymentMonth from SaAporTransRevCtlLimit3 Use index(TRCLi) group by EntityID,FiscalYear having FiscalYear=(%s)) jm on j.EntityID=jm.EntityID and j.PaymentMonth=jm.MaxPaymentMonth and jm.FiscalYear=j.FiscalYear   ))TRCL left join ((select k.EntityID,k.TSL from SaAporTransSupptLvl3 k use index(TSLi)  inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporTransSupptLvl3 use index(TSLi) group by EntityID,FiscalYear having FiscalYear=(%s))km where k.EntityID=km.EntityID and k.PaymentMonth=km.MaxPaymentMonth and km.FiscalYear=k.FiscalYear   ))TSL on TRCL.EntityID=TSL.EntityID)TRCLTSL left join ((Select l.EntityID,l.TotalPSElAssessValAmt,l.TotalHSAssessValAmt,l.PSElAmt,l.HSAmt from SaAporQualLevy3 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy3 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear  ))PSEl on TRCLTSL.EntityID=PSEl.EntityID )Bike on ftfmaintype.EntityID=Bike.EntityID) kvs left join (select s1.EntityID, CWN.parentOrganization, CWN.NetworkForFundingPurposes, s1.ESSmallIsolated, s1.HSSmallIsolated from (select EntityID, ChartersWithNetwork.OrganizationName as EntityName, ParentOrganization, ifnull(Charters4Funding.NetworkForFundingPurposes,0) as NetworkForFundingPurposes  from ChartersWithNetwork use index(chneti) left join Charters4Funding use index(charfundi) on ChartersWithNetwork.ParentOrganization = Charters4Funding.OrganizationName) CWN right join (select * from SmallIsolatedList1 use index(smallisoi) where FiscalYear=(%s))s1  on CWN.EntityID = s1.EntityID)CSH on kvs.EntityID = CSH.EntityID)truck left join(select car1.EntityID,PsdCapOutlayRevLimitAmt,ElemCapOutlayRevLimitAmt,HsPrlmCapOutlayRevLimitAmt,HsBooksCapOutlayRevLimitAmt,PSElTransAdj,HSTransAdj from ((select g.EntityID,g.PsdCapOutlayRevLimitAmt,g.ElemCapOutlayRevLimitAmt,g.HsPrlmCapOutlayRevLimitAmt,g.HsBooksCapOutlayRevLimitAmt from SaAporCapitalOutlayCalcs3 g use index(acapoutlaycalci) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporCapitalOutlayCalcs3 use index(acapoutlaycalci) group by EntityID,FiscalYear having FiscalYear=(%s) ) gm where g.EntityID=gm.EntityID and g.PaymentMonth=gm.MaxPaymentMonth and gm.FiscalYear=g.FiscalYear   ) )bike1 left join ((select d.EntityID,d.PSElTransAdj,d.HSTransAdj from SaAporSoftCapAlloc3 d use index(aporsoftcapi) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporSoftCapAlloc3 use index(aporsoftcapi) group by EntityID,FiscalYear having FiscalYear=(%s))dm where d.EntityID=dm.EntityID and d.PaymentMonth=dm.MaxPaymentMonth and dm.FiscalYear=d.FiscalYear   ) )car1 on car1.EntityID=bike1.EntityID)lorry on lorry.EntityID=truck.EntityID)flight left join(SELECT EntityID,FiscalYear,TuitionOutCnt,HSTuitionOutAmt1 FROM Tutionoutcount use index(Tui) where FiscalYear=(%s))fm on fm.EntityID=flight.EntityID)auto left join (select a.EntityID,a.EqualisationAssistanceoriginal from SaAporEqualAssistance a use index(EqA) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporEqualAssistance use index(EqA) group by EntityID,FiscalYear having FiscalYear=(%s))am where a.EntityID=am.EntityID and a.PaymentMonth=am.MaxPaymentMonth and am.FiscalYear=a.FiscalYear   )auto1 on auto.EntityID=auto1.EntityID',(yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum, yearnum))
 
         # use special handler for dates and decimals
         return json.dumps([dict(r) for r in preresult], default=alchemyencoder)
 
     def example1():
-        basesup = engine.execute(
-            'SELECT min(BaseAmount) as minbase FROM DCSchoolFinance.SaAporBaseSupportLevelCalcs2 where FiscalYear=(%s)',
-            (yearnum))
+        basesup = engine.execute('SELECT min(BaseAmount) as minbase FROM DCSchoolFinance.SaAporBaseSupportLevelCalcs2 where FiscalYear=(%s)',(yearnum))
 
         return json.dumps([dict(r) for r in basesup], default=alchemyencoder)
 
     def example2():
-        QtrPsElrate = engine.execute(
-            'Select distinct(l.TotalPSElTaxRate) as elemqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',
-            (yearnum))
+        QtrPsElrate = engine.execute('Select distinct(l.TotalPSElTaxRate) as elemqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrPsElrate], default=alchemyencoder)
 
     def example3():
-        QtrHSrate = engine.execute(
-            'Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',
-            (yearnum))
+        QtrHSrate = engine.execute('Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrHSrate], default=alchemyencoder)
 
     def example4():
-        Elemcharter = engine.execute(
-            'Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
-            (yearnum))
+        Elemcharter = engine.execute('Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',(yearnum))
         return json.dumps([dict(r) for r in Elemcharter], default=alchemyencoder)
 
     def example5():
-        HScharter = engine.execute(
-            'Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
-            (yearnum))
+        HScharter = engine.execute('Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',(yearnum))
         return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
 
     elemchar = (example4())
@@ -2587,11 +2568,9 @@ def wftf2():
             pred['EHType'] = "Unified district"
         schoolEHType[pred['EntityID']] = pred['EHType']
         if (pred['Type'] == 'Charter Holder-Charter Board'):
-
             pred['Type'] = "Charter"
         elif (pred['Type'] == 'Charter Holder - University'):
             pred['Type'] = "Charter"
-
         elif (pred['Type'] == 'School District - Vocational/Technical'):
             pred['Type'] = "CTED"
         else:
@@ -2854,22 +2833,14 @@ def wftf2():
                 Final_9_12SmWgt[d['EntityID']] = (HSBaseWeight[d['EntityID']])
             elif HSRange[d['EntityID']] == "100to499":
                 if d['NetworkForFundingPurposes'] == 1 and d['Type'] != "Charter":
-                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (
-                            float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                        float(float(500) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (
-                            float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                        float(float(500) - float(sumhsadm[d['EntityID']])))))
+                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(500) - float(sumhsadm[d['EntityID']])))))
             elif HSRange[d['EntityID']] == "500to599":
                 if d['NetworkForFundingPurposes'] == 1 and d['Type'] != "Charter":
-                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (
-                            float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                        float(float(600) - float(NetworkHSADM[counter1])))))
+                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(NetworkHSADM[counter1])))))
                 else:
-                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (
-                            float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (
-                        float(float(600) - float(sumhsadm[d['EntityID']])))))
+                    Final_9_12SmWgt[d['EntityID']] = (float(HSBaseWeight[d['EntityID']]) + (float(SSWHSINCREMENTALWEIGHTPP[counter1]) * (float(float(600) - float(sumhsadm[d['EntityID']])))))
             else:
                 Final_9_12SmWgt[d['EntityID']] = (GroupAFinalGroupAWeights9_12)
         # CALCULATION OF SSWELEMINCREMENTALWEIGHTPP
@@ -2917,18 +2888,14 @@ def wftf2():
             Final_K_8SmWgt[d['EntityID']] = (ElemBaseWeight[counter1])
         elif ELEMRange[d['EntityID']] == "100to499":
             if d['NetworkForFundingPurposes'] == 1 and d['Type'] != "Charter":
-                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (
-                        float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (
-                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - sumelemadm[d['EntityID']]))))
+                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(500 - sumelemadm[d['EntityID']]))))
         elif ELEMRange[d['EntityID']] == "500to599":
             if d['NetworkForFundingPurposes'] == 1 and d['Type'] != "Charter":
-                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (
-                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
+                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - NetworkElemADM[counter1]))))
             else:
-                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (
-                            float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - sumelemadm[d['EntityID']]))))
+                Final_K_8SmWgt[d['EntityID']] = (float(ElemBaseWeight[counter1]) + (float(SSWELEMINCREMENTALWEIGHTPP[counter1]) * (float(600 - sumelemadm[d['EntityID']]))))
         else:
             Final_K_8SmWgt[d['EntityID']] = (GroupAFinalGroupAWeightsK_8)
         # CALCULATION OF VARIABLES FOR GROUP B WEIGHTS
@@ -3072,15 +3039,9 @@ def wftf2():
         else:
             sumofELL[d['EntityID']] += (GB4_ELL[counter1])
         if d['EntityID'] not in sumofdisability:
-            sumofdisability[d['EntityID']] = (
-                        GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[
-                    counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] +
-                        GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
+            sumofdisability[d['EntityID']] = (GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
         else:
-            sumofdisability[d['EntityID']] += (
-                        GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[
-                    counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] +
-                        GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
+            sumofdisability[d['EntityID']] += (GB1_EDMIDSLD[counter1] + GB4_ELL[counter1] + GB5_OI_R[counter1] + GB6_PS_D[counter1] + GB7_MOID[counter1] + GB8_HI[counter1] + GB9_VI[counter1] + GB10_ED_P[counter1] + GB11_MDSC[counter1] + GB12_MD_R[counter1] + GB13_OI_SC[counter1] + GB14_MD_SSI[counter1])
 
         if d["TEI"] == None:
             d["TEI"] = 0
@@ -3094,9 +3055,7 @@ def wftf2():
             LEABaseLevel1.append(round(BaseSupport + (BaseSupport * (Percent200DayCalender) / 100), 2))
         elif float(d["MaxOfBaseAmount"]) == actualTeacherCompAnd200DayCalender:
 
-            LEABaseLevel1.append(round(
-                (BaseSupport * (1 + (TeacherCompPercent / 100))) + (BaseSupport * (1 + (TeacherCompPercent / 100))) * (
-                        Percent200DayCalender / 100), 2))
+            LEABaseLevel1.append(round((BaseSupport * (1 + (TeacherCompPercent / 100))) + (BaseSupport * (1 + (TeacherCompPercent / 100))) * (Percent200DayCalender / 100), 2))
         elif float(d["MaxOfBaseAmount"]) == actualBaseSupport:
 
             LEABaseLevel1.append(BaseSupport)
@@ -3119,36 +3078,21 @@ def wftf2():
         # CALCULATION OF PREKBSL
         if d['FTFStatus'] == '1':
             PrekBSL.append(
-                (float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),
-                                                                                  3) * float(FullTimeAOI))
+                (float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),3) * float(FullTimeAOI))
         elif d['FTFStatus'] == '0':
-            PrekBSL.append(
-                (float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),
-                                                                                  3) * float(HalfTimeAOI))
+            PrekBSL.append((float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),3) * float(HalfTimeAOI))
         else:
-            PrekBSL.append(
-                (float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),
-                                                                                  3))
+            PrekBSL.append((float(TEI[counter1])) * (float(LEABaseLevel1[counter1])) * round(float(WeightedPreKCounts[counter1]),3))
         # CALCULATION OF ELEMBSL AND HSBSL
         if (d["FTFStatus"] == '0'):
-            ELEMBSL.append(
-                (float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),
-                                                                                  3) * float(HalfTimeAOI))
-            HSBSL.append(
-                (float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),
-                                                                                  3) * float(HalfTimeAOI))
+            ELEMBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),3) * float(HalfTimeAOI))
+            HSBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),3) * float(HalfTimeAOI))
         elif (d["FTFStatus"] == '1'):
-            ELEMBSL.append(
-                (float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),
-                                                                                  3) * float(FullTimeAOI))
-            HSBSL.append(
-                (float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]),
-                                                                                  3) * float(FullTimeAOI))
+            ELEMBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]),3) * float(FullTimeAOI))
+            HSBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]), 3) * float(FullTimeAOI))
         else:
-            ELEMBSL.append(
-                ((LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]), 3))
-            HSBSL.append(
-                (float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]), 3))
+            ELEMBSL.append(((LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedElemCounts[counter1]), 3))
+            HSBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(WeightedHSCounts[counter1]), 3))
         # CALCULATION OF VARIABLES FOR Q(GROUP B WEIGHTED ADD ON COUNTS) FROM STUDENT COUNTS FY2016_CLEAN
         Weighted_GB1_EDMIDSLD.append(float(GB1_EDMIDSLD[counter1]) * float(GroupB1))
         Weighted_GB2_K3Reading.append(float(GB2_K3Reading[counter1]) * float(GroupB2))
@@ -3165,25 +3109,15 @@ def wftf2():
         Weighted_GB13_OI_SC.append(float(GB13_OI_SC[counter1]) * float(GroupB13))
         Weighted_GB14_MD_SSI.append(float(GB14_MD_SSI[counter1]) * float(GroupB14))
         # CALCULATION OF GROUP B WEIGHTED ADD ON COUNTS
-        GroupBWeightedAddonCounts.append(
-            round(Weighted_GB1_EDMIDSLD[counter1], 3) + round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                Weighted_GB3_K3[counter1], 3) + round(Weighted_[counter1], 3) +
-            round(Weighted_GB5_OI_R[counter1], 3) + round(Weighted_GB6_PS_D[counter1], 3) + round(
-                Weighted_GB7_MOID[counter1], 3) + round(Weighted_GB8_HI[counter1], 3) +
-            round(Weighted_GB9_VI[counter1], 3) + round(Weighted_GB10_ED_P[counter1], 3) + round(
-                Weighted_GB11_MDSC[counter1], 3) + round(Weighted_GB12_MD_R[counter1], 3) +
-            round(Weighted_GB13_OI_SC[counter1], 3) + round(Weighted_GB14_MD_SSI[counter1], 3))
+        GroupBWeightedAddonCounts.append(round(Weighted_GB1_EDMIDSLD[counter1], 3) + round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1], 3) + round(Weighted_[counter1], 3) +round(Weighted_GB5_OI_R[counter1], 3) + round(Weighted_GB6_PS_D[counter1], 3) + round(Weighted_GB7_MOID[counter1], 3) + round(Weighted_GB8_HI[counter1], 3) +round(Weighted_GB9_VI[counter1], 3) + round(Weighted_GB10_ED_P[counter1], 3) + round(Weighted_GB11_MDSC[counter1], 3) + round(Weighted_GB12_MD_R[counter1], 3) +round(Weighted_GB13_OI_SC[counter1], 3) + round(Weighted_GB14_MD_SSI[counter1], 3))
         # CALCULATION OF GROUP B BSL
         if (d["FTFStatus"] == '0'):
-            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(
-                float(GroupBWeightedAddonCounts[counter1]), 3) * (float(HalfTimeAOI)))
+            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(GroupBWeightedAddonCounts[counter1]), 3) * (float(HalfTimeAOI)))
 
         elif (d["FTFStatus"] == '1'):
-            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(
-                float(GroupBWeightedAddonCounts[counter1]), 3) * (float(FullTimeAOI)))
+            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(GroupBWeightedAddonCounts[counter1]), 3) * (float(FullTimeAOI)))
         else:
-            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(
-                float(GroupBWeightedAddonCounts[counter1]), 3))
+            GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round(float(GroupBWeightedAddonCounts[counter1]), 3))
         # CALCULATION OF AuditBaseLevelAdjustment
         if (d["FTFStatus"] == None):
             AuditBaseLevelAdjustment.append(float(d["MaxofBaseAdjsAmount"]))
@@ -3197,12 +3131,8 @@ def wftf2():
         AI.append(0)
         # AI.append(float(AC2[counter1]) - float(AC2[counter1] * float(sixtyseven / 100)))
         # CALCULATION OF BSL VALUE
-        BSLWithoutAdjustment.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]),
-                                                                                                 3) + round(
-            float(GroupBBSL[counter1]), 3)))
-        BSL.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]), 3) + round(
-            float(GroupBBSL[counter1]), 3) + float(AuditBaseLevelAdjustment[counter1])))
-
+        BSLWithoutAdjustment.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]),3) + round(float(GroupBBSL[counter1]), 3)))
+        BSL.append((float(PrekBSL[counter1]) + float(ELEMBSL[counter1]) + round(float(HSBSL[counter1]), 3) + round(float(GroupBBSL[counter1]), 3) + float(AuditBaseLevelAdjustment[counter1])))
         SumofBSL[d['EntityID']] += BSL[counter1]
         sumofadm[d['EntityID']] += ELEMADM[counter1] + PREKADM[counter1] + HSADM[counter1]
         if d['County'] not in bslbyCounty:
@@ -3219,40 +3149,23 @@ def wftf2():
                         GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
                     Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyCounty[d['County']] += (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
+            weightedadmbyCounty[d['County']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
                         GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
                     Weighted_GB3_K3[counter1])))
         if str(d['Type'] + "-" + d['County']) not in weightedadmbyTypeandcounty:
-            weightedadmbyTypeandcounty[str(d['Type'] + "-" + d['County'])] = (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyTypeandcounty[str(d['Type'] + "-" + d['County'])] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyTypeandcounty[str(d['Type'] + "-" + d['County'])] += (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyTypeandcounty[str(d['Type'] + "-" + d['County'])] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         if str(d['EHType'] + "-" + d['County']) not in weightedadmbyEHTypeandcounty:
-            weightedadmbyEHTypeandcounty[str(d['EHType'] + "-" + d['County'])] = (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
+            weightedadmbyEHTypeandcounty[str(d['EHType'] + "-" + d['County'])] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
                         GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
                     Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyEHTypeandcounty[str(d['EHType'] + "-" + d['County'])] += (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyEHTypeandcounty[str(d['EHType'] + "-" + d['County'])] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         if d['Type'] not in weightedadmbyType:
-            weightedadmbyType[d['Type']] = (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyType[d['Type']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyType[d['Type']] += (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyType[d['Type']] += (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         if d['EHType'] not in bslbyEHType:
             bslbyEHType[d['EHType']] = BSL[counter1]
         else:
@@ -3262,15 +3175,9 @@ def wftf2():
         else:
             admbyEHType[d['EHType']] += (PREKADM[counter1] + ELEMADM[counter1] + HSADM[counter1])
         if d['EHType'] not in weightedadmbyEHType:
-            weightedadmbyEHType[d['EHType']] = (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyEHType[d['EHType']] = (WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         else:
-            weightedadmbyEHType[d['EHType']] += (
-                        WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] +
-                        GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(
-                    Weighted_GB3_K3[counter1])))
+            weightedadmbyEHType[d['EHType']] += ( WeightedPreKCounts[counter1] + WeightedElemCounts[counter1] + WeightedHSCounts[counter1] + GroupBWeightedAddonCounts[counter1] - (round(Weighted_GB2_K3Reading[counter1], 3) + round(Weighted_GB3_K3[counter1])))
         # if schooltype[d['EntityID']] not in bslbyschooltype:
         #     bslbyschooltype[schooltype[d['EntityID']]] = BSL[counter1]
         # else:
@@ -3530,11 +3437,11 @@ def wftf2():
         if admbyCounty[i] == 0:
             perpupilbyCounty[i] = 0
         else:
-            perpupilbyCounty[i] = ((bslbyCounty[i] / 3) / (admbyCounty[i]) / 3)
+            perpupilbyCounty[i] = ((bslbyCounty[i] / 3) / (admbyCounty[i]/3) )
         if weightedadmbyCounty[i] == 0:
             perpupilbyweightedCounty[i] = 0
         else:
-            perpupilbyweightedCounty[i] = ((bslbyCounty[i] / 3) / (weightedadmbyCounty[i]) / 3)
+            perpupilbyweightedCounty[i] = ((bslbyCounty[i] / 3) / (weightedadmbyCounty[i]/3) )
     # for i in bslbytype:
     #   if admbytype[i]==0:
     #      perpupilpertype[i] =0
@@ -3544,20 +3451,20 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = ((bslbyEHType[i] / 3) / (admbyEHType[i]) / 3)
+            perpupilbyEHType[i] = ((bslbyEHType[i] / 3) / (admbyEHType[i]/3) )
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
-            perpupilbyweightedEHType[i] = ((bslbyEHType[i] / 3) / (weightedadmbyEHType[i]) / 3)
+            perpupilbyweightedEHType[i] = ((bslbyEHType[i] / 3) / (weightedadmbyEHType[i]/3) )
     for i in AabyCounty:
         if admbyCounty[i] == 0:
             perpupilaabyCounty[i] = 0
         else:
-            perpupilaabyCounty[i] = ((AabyCounty[i] / 3) / (admbyCounty[i]) / 3)
+            perpupilaabyCounty[i] = ((AabyCounty[i] / 3) / (admbyCounty[i]/3) )
         if weightedadmbyCounty[i] == 0:
             perpupilaabyweightedCounty[i] = 0
         else:
-            perpupilaabyweightedCounty[i] = ((AabyCounty[i] / 3) / (weightedadmbyCounty[i]) / 3)
+            perpupilaabyweightedCounty[i] = ((AabyCounty[i] / 3) / (weightedadmbyCounty[i]/3))
 
     # for i in bslbyschooltype:
     #     if admbyschooltype[i]==0:

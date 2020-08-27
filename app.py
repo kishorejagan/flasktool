@@ -1511,7 +1511,7 @@ def wftf(yearnum, g, Yeardef):
             else:
                 DAAdefault[d['EntityID']] = FinalFormulaAdditionalAssistance[counter1]
             FinalAAAllocation.append(FinalFormulaAdditionalAssistance[counter1])
-        AdditionalAssistance[d['EntityID']] = (FinalAAAllocation[counter1])
+        AdditionalAssistance[d['EntityID']] =(AAHS[d['EntityID']] + AAElem[d['EntityID']])
 
         if d['County'] not in aabyCounty:
             aabyCounty[d['County']] = AdditionalAssistance[d['EntityID']]

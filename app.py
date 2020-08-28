@@ -1795,7 +1795,7 @@ def wftf(yearnum, g, Yeardef):
         if weightedadmbyTypeandcounty[i] == 0:
             perpupilEBbyweightedTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedTypeandcounty[i] = ((EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] / 3))
+            perpupilEBbyweightedTypeandcounty[i] = ((EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] ))
 
     for i in EqBasebyEHTypeandcounty:
         if admbyEHTypeandcounty[i] == 0:
@@ -1805,7 +1805,7 @@ def wftf(yearnum, g, Yeardef):
         if weightedadmbyEHTypeandcounty[i] == 0:
             perpupilEBbyweightedEHTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedEHTypeandcounty[i] = ((EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] / 3))
+            perpupilEBbyweightedEHTypeandcounty[i] = ((EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] ))
 
     for i in EqBasebyEHType:
         if admbyEHType[i] == 0:
@@ -3721,7 +3721,7 @@ def wftf2():
         if weightedadmbyTypeandcounty[i] == 0:
             perpupilEBbyweightedTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedTypeandcounty[i] = ((EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] / 3))
+            perpupilEBbyweightedTypeandcounty[i] = ((EqBasebyTypeandcounty[i] / 3) / (weightedadmbyTypeandcounty[i] ))
 
     for i in EqBasebyEHTypeandcounty:
         if admbyEHTypeandcounty[i] == 0:
@@ -3731,7 +3731,7 @@ def wftf2():
         if weightedadmbyEHTypeandcounty[i] == 0:
             perpupilEBbyweightedEHTypeandcounty[i] = 0
         else:
-            perpupilEBbyweightedEHTypeandcounty[i] = ((EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] / 3))
+            perpupilEBbyweightedEHTypeandcounty[i] = ((EqBasebyEHTypeandcounty[i] / 3) / (weightedadmbyEHTypeandcounty[i] ))
 
     for i in EqBasebyType:
         if admbyType[i] == 0:

@@ -1771,7 +1771,7 @@ def wftf(yearnum, g, Yeardef):
         # if int(round_half_up(EqualisationAssistance[decoded[d4]['EntityID']], 2)) ==(int(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2))) or (int(round_half_up(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
         #     checkflag+=1
         # #else:
-        #
+        # 
         # if iterator%3==0:
         #   schoolname.append(decoded[d4]['EntityName'])
         #   schoolID.append(decoded[d4]['EntityID'])
@@ -1786,7 +1786,7 @@ def wftf(yearnum, g, Yeardef):
 
         counter2 += 1
     counter2 = 0
-    #print("Checkflag: ",(checkflag/3))
+    # print("Checkflag: ",(checkflag/3))
     for i in EqBasebyTypeandcounty:
         if admbyTypeandcounty[i] == 0:
             perpupilEBbyTypeandcounty[i] = 0
@@ -2009,7 +2009,7 @@ def wftf(yearnum, g, Yeardef):
 
     # df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,equadiff)),
     #                  columns=['IDCY', 'NameCY','TypeCY','equasscalcCY','eqassasoriginalCY','eqassasdiffCY'])
-    # df.to_csv('NotmatchCY2018withdifferetele.csv',header=True)
+    # df.to_csv('NotmatchCY2019withdifferet.csv',header=True)
     E['sumbsldefault'] = str(round_half_up(sum(SumofBSL.values()), 3))
     E['sumtrcldefault'] = str(round_half_up(sum(TRCL.values()), 3))
     E['sumtsldefault'] = str(round_half_up(sum(TSL.values()), 3))
@@ -4052,11 +4052,11 @@ def wftf2():
         ti = time.time()
         # print(eqcount/3)
     # print("checkflag:",(checkflag/3))
-    # print("Total districts:", (counter1 / 3))
-    #     # print("Total districts with zeros:", zerocount / 3)
+    print("Total districts:", (counter1 / 3))
+    print("Total districts with zeros:", zerocount / 3)
     # df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
     # columns=['IDPY', 'NamePY','TypePY','equasscalcPY','eqassasoriginalPY'])
-    #df.to_csv('NotmatchsplitCY2018now.csv',header=True)
+    # df.to_csv('NotmatchsplitCY2018now.csv',header=True)
     F['AAdelta'] = str(round_half_up(sum(AAdelta.values()), 3))
     F['savingsflag1'] = str((savingsflag1))
     F['savingsflag'] = str((savingsflag))

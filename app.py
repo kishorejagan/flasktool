@@ -1563,7 +1563,7 @@ def wftf(yearnum, g, Yeardef):
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i] / 3))
+            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
@@ -1771,7 +1771,7 @@ def wftf(yearnum, g, Yeardef):
         # if int(round_half_up(EqualisationAssistance[decoded[d4]['EntityID']], 2)) ==(int(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2))) or (int(round_half_up(EqualisationAssistance[decoded[d4]['EntityID']], 2))==0 and int(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2))==0)  :
         #     checkflag+=1
         # #else:
-        #
+        # 
         # if iterator%3==0:
         #   schoolname.append(decoded[d4]['EntityName'])
         #   schoolID.append(decoded[d4]['EntityID'])
@@ -1811,7 +1811,7 @@ def wftf(yearnum, g, Yeardef):
         if admbyEHType[i] == 0:
             perpupilEBbyEHType[i] = 0
         else:
-            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] / 3))
+            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilEBbyweightedEHType[i] = 0
         else:
@@ -1826,6 +1826,7 @@ def wftf(yearnum, g, Yeardef):
             perpupilEBbyweightedType[i] = 0
         else:
             perpupilEBbyweightedType[i] = ((EqBasebyType[i] / 3) / (weightedadmbyType[i] ))
+
 
     for i in EqBasebyCounty:
         if admbyCounty[i] == 0:
@@ -3455,7 +3456,7 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i]/3) )
+            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i]) )
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
@@ -3746,7 +3747,7 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilEBbyEHType[i] = 0
         else:
-            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] / 3))
+            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilEBbyweightedEHType[i] = 0
         else:

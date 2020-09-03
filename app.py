@@ -567,6 +567,10 @@ def wftf(yearnum, g, Yeardef):
     count = 0
     schooltype = {}
     Elementary = {}
+    Elementaryadm = {}
+    Elementaryweightedadm = {}
+    Elementaryadmbycounty = {}
+    Elementaryweightedadmbycounty = {}
     Elementaryperpupil = {}
     Elementaryweightedperpupil = {}
     Elementarybycounty = {}
@@ -1563,7 +1567,7 @@ def wftf(yearnum, g, Yeardef):
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i] / 3))
+            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
@@ -1811,7 +1815,7 @@ def wftf(yearnum, g, Yeardef):
         if admbyEHType[i] == 0:
             perpupilEBbyEHType[i] = 0
         else:
-            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] / 3))
+            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilEBbyweightedEHType[i] = 0
         else:
@@ -1826,6 +1830,7 @@ def wftf(yearnum, g, Yeardef):
             perpupilEBbyweightedType[i] = 0
         else:
             perpupilEBbyweightedType[i] = ((EqBasebyType[i] / 3) / (weightedadmbyType[i] ))
+
 
     for i in EqBasebyCounty:
         if admbyCounty[i] == 0:
@@ -1856,33 +1861,52 @@ def wftf(yearnum, g, Yeardef):
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i] ))
     for i in Elementary:
         Elementary[i] = EqualisationBase[i]
+        Elementaryadm[i]=sumofadm[i]
+        Elementaryweightedadm[i]=sumofweightedadm[i]
         if County[i] not in Elementarybycounty:
             Elementarybycounty[County[i]] = EqualisationBase[i]
         else:
             Elementarybycounty[County[i]] += EqualisationBase[i]
-        if sumofadm[i] == 0:
-            Elementaryperpupil[i] = 0
+        if County[i] not in Elementaryadmbycounty:
+            Elementaryadmbycounty[County[i]]=sumofadm[i]
         else:
-            Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
-        if County[i] not in Elementarybycountyperpupil:
-            Elementarybycountyperpupil[County[i]] = Elementaryperpupil[i]
+            Elementaryadmbycounty[County[i]]+=sumofadm[i]
+        if County[i] not in Elementaryweightedadmbycounty:
+            Elementaryweightedadmbycounty[County[i]]=sumofweightedadm[i]
         else:
-            Elementarybycountyperpupil[County[i]] += Elementaryperpupil[i]
-        if sumofweightedadm[i] == 0:
-            Elementaryweightedperpupil[i] = 0
+            Elementaryweightedadmbycounty[County[i]]+=sumofweightedadm[i]
+        # if sumofadm[i] == 0:
+        #     Elementaryperpupil[i] = 0
+        # else:
+        #     Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
+        # if County[i] not in Elementarybycountyperpupil:
+        #     Elementarybycountyperpupil[County[i]] = Elementaryperpupil[i]
+        # else:
+        #     Elementarybycountyperpupil[County[i]] += Elementaryperpupil[i]
+        # if sumofweightedadm[i] == 0:
+        #     Elementaryweightedperpupil[i] = 0
+        # else:
+        #     Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
+        # if County[i] not in Elementarybycountyweightedperpupil:
+        #     Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
+        # else:
+        #     Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
+    for i in County.values():
+        if i not in Elementarybycounty or Elementaryadmbycounty:
+            Elementarybycountyperpupil[i]=0
         else:
-            Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
-        if County[i] not in Elementarybycountyweightedperpupil:
-            Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
+            Elementarybycountyperpupil[i]=Elementarybycounty[i]/Elementaryadmbycounty[i]
+        if i not in Elementarybycounty or Elementaryweightedadmbycounty:
+            Elementarybycountyweightedperpupil[i]=0
         else:
-            Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
+            Elementarybycountyweightedperpupil[i]=Elementarybycounty[i]/Elementaryweightedadmbycounty[i]
+
     for d4 in range(len(decoded)):
         dictionary = {}
         dictionary['EntityName'] = str((decoded[d4]['EntityName']))
         dictionary['EntityID'] = str((decoded[d4]['EntityID']))
         dictionary['EqBasebyEHType'] = str(round_half_up(EqBasebyEHType[decoded[d4]['EHType']], 4))
         # dictionary['EqBasebyType'] = str(round_half_up(EqBasebyType[decoded[d4]['Type']], 4))
-
         dictionary['AAHSNoreduction'] = str(round_half_up(AAHSNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['AAElemNoreduction'] = str(round_half_up(AAElemNoreduction[decoded[d4]['EntityID']], 2))
         dictionary['EqualisationBaseHS'] = str(round_half_up(EqualisationBaseHS[decoded[d4]['EntityID']], 2))
@@ -1904,8 +1928,7 @@ def wftf(yearnum, g, Yeardef):
         dictionary['EqualisationAssisHS'] = str(round_half_up(EqualisationAssisHS[decoded[d4]['EntityID']], 2))
         dictionary['ElemQTRYield'] = str(round_half_up(ElemQTRYield[decoded[d4]['EntityID']], 4))
         dictionary['HSQTRYield'] = str(round_half_up(HSQTRYield[decoded[d4]['EntityID']], 4))
-        dictionary['TotalStateEqualisationFunding'] = str(
-            round_half_up(TotalStateEqualisationFunding[decoded[d4]['EntityID']], 4))
+        dictionary['TotalStateEqualisationFunding'] = str(round_half_up(TotalStateEqualisationFunding[decoded[d4]['EntityID']], 4))
         dictionary['ElemTotalStateFormula'] = str(round_half_up(ElemTotalStateFormula[decoded[d4]['EntityID']], 4))
         dictionary['HSTotalStateFormula'] = str(round_half_up(HSTotalStateFormula[decoded[d4]['EntityID']], 4))
         # dictionary['DistrictPreKElemReduction']=str(round_half_up(DistrictPreKElemReduction[counter2], 4))
@@ -1914,7 +1937,6 @@ def wftf(yearnum, g, Yeardef):
         # dictionary['NetworkForFundingPurposes']=str(decoded[d4]['NetworkForFundingPurposes'])
         dictionary['prekadm'] = str(round_half_up(PREKADM[counter2], 4))
         dictionary['NoStateAidDistrict'] = str(round_half_up(NoStateAidDistrict[counter2], 4))
-
         # dictionary['schooltype']=str(schooltype[decoded[d4]['EntityID']])
         dictionary['County'] = decoded[d4]['County']
         # dictionary['AOI'] = str(decoded[d4]['FTFStatus'])
@@ -2061,9 +2083,9 @@ def wftf(yearnum, g, Yeardef):
     E['EqBasebyEHTypedefault'] = {k: v / 3 for k, v in EqBasebyEHType.items()}
     E['EqBasebyEHTypeperpupildefault'] = (perpupilEBbyEHType)
     E['EqBasebyEHTypeweightedperpupildefault'] = (perpupilEBbyweightedEHType)
-    E['ElemntaryEqualisationBasedefault'] = round_half_up(sum(Elementary.values()), 2)
-    E['ElemntaryEqualisationBaseperpupildefault'] = round_half_up(sum(Elementaryperpupil.values()), 2)
-    E['ElemntaryEqualisationBaseweightedperpupildefault'] = round_half_up(sum(Elementaryweightedperpupil.values()), 2)
+    E['ElemntaryEqualisationBasedefault'] = str(round_half_up(sum(Elementary.values()), 2))
+    E['ElemntaryEqualisationBaseperpupildefault'] = str(round_half_up((sum(Elementary.values())/sum(Elementaryadm.values())), 2))
+    E['ElemntaryEqualisationBaseweightedperpupildefault'] = str(round_half_up((sum(Elementary.values())/sum(Elementaryweightedadm.values())), 2))
     E['ElemntaryEqualisationBasebycountydefault'] = {k: round_half_up(v, 2) for k, v in Elementarybycounty.items()}
     E['ElemntaryEqualisationBasebycountyperpupildefault'] = {k: round_half_up(v, 2) for k, v in Elementarybycountyperpupil.items()}
     E['ElemntaryEqualisationBasebycountyweightedperpupildefault'] = {k: round_half_up(v, 2) for k, v in Elementarybycountyweightedperpupil.items()}
@@ -2497,6 +2519,10 @@ def wftf2():
     count = 0
     # schooltype = {}
     Elementary = {}
+    Elementaryadm={}
+    Elementaryweightedadm={}
+    Elementaryadmbycounty={}
+    Elementaryweightedadmbycounty={}
     Elementaryperpupil = {}
     Elementaryweightedperpupil = {}
     Elementarybycounty = {}
@@ -3455,7 +3481,7 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilbyEHType[i] = 0
         else:
-            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i]/3) )
+            perpupilbyEHType[i] = ((bslbyEHType[i] ) / (admbyEHType[i]) )
         if weightedadmbyEHType[i] == 0:
             perpupilbyweightedEHType[i] = 0
         else:
@@ -3746,7 +3772,7 @@ def wftf2():
         if admbyEHType[i] == 0:
             perpupilEBbyEHType[i] = 0
         else:
-            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] / 3))
+            perpupilEBbyEHType[i] = ((EqBasebyEHType[i] / 3) / (admbyEHType[i] ))
         if weightedadmbyEHType[i] == 0:
             perpupilEBbyweightedEHType[i] = 0
         else:
@@ -3781,26 +3807,45 @@ def wftf2():
             perpupilAAbyweightedType[i] = ((AAbyType[i] / 3) / (weightedadmbyType[i] ))
     for i in Elementary:
         Elementary[i] = EqualisationBase[i]
+        Elementaryadm[i] = sumofadm[i]
+        Elementaryweightedadm[i] = sumofweightedadm[i]
         if County[i] not in Elementarybycounty:
             Elementarybycounty[County[i]] = EqualisationBase[i]
         else:
             Elementarybycounty[County[i]] += EqualisationBase[i]
-        if sumofadm[i] == 0:
-            Elementaryperpupil[i] = 0
+        if County[i] not in Elementaryadmbycounty:
+            Elementaryadmbycounty[County[i]] = sumofadm[i]
         else:
-            Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
-        if County[i] not in Elementarybycountyperpupil:
-            Elementarybycountyperpupil[County[i]] = Elementaryperpupil[i]
+            Elementaryadmbycounty[County[i]] += sumofadm[i]
+        if County[i] not in Elementaryweightedadmbycounty:
+            Elementaryweightedadmbycounty[County[i]] = sumofweightedadm[i]
         else:
-            Elementarybycountyperpupil[County[i]] += Elementaryperpupil[i]
-        if sumofweightedadm[i] == 0:
-            Elementaryweightedperpupil[i] = 0
+            Elementaryweightedadmbycounty[County[i]] += sumofweightedadm[i]
+        # if sumofadm[i] == 0:
+        #     Elementaryperpupil[i] = 0
+        # else:
+        #     Elementaryperpupil[i] = EqualisationBase[i] / sumofadm[i]
+        # if County[i] not in Elementarybycountyperpupil:
+        #     Elementarybycountyperpupil[County[i]] = Elementaryperpupil[i]
+        # else:
+        #     Elementarybycountyperpupil[County[i]] += Elementaryperpupil[i]
+        # if sumofweightedadm[i] == 0:
+        #     Elementaryweightedperpupil[i] = 0
+        # else:
+        #     Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
+        # if County[i] not in Elementarybycountyweightedperpupil:
+        #     Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
+        # else:
+        #     Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
+    for i in County.values():
+        if i not in Elementarybycounty or Elementaryadmbycounty:
+            Elementarybycountyperpupil[i] = 0
         else:
-            Elementaryweightedperpupil[i] = EqualisationBase[i] / sumofweightedadm[i]
-        if County[i] not in Elementarybycountyweightedperpupil:
-            Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
+            Elementarybycountyperpupil[i] = Elementarybycounty[i] / Elementaryadmbycounty[i]
+        if i not in Elementarybycounty or Elementaryweightedadmbycounty:
+            Elementarybycountyweightedperpupil[i] = 0
         else:
-            Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
+            Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
 
     for d4 in range(len(decoded)):
         dictionary = {}
@@ -4121,8 +4166,8 @@ def wftf2():
     F["EqualLEAnumber"] = len(EqualLEA)
     F["EqualLEAstudents"] = round_half_up(sum(EqualLEA.values()), 2)
     E['ElemntaryEqualisationBasecalc'] = round_half_up(sum(Elementary.values()), 2)
-    E['ElemntaryEqualisationBaseperpupilcalc'] = round_half_up(sum(Elementaryperpupil.values()), 2)
-    E['ElemntaryEqualisationBaseweightedperpupilcalc'] = round_half_up(sum(Elementaryweightedperpupil.values()), 2)
+    E['ElemntaryEqualisationBaseperpupilcalc'] = round_half_up(sum(Elementary.values())/sum(Elementaryadm.values()), 2)
+    E['ElemntaryEqualisationBaseweightedperpupilcalc'] = round_half_up(sum(Elementary.values())/sum(Elementaryweightedadm.values()), 2)
     E['ElemntaryEqualisationBasebycountycalc'] = {k: round_half_up(v, 2) for k, v in Elementarybycounty.items()}
     E['ElemntaryEqualisationBasebycountyperpupilcalc'] = {k: round_half_up(v, 2) for k, v in Elementarybycountyperpupil.items()}
     E['ElemntaryEqualisationBasebycountyweightedperpupilcalc'] = {k: round_half_up(v, 2) for k, v in Elementarybycountyweightedperpupil.items()}

@@ -1891,15 +1891,16 @@ def wftf(yearnum, g, Yeardef):
         #     Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
         # else:
         #     Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
-    for i in County.values():
-        if i not in Elementarybycounty or Elementaryadmbycounty:
+    for i in set(County.values()):
+        if i not in Elementarybycounty:
             Elementarybycountyperpupil[i]=0
         else:
-            Elementarybycountyperpupil[i]=Elementarybycounty[i]/Elementaryadmbycounty[i]
-        if i not in Elementarybycounty or Elementaryweightedadmbycounty:
-            Elementarybycountyweightedperpupil[i]=0
-        else:
-            Elementarybycountyweightedperpupil[i]=Elementarybycounty[i]/Elementaryweightedadmbycounty[i]
+            if Elementaryadmbycounty[i]==0:
+                Elementarybycountyperpupil[i] = 0
+                Elementarybycountyweightedperpupil[i] = 0
+            else:
+                Elementarybycountyperpupil[i]=(Elementarybycounty[i]/Elementaryadmbycounty[i])
+                Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
 
     for d4 in range(len(decoded)):
         dictionary = {}
@@ -3837,15 +3838,16 @@ def wftf2():
         #     Elementarybycountyweightedperpupil[County[i]] = Elementaryweightedperpupil[i]
         # else:
         #     Elementarybycountyweightedperpupil[County[i]] += Elementaryweightedperpupil[i]
-    for i in County.values():
-        if i not in Elementarybycounty or Elementaryadmbycounty:
-            Elementarybycountyperpupil[i] = 0
+    for i in set(County.values()):
+        if i not in Elementarybycounty:
+            Elementarybycountyperpupil[i]=0
         else:
-            Elementarybycountyperpupil[i] = Elementarybycounty[i] / Elementaryadmbycounty[i]
-        if i not in Elementarybycounty or Elementaryweightedadmbycounty:
-            Elementarybycountyweightedperpupil[i] = 0
-        else:
-            Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
+            if Elementaryadmbycounty[i]==0:
+                Elementarybycountyperpupil[i] = 0
+                Elementarybycountyweightedperpupil[i] = 0
+            else:
+                Elementarybycountyperpupil[i]=(Elementarybycounty[i]/Elementaryadmbycounty[i])
+                Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
 
     for d4 in range(len(decoded)):
         dictionary = {}

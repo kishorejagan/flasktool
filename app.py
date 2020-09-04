@@ -17,8 +17,7 @@ app = flask.Flask(__name__)
 app.secret_key = 'asfmasgma'
 app._static_folder = os.path.abspath("C:/Users/jjoth/PycharmProjects/untitled1/templates/static/")
 # ESHTABLISHING CONNECTION
-engine = create_engine(
-    'mysql+pymysql://DCEdExUser1:DCEdExUser1@dcedex.cgnkf5ysjn5z.us-west-1.rds.amazonaws.com/DCSchoolFinance')
+engine = create_engine('mysql+pymysql://DCEdExUser1:DCEdExUser1@dcedex.cgnkf5ysjn5z.us-west-1.rds.amazonaws.com/DCSchoolFinance')
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -76,27 +75,19 @@ def year():
     flask.session['basesupport'] = BaseSupport
 
     def example2():
-        QtrPsElrate = engine.execute(
-            'Select distinct(l.TotalPSElTaxRate) as elemqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',
-            (yearnum))
+        QtrPsElrate = engine.execute('Select distinct(l.TotalPSElTaxRate) as elemqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrPsElrate], default=alchemyencoder)
 
     def example3():
-        QtrHSrate = engine.execute(
-            'Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',
-            (yearnum))
+        QtrHSrate = engine.execute('Select distinct(l.TotalHSTaxRate) as hsqtr from SaAporQualLevy2 l use index(quallevyi1) inner join (Select EntityID,FiscalYear,max(PaymentMonth) as MaxPaymentMonth from SaAporQualLevy2 use index(quallevyi1) group by EntityID,FiscalYear having FiscalYear=(%s))lm where l.EntityID=lm.EntityID and l.PaymentMonth=lm.MaxPaymentMonth and lm.FiscalYear=l.FiscalYear',(yearnum))
         return json.dumps([dict(r) for r in QtrHSrate], default=alchemyencoder)
 
     def example4():
-        Elemcharter = engine.execute(
-            'Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
-            (yearnum))
+        Elemcharter = engine.execute('Select distinct(ElCapAssistAmt) as elemcaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)', (yearnum))
         return json.dumps([dict(r) for r in Elemcharter], default=alchemyencoder)
 
     def example5():
-        HScharter = engine.execute(
-            'Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',
-            (yearnum))
+        HScharter = engine.execute('Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',(yearnum))
         return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
 
     elemchar = (example4())
@@ -1745,6 +1736,7 @@ def wftf(yearnum, g, Yeardef):
             LocalcontributionHS[decoded[d4]['EntityID']] = HSLL[decoded[d4]['EntityID']]
             UncapturedQTRHS[decoded[d4]['EntityID']] = 0
             AAstateHSdelta[decoded[d4]['EntityID']] = 0
+        AAstatedelta[decoded[d4]['EntityID']] = AAstateElemdelta[decoded[d4]['EntityID']] + AAstateHSdelta[decoded[d4]['EntityID']]
         EqualisationAssistance[decoded[d4]['EntityID']] = EqualisationAssisElem[decoded[d4]['EntityID']] + EqualisationAssisHS[decoded[d4]['EntityID']]
         Localcontribution[decoded[d4]['EntityID']] = LocalcontributionHS[decoded[d4]['EntityID']] + LocalcontributionElem[decoded[d4]['EntityID']]
         Statecontribution[decoded[d4]['EntityID']] = StatecontributionHS[decoded[d4]['EntityID']] + StatecontributionElem[decoded[d4]['EntityID']]

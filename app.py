@@ -3387,13 +3387,12 @@ def wftf2():
                 # CAA[d['EntityID']] = (FinalFormulaAAwithReduction[counter1])
                 # AAHS[d['EntityID']]-= float(CharterHSAAReduction[counter1])
                 # AAElem[d['EntityID']]-= float(CharterElemAAReduction[counter1])
-                # if Reductionflag=="percent":
-                #     AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (CAAReduction / 100))
-                #     AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (CAAReduction / 100))
-                # elif Reductionflag=="value":
-                #     AAHS[d['EntityID']] = AAHS[d['EntityID']] - (CAAReduction)
-                #     AAElem[d['EntityID']] = AAElem[d['EntityID']] - (CAAReduction)
-                pass
+                if Reductionflag=="percent":
+                    AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 - (CAAReduction / 100))
+                    AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 - (CAAReduction / 100))
+                elif Reductionflag=="value":
+                    AAHS[d['EntityID']] = AAHS[d['EntityID']] - (CAAReduction)
+                    AAElem[d['EntityID']] = AAElem[d['EntityID']] - (CAAReduction)
             else:
                 # AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
                 # AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
@@ -4202,6 +4201,7 @@ def wholevalues():
     E['DAAdifference'] = str(round_half_up((float(E['DAAcalc']) - (float(E['DAAdefault']))), 3))
     E['sumtotalqtryeilddifference'] = str(round_half_up((float(E['sumtotalqtryeildcalc']) - (float(E['sumtotalqtryeilddefault']))), 3))
     E['sumtotaluncapturedqtrdifference'] = str(round_half_up((float(E['sumtotaluncapturedqtrcalc']) - (float(E['sumtotaluncapturedqtrdefault']))), 3))
+    E['sumdsldifference'] = str(round_half_up((float(E['sumdslcalc']) - (float(E['sumdsldefault']))), 3))
     E['sumrcldifference'] = str(round_half_up((float(E['sumrclcalc']) - (float(E['sumrcldefault']))), 3))
     E['sumtsldifference'] = str(round_half_up((float(E['sumtslcalc']) - (float(E['sumtsldefault']))), 3))
     E['sumEqualisationAssistancedifference'] = str(round_half_up((float(E['sumEqualisationAssistancecalc']) - (float(E['sumEqualisationAssistancedefault']))), 3))

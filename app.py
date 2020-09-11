@@ -4210,7 +4210,7 @@ def wholevalues():
     E['Localcontributiondifference'] = str(round_half_up(((float(E['Localcontributioncalc']) - float(E['Localcontributiondefault']))), 3))
     E['sumEqualisationBaseperpupildifference'] = str(round_half_up((float(E['sumEqualisationBaseperpupilcalc']) - (float(E['sumEqualisationBaseperpupildefault']))), 3))
     E['Statecontributionperpupildifference'] = str(round_half_up(((float(E['Statecontributionperpupilcalc']) - float(E['Statecontributionperpupildefault']))), 3))
-    E['Localcontributiondifference'] = str(round_half_up(((float(E['Localcontributionperpupilcalc']) - float(E['Localcontributionperpupildefault']))), 3))
+    E['Localcontributionperpupildifference'] = str(round_half_up(((float(E['Localcontributionperpupilcalc']) - float(E['Localcontributionperpupildefault']))), 3))
     E['sumEqualisationBaseweightedperpupildifference'] = str(round_half_up((float(E['sumEqualisationBaseweightedperpupilcalc']) - (float(E['sumEqualisationBaseweightedperpupildefault']))),3))
     E['Statecontributionweightedperpupildifference'] = str(round_half_up(((float(E['Statecontributionweightedperpupilcalc']) - float(E['Statecontributionweightedperpupildefault']))), 3))
     E['Localcontributionweightedperpupildifference'] = str(round_half_up(((float(E['Localcontributionweightedperpupilcalc']) - float(E['Localcontributionweightedperpupildefault']))), 3))

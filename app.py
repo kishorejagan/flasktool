@@ -1618,12 +1618,12 @@ def wftf(yearnum, g, Yeardef):
 
         if RCL[decoded[d4]['EntityID']] < DSL[decoded[d4]['EntityID']]:
             TransportationSupport[decoded[d4]['EntityID']] = TRCL[decoded[d4]['EntityID']]
-            MaintainanceandOperations[decoded[d4]['EntityID']] = RCL[decoded[d4]['EntityID']] + TRCL[
-                decoded[d4]['EntityID']] - decoded[d4]['HSTuitionOutAmt1']
+            MaintainanceandOperations[decoded[d4]['EntityID']] = RCL[decoded[d4]['EntityID']] - TRCL[
+                decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1']
         else:
             TransportationSupport[decoded[d4]['EntityID']] = TSL[decoded[d4]['EntityID']]
-            MaintainanceandOperations[decoded[d4]['EntityID']] = DSL[decoded[d4]['EntityID']] + TSL[
-                decoded[d4]['EntityID']] - decoded[d4]['HSTuitionOutAmt1']
+            MaintainanceandOperations[decoded[d4]['EntityID']] = DSL[decoded[d4]['EntityID']] - TSL[
+                decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1']
         if decoded[d4]['Type'] not in MObyType:
             MObyType[decoded[d4]['Type']] = MaintainanceandOperations[decoded[d4]['EntityID']]
         else:
@@ -3542,12 +3542,12 @@ def wftf2():
             decoded[d4]['HSTuitionOutAmt1'] = 0
         if RCL[decoded[d4]['EntityID']] < DSL[decoded[d4]['EntityID']]:
             TransportationSupport[decoded[d4]['EntityID']] = TRCL[decoded[d4]['EntityID']]
-            MaintainanceandOperations[decoded[d4]['EntityID']] = RCL[decoded[d4]['EntityID']] + TRCL[
-                decoded[d4]['EntityID']] - decoded[d4]['HSTuitionOutAmt1']
+            MaintainanceandOperations[decoded[d4]['EntityID']] = RCL[decoded[d4]['EntityID']] - TRCL[
+                decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1']
         else:
             TransportationSupport[decoded[d4]['EntityID']] = TSL[decoded[d4]['EntityID']]
-            MaintainanceandOperations[decoded[d4]['EntityID']] = DSL[decoded[d4]['EntityID']] + TSL[
-                decoded[d4]['EntityID']] - decoded[d4]['HSTuitionOutAmt1']
+            MaintainanceandOperations[decoded[d4]['EntityID']] = DSL[decoded[d4]['EntityID']] - TSL[
+                decoded[d4]['EntityID']] + decoded[d4]['HSTuitionOutAmt1']
         if decoded[d4]['Type'] not in MObyType:
             MObyType[decoded[d4]['Type']] = MaintainanceandOperations[decoded[d4]['EntityID']]
         else:

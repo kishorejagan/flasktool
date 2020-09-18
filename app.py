@@ -3403,9 +3403,10 @@ def wftf2():
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] + (CAAReduction)
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] + (CAAReduction)
             else:
-                # AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
-                # AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
+                AAHS[d['EntityID']] += float(DistrictHSReduction[counter1])
+                AAElem[d['EntityID']] += float(DistrictPreKElemReduction[counter1] )
                 if Reductionflag == "percent":
+
                     AAHS[d['EntityID']] = AAHS[d['EntityID']] * (1 + (DAAReduction / 100))
                     AAElem[d['EntityID']] = AAElem[d['EntityID']] * (1 + (DAAReduction / 100))
                 elif Reductionflag == "value":

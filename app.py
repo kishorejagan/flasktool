@@ -3729,9 +3729,9 @@ def wftf2():
         #             equasscalc.append(int(round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2)))
         #             equassoriginal.append(int(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2)))
         #             Type.append((decoded[d4]['EHType']))
-        if round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2) > round_half_up(float(Original[counter2]['EqualisationAssistancedefault']), 2):
+        if round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']],4) > round_half_up(float(Original[counter2]['EqualisationAssistancedefault']),4):
             IncLEA[decoded[d4]['EntityID']] = sumofadm[decoded[d4]['EntityID']]
-        elif round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']], 2) < round_half_up(float(Original[counter2]['EqualisationAssistancedefault']), 2):
+        elif round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']],4) < round_half_up(float(Original[counter2]['EqualisationAssistancedefault']),4):
             DecLEA[decoded[d4]['EntityID']] = sumofadm[decoded[d4]['EntityID']]
         else:
             EqualLEA[decoded[d4]['EntityID']] = sumofadm[decoded[d4]['EntityID']]
@@ -3866,7 +3866,7 @@ def wftf2():
         # dictionary['BSLWithoutAdjustment'] = str(round_half_up(BSLWithoutAdjustment[counter2], 4))
         # dictionary['AuditBaseLevelAdjustment'] = str(round_half_up(AuditBaseLevelAdjustment[counter2], 3))
         # dictionary['EqualisationAssistanceoriginal'] = str(round_half_up(decoded[d4]['EqualisationAssistanceoriginal'], 2))
-        # dictionary['EqualisationAssistancedefault'] = str(round_half_up(float(Original[counter2]['EqualisationAssistancedefault']), 2))
+
         # dictionary['EqualisationAssisElem'] =str(round_half_up(float(Original[counter2]['EqualisationAssisElem']), 2))
         # dictionary['EqualisationAssisHS'] = str(round_half_up(float(Original[counter2]['EqualisationAssisHS']), 2))
         # dictionary['GB1_EDMIDSLD'] = str(round_half_up(GB1_EDMIDSLD[counter2], 4))
@@ -3936,6 +3936,7 @@ def wftf2():
         # dictionary['EqualisationBaseHS'] = str(round_half_up(float(Original[counter2]['EqualisationBaseHS']), 4))
         # dictionary['EqualisationBaseElem'] = str(round_half_up(float(Original[counter2]['EqualisationBaseElem']), 4))
 
+        dictionary['EqualisationAssistancedefault'] = str(round_half_up(float(Original[counter2]['EqualisationAssistancedefault']), 2))
         dictionary['EqualisationAssistancesplit'] = str(round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4))
         dictionary['EqualisationAssistancedifference'] = str(round_half_up(EqualisationAssistancesplit[decoded[d4]['EntityID']], 4) - (float(Original[counter2]['EqualisationAssistancedefault'])))
         dictionary['EqualisationBasecalc'] = str(round_half_up(EqualisationBase[decoded[d4]['EntityID']], 2))

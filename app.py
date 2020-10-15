@@ -89,9 +89,31 @@ def year():
     def example5():
         HScharter = engine.execute('Select distinct(HsCapAssistAmt) as hscaa from SaCharAdditionalAssistance use index(CAA) where FiscalYear=(%s)',(yearnum))
         return json.dumps([dict(r) for r in HScharter], default=alchemyencoder)
+    def example6():
+        totalstudents = engine.execute('Select totalstudents  from Defaults  where year=(%s)',(yearnum))
+        return json.dumps([dict(r) for r in totalstudents], default=alchemyencoder)
+    def example7():
+        groupaweighted = engine.execute('Select groupaweighted  from Defaults  where year=(%s)',(yearnum))
+        return json.dumps([dict(r) for r in groupaweighted], default=alchemyencoder)
+    def example8():
+        groupbweighted = engine.execute('Select groupbweighted  from Defaults  where year=(%s)',(yearnum))
+        return json.dumps([dict(r) for r in groupbweighted], default=alchemyencoder)
+    def example9():
+        totalweightedstudents = engine.execute('Select totalweightedstudents  from Defaults  where year=(%s)',(yearnum))
+        return json.dumps([dict(r) for r in totalweightedstudents], default=alchemyencoder)
+
 
     elemchar = (example4())
     hschar = (example5())
+
+    dd=json.loads(example6())
+    da=json.loads(example7())
+    db=json.loads(example8())
+    dw=json.loads(example9())
+    flask.session['totalstudents']= float(dd[0]['totalstudents'])
+    flask.session['groupaweighted'] = float(da[0]['groupaweighted'])
+    flask.session['groupbweighted'] = float(db[0]['groupbweighted'])
+    flask.session['totalweightedstudents'] = float(dw[0]['totalweightedstudents'])
     dh = json.loads(elemchar)
     dj = json.loads(hschar)
     CharSuppLvlAllK_8 = float(dh[0]['elemcaa'])
@@ -104,6 +126,7 @@ def year():
     QTR9_12 = float(dg[0]['hsqtr'])
     flask.session['elemqtr'] = QTRK_8
     flask.session['hsqtr'] = QTR9_12
+
     return flask.render_template('input variables.html')
 
 
@@ -1899,7 +1922,12 @@ def wftf(yearnum, g, Yeardef):
             else:
                 Elementarybycountyperpupil[i]=(Elementarybycounty[i]/Elementaryadmbycounty[i])
                 Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
+    F['totalnumberofstudents'] = str(round_half_up(sum(sumofadm.values()), 3))
+    F['totalnumberofweightedstudents'] = str(round_half_up(sum(sumofweightedadm.values()), 3))
+    F['totalnumberofGroupBweightedstudents'] = str(round_half_up(sum(GroupBWeightedAddonCountsweighted), 3))
+    F['totalnumberofGroupAweightedstudents'] = str(round_half_up(sum(WeightedPreKCounts) + sum(WeightedHSCounts) + sum(WeightedElemCounts), 3))
 
+    engine.execute('insert into Defaults(year, basesup,QtrPsElrate,QtrHSrate,Elemcharter,HScharter,totalstudents,groupaweighted,groupbweighted,totalweightedstudents) SELECT %s, %s,%s,%s,%s,%s,%s,%s,%s,%s WHERE NOT EXISTS (SELECT %s FROM Defaults WHERE year = %s)',(yearnum,BaseSupport,QTRK_8,QTR9_12,CharSuppLvlAllK_8,CharSuppLvlAll9_12,F['totalnumberofstudents'],F['totalnumberofGroupAweightedstudents'],F['totalnumberofGroupBweightedstudents'],F['totalnumberofweightedstudents'],yearnum,yearnum))
     for d4 in range(len(decoded)):
         dictionary = {}
         dictionary['EntityName'] = str((decoded[d4]['EntityName']))
@@ -4110,10 +4138,6 @@ def wftf2():
     # df = pd.DataFrame(list(zip(schoolID, schoolname,Type,equasscalc,equassoriginal,)),
     # columns=['IDPY', 'NamePY','TypePY','equasscalcPY','eqassasoriginalPY'])
     # df.to_csv('NotmatchsplitCY2018now.csv',header=True)
-    F['totalnumberofstudents']=str(round_half_up(sum(sumofadm.values()), 3))
-    F['totalnumberofweightedstudents'] = str(round_half_up(sum(sumofweightedadm.values()), 3))
-    F['totalnumberofGroupBweightedstudents'] = str(round_half_up(sum(GroupBWeightedAddonCountsweighted), 3))
-    F['totalnumberofGroupAweightedstudents'] = str(round_half_up(sum(WeightedPreKCounts)+sum(WeightedHSCounts)+sum(WeightedElemCounts), 3))
     F['AAdelta'] = str(round_half_up(sum(AAdelta.values()), 3))
     F['savingsflag1'] = str((savingsflag1))
     F['savingsflag'] = str((savingsflag))

@@ -1927,7 +1927,7 @@ def wftf(yearnum, g, Yeardef):
     F['totalnumberofGroupBweightedstudents'] = str(round_half_up(sum(GroupBWeightedAddonCountsweighted), 3))
     F['totalnumberofGroupAweightedstudents'] = str(round_half_up(sum(WeightedPreKCounts) + sum(WeightedHSCounts) + sum(WeightedElemCounts), 3))
 
-    engine.execute('insert into Defaults(year, basesup,QtrPsElrate,QtrHSrate,Elemcharter,HScharter,totalstudents,groupaweighted,groupbweighted,totalweightedstudents) SELECT %s, %s,%s,%s,%s,%s,%s,%s,%s,%s WHERE NOT EXISTS (SELECT %s FROM Defaults WHERE year = %s)',(yearnum,BaseSupport,QTRK_8,QTR9_12,CharSuppLvlAllK_8,CharSuppLvlAll9_12,F['totalnumberofstudents'],F['totalnumberofGroupAweightedstudents'],F['totalnumberofGroupBweightedstudents'],F['totalnumberofweightedstudents'],yearnum,yearnum))
+    #engine.execute('insert into Defaults(year, basesup,QtrPsElrate,QtrHSrate,Elemcharter,HScharter,totalstudents,groupaweighted,groupbweighted,totalweightedstudents) SELECT %s, %s,%s,%s,%s,%s,%s,%s,%s,%s WHERE NOT EXISTS (SELECT %s FROM Defaults WHERE year = %s)',(yearnum,BaseSupport,QTRK_8,QTR9_12,CharSuppLvlAllK_8,CharSuppLvlAll9_12,F['totalnumberofstudents'],F['totalnumberofGroupAweightedstudents'],F['totalnumberofGroupBweightedstudents'],F['totalnumberofweightedstudents'],yearnum,yearnum))
     for d4 in range(len(decoded)):
         dictionary = {}
         dictionary['EntityName'] = str((decoded[d4]['EntityName']))
@@ -2073,7 +2073,8 @@ def wftf(yearnum, g, Yeardef):
     E['SumTotalStateFundingEqualiseddefault'] = str(round_half_up(sum(TotalStateFundingEqualised.values()), 3))
     E['NoStateAidDistrictsdefault'] = str((sum(NoStateAidDistrict) / 3))
     E['CAAdefault'] = str(round_half_up(sum(CAA.values()), 3))
-    E['DAAdefault'] = str(round_half_up(sum(DAA.values()), 3))
+    #E['DAAdefault'] = str(round_half_up(sum(DAA.values()), 3))
+    E['DAAdefault'] = str(round_half_up((AAbyType['District'] / 3), 3))
     E['sumEqualisationBasedefault'] = str(round_half_up(sum(EqualisationBase.values()), 3))
     E['sumEqualisationBaseperpupildefault'] = str(round_half_up((sum(EqualisationBase.values()) / (sum(sumofadm.values()))), 3))
     E['sumEqualisationBaseweightedperpupildefault'] = str(round_half_up((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))
@@ -4161,7 +4162,8 @@ def wftf2():
     F['sumEqualisationAssistancedef'] = str(round_half_up(sum(EqualisationAssistancedef.values()), 3))
     F['AAstatedeltacalc'] = str(round_half_up(sum(AAstatedelta.values()), 3))
     F['CAAcalc'] = str(round_half_up(sum(CAA.values()), 3))
-    F['DAAcalc'] = str(round_half_up(sum(DAA.values()), 3))
+    #F['DAAcalc'] = str(round_half_up(sum(DAA.values()), 3))
+    F['DAAcalc'] = str(round_half_up((AAbyType['District']/3), 3))
     F['sumEqualisationBasecalc'] = str(round_half_up(sum(EqualisationBase.values()), 3))
     F['sumEqualisationBaseperpupilcalc'] = str(round_half_up((sum(EqualisationBase.values()) / (sum(sumofadm.values()))), 3))
     F['sumEqualisationBaseweightedperpupilcalc'] = str(round_half_up((sum(EqualisationBase.values()) / (sum(sumofweightedadm.values()))), 3))

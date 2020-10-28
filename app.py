@@ -1229,7 +1229,7 @@ def wftf(yearnum, g, Yeardef):
             GroupBWeightedAddonCountsweighted.append(round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3) * (float(FullTimeAOI)))
         else:
             GroupBBSL.append((float(LEABaseLevel[counter1])) * (float(TEI[counter1])) * round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3))
-            GroupBWeightedAddonCountsweighted.append((float(FullTimeAOI)))
+            GroupBWeightedAddonCountsweighted.append(round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3))
 
         # CALCULATION OF AuditBaseLevelAdjustment
         if (d["FTFStatus"] == None):
@@ -1924,7 +1924,7 @@ def wftf(yearnum, g, Yeardef):
                 Elementarybycountyweightedperpupil[i] = Elementarybycounty[i] / Elementaryweightedadmbycounty[i]
     F['totalnumberofstudents'] = str(round_half_up(sum(sumofadm.values()), 3))
     F['totalnumberofweightedstudents'] = str(round_half_up(sum(sumofweightedadm.values()), 3))
-    F['totalnumberofGroupBweightedstudents'] = str(round_half_up(sum(GroupBWeightedAddonCountsweighted), 3))
+    F['totalnumberofGroupBweightedstudents'] = str(round_half_up(sum(GroupBWeightedAddonCounts), 3))
     F['totalnumberofGroupAweightedstudents'] = str(round_half_up(sum(WeightedPreKCounts) + sum(WeightedHSCounts) + sum(WeightedElemCounts), 3))
 
     #engine.execute('insert into Defaults(year, basesup,QtrPsElrate,QtrHSrate,Elemcharter,HScharter,totalstudents,groupaweighted,groupbweighted,totalweightedstudents) SELECT %s, %s,%s,%s,%s,%s,%s,%s,%s,%s WHERE NOT EXISTS (SELECT %s FROM Defaults WHERE year = %s)',(yearnum,BaseSupport,QTRK_8,QTR9_12,CharSuppLvlAllK_8,CharSuppLvlAll9_12,F['totalnumberofstudents'],F['totalnumberofGroupAweightedstudents'],F['totalnumberofGroupBweightedstudents'],F['totalnumberofweightedstudents'],yearnum,yearnum))
@@ -3193,7 +3193,7 @@ def wftf2():
             GroupBWeightedAddonCountsweighted.append(round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3) * (float(FullTimeAOI)))
         else:
             GroupBBSL.append((float(LEABaseLevel1[counter1])) * (float(TEI[counter1])) * round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3))
-            GroupBWeightedAddonCountsweighted.append((float(FullTimeAOI)))
+            GroupBWeightedAddonCountsweighted.append(round_half_up(float(GroupBWeightedAddonCounts[counter1]), 3))
         # CALCULATION OF AuditBaseLevelAdjustment
         if (d["FTFStatus"] == None):
             AuditBaseLevelAdjustment.append(float(d["MaxofBaseAdjsAmount"]))
